@@ -4,7 +4,7 @@ Get the best order for enchanting. Base on the [Python Version](https://github.c
 [![Issues](https://img.shields.io/github/issues/wherewhere/Unicode-Style.svg?label=Issues&style=flat-square)](https://github.com/wherewhere/Unicode-Style/issues "Issues")
 [![Stargazers](https://img.shields.io/github/stars/wherewhere/Unicode-Style.svg?label=Stars&style=flat-square)](https://github.com/wherewhere/Unicode-Style/stargazers "Stargazers")
 
-![image](https://user-images.githubusercontent.com/27689196/188614853-a2599541-8d13-41f8-b3ac-89cbcf908eed.png)
+![image](https://user-images.githubusercontent.com/27689196/188638113-d1a4bdae-c9f0-483e-8b2b-9a226892dcaf.png)
 
 ## Support Platform
 - .NET Framework 3.5
