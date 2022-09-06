@@ -2,33 +2,16 @@
 
   <PropertyGroup>
 	<LangVersion>preview</LangVersion>
-    <TargetFrameworks>net3.5-client;net4.0-client;net4.5.2;net4.7.2;net4.8.1;net6.0;netcore50;netcoreapp3.1;netstandard1.1</TargetFrameworks>
+    <TargetFrameworks>net3.5-client;net4.0-client;net4.5.2;net4.6.2;net4.8.1;net6.0;netcore50;netcoreapp3.1;netstandard1.1</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcore50'">
     <NugetTargetMoniker>.NETCore,Version=v5.0</NugetTargetMoniker>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net3.5-client'">
-    <PackageReference Include="ValueTupleBridge" Version="0.1.5" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net4.0-client'">
-    <PackageReference Include="ValueTupleBridge" Version="0.1.5" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net4.5.2'">
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'netcore50'">
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="Microsoft.NETCore" Version="5.0.2" />
     <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.2" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
- 
 </Project>
