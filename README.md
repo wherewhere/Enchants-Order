@@ -1,8 +1,8 @@
-# Order Enchants
+# Enchants Order
 Get the best order for enchanting. Base on the [Python Version](https://github.com/hqqaazz/ordered-Enchanting-Demo) by [@hqqaazz](https://github.com/hqqaazz)
 
-[![Issues](https://img.shields.io/github/issues/wherewhere/Unicode-Style.svg?label=Issues&style=flat-square)](https://github.com/wherewhere/Unicode-Style/issues "Issues")
-[![Stargazers](https://img.shields.io/github/stars/wherewhere/Unicode-Style.svg?label=Stars&style=flat-square)](https://github.com/wherewhere/Unicode-Style/stargazers "Stargazers")
+[![Issues](https://img.shields.io/github/issues/wherewhere/Enchants-Order.svg?label=Issues&style=flat-square)](https://github.com/wherewhere/Enchants-Order/issues "Issues")
+[![Stargazers](https://img.shields.io/github/stars/wherewhere/Enchants-Order.svg?label=Stars&style=flat-square)](https://github.com/wherewhere/Enchants-Order/stargazers "Stargazers")
 
 ![image](https://user-images.githubusercontent.com/27689196/188638113-d1a4bdae-c9f0-483e-8b2b-9a226892dcaf.png)
 

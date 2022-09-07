@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace OrderEnchants.Models
+namespace EnchantsOrder.Models
 {
     public class EnchantmentStep : List<Enchantment>
     {

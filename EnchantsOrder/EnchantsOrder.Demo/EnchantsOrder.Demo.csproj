@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OrderEnchants\OrderEnchants.csproj" />
+    <ProjectReference Include="..\EnchantsOrder\EnchantsOrder.csproj" />
   </ItemGroup>
 
   <ItemGroup>

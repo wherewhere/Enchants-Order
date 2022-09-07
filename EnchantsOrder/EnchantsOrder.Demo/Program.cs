@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using OrderEnchants.Models;
+using EnchantsOrder.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace OrderEnchant.Demo
+namespace EnchantsOrder.Demo
 {
     internal class Program
     {
@@ -49,7 +49,7 @@ namespace OrderEnchant.Demo
 
             Console.WriteLine("Start ordering...");
             Console.WriteLine("*****************");
-            OrderingResults results = Instance.Ordering(enchantment_list);
+            OrderingResults results = enchantment_list.Ordering();
             Console.WriteLine(results.ToString());
             Console.Write("Press any key to exit...");
             Console.ReadKey(true);

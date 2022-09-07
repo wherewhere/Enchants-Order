@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OrderEnchants.Models
+namespace EnchantsOrder.Models
 {
     internal class EnchantLayerResults
     {

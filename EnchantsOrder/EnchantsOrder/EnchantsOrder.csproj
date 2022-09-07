@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>wherewhere</Authors>
+    <Copyright>Copyright © 2017 - 2022 wherewhere. All Rights Reserved.</Copyright>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <IncludeSymbols>True</IncludeSymbols>
+	<LangVersion>preview</LangVersion>
+    <PackageProjectUrl>https://github.com/wherewhere/Enchants-Order</PackageProjectUrl>
+    <PackageTags>Minecraft;Enchants;Order;MC;附魔;我的世界;麦块</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/wherewhere/Enchants-Order</RepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <TargetFrameworks>net3.5-client;net4.0-client;net4.5.2;net4.6.2;net4.8.1;net6.0;netcore50;netcoreapp3.1;netstandard1.1</TargetFrameworks>
+    <Title>Enchants Order - Get the best order for enchanting</Title>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <Description>Get the best order for enchanting. Base on the Python Version by @hqqaazz (https://github.com/hqqaazz/ordered-Enchanting-Demo).</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcore50'">
+    <NugetTargetMoniker>.NETCore,Version=v5.0</NugetTargetMoniker>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcore50'">
+    <PackageReference Include="Microsoft.NETCore" Version="5.0.2" />
+    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.2" />
+  </ItemGroup>
+
+</Project>

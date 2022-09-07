@@ -1,13 +1,13 @@
-﻿using OrderEnchants.Models;
+﻿using EnchantsOrder.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OrderEnchant
+namespace EnchantsOrder
 {
     public static class Instance
     {
-        public static OrderingResults Ordering(List<Enchantment> wantedlist, int inital_penalty = 0)
+        public static OrderingResults Ordering(this List<Enchantment> wantedlist, int inital_penalty = 0)
         {
             if (!wantedlist.Any())
             {
@@ -17,7 +17,7 @@ namespace OrderEnchant
             //get the xp required and in（tobe_enchanted it
             List<Enchantment> sortedlist = wantedlist;
             sortedlist.Sort((x, y) => y.CompareTo(x));
-            List<int> numlist = sortedlist.Select((x) => x.Experience).ToList();
+            List<long> numlist = sortedlist.Select((x) => x.Experience).ToList();
 #if NETCOREAPP
             int total_step = Convert.ToInt32(Math.Log2(sortedlist.Count)) + 1;
 #else
@@ -30,10 +30,10 @@ namespace OrderEnchant
             }
             // the factor of enchantment (first 16 books, should be enough though), no idea to form an equation or function
             List<int> multiplyfactor = new List<int> { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4 };
-            List<int>[] ordering_num = new List<int>[total_step];
+            List<long>[] ordering_num = new List<long>[total_step];
             List<EnchantmentStep> ordering = new List<EnchantmentStep>();
             // multiplied enchatment factor
-            int xp_extra_level = 0;
+            long xp_extra_level = 0;
             List<object> priority_list = new List<object>();
             // generate base enchantment level list
             // i.e. add the sum of penalty level by item and merged books
@@ -42,6 +42,7 @@ namespace OrderEnchant
             EnchantLayerResults enchantlayer_results = EnchantLayer(total_step, total_enchantment, inital_penalty);
             List<double> xp_list = enchantlayer_results.XpList;
             List<double> max_step = enchantlayer_results.MaxStep;
+            penalty = max_step.Where((x) => x != 0).Count();
             while (numlist.Any())
             {
                 List<double> temp_xp_list = new List<double>();
@@ -57,9 +58,9 @@ namespace OrderEnchant
                     }
                 }
                 int step = temp_xp_list.IndexOf(temp_xp_list.Min());
-                ordering_num[step] ??= new List<int>();
+                ordering_num[step] ??= new List<long>();
                 int existed_num = ordering_num[step].Count;
-                int tobe_enchanted = numlist.Max();
+                long tobe_enchanted = numlist.Max();
                 ordering_num[step].Add(tobe_enchanted);
                 xp_list[step] += tobe_enchanted;
                 max_step[step] -= 1;
@@ -78,7 +79,7 @@ namespace OrderEnchant
             //penalty of merged books
             double xp_penalty_book = 0;
             int enchantment_step = 0;
-            foreach (List<int> element in ordering_num)
+            foreach (List<long> element in ordering_num)
             {
                 if (element == null) { continue; }
                 enchantment_step++;
@@ -86,7 +87,7 @@ namespace OrderEnchant
                 //penalty for merge book
                 xp_penalty_book += MergedPenaltyBook(element.Count);
                 //list steps with name
-                foreach (int j in element)
+                foreach (long j in element)
                 {
                     foreach (Enchantment k in sortedlist)
                     {

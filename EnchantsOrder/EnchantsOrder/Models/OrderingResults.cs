@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace OrderEnchants.Models
+namespace EnchantsOrder.Models
 {
     public class OrderingResults
     {
