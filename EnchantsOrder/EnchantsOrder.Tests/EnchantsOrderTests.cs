@@ -125,50 +125,50 @@ namespace EnchantsOrder.Tests
             OrderingResults results = enchantmentlist.Ordering();
 
             Assert.AreEqual(3, results.Penalty);
-            Assert.AreEqual(10, results.MaxExperience);
-            Assert.AreEqual(30, results.TotalExperience);
+            Assert.AreEqual(11, results.MaxExperience);
+            Assert.AreEqual(29, results.TotalExperience);
 
             Assert.AreEqual(3, results.Steps.Count);
             Assert.AreEqual(1, results.Steps[0].Count);
             Assert.AreEqual("Power", results.Steps[0][0].Name);
             Assert.AreEqual(2, results.Steps[1].Count);
-            Assert.AreEqual("Infinity", results.Steps[1][0].Name);
-            Assert.AreEqual("Unbreaking", results.Steps[1][1].Name);
+            Assert.AreEqual("Punch", results.Steps[1][0].Name);
+            Assert.AreEqual("Flame", results.Steps[1][1].Name);
             Assert.AreEqual(2, results.Steps[2].Count);
-            Assert.AreEqual("Punch", results.Steps[2][0].Name);
-            Assert.AreEqual("Flame", results.Steps[2][1].Name);
+            Assert.AreEqual("Infinity", results.Steps[2][0].Name);
+            Assert.AreEqual("Unbreaking", results.Steps[2][1].Name);
         }
 
-        //[TestMethod]
-        //public void SixBookOrderTest()
-        //{
-        //    List<Enchantment> enchantmentlist = new List<Enchantment>
-        //    {
-        //        new Enchantment("Aqua Affinity", 1, 2),
-        //        new Enchantment("Respiration", 3, 2),
-        //        new Enchantment("Mending", 1, 2),
-        //        new Enchantment("Unbreaking", 3, 1),
-        //        new Enchantment("Blast Protection", 4, 2),
-        //        new Enchantment("Thorns", 3, 4)
-        //    };
+        [Test]
+        public void SixBookOrderTest()
+        {
+            List<Enchantment> enchantmentlist = new List<Enchantment>
+            {
+                new Enchantment("Aqua Affinity", 1, 2),
+                new Enchantment("Respiration", 3, 2),
+                new Enchantment("Mending", 1, 2),
+                new Enchantment("Unbreaking", 3, 1),
+                new Enchantment("Blast Protection", 4, 2),
+                new Enchantment("Thorns", 3, 4)
+            };
 
-        //    OrderingResults results = enchantmentlist.Ordering();
+            OrderingResults results = enchantmentlist.Ordering();
 
-        //    Assert.AreEqual(3, results.Penalty);
-        //    Assert.AreEqual(16, results.MaxExperience);
-        //    Assert.AreEqual(58, results.TotalExperience);
+            Assert.AreEqual(3, results.Penalty);
+            Assert.AreEqual(17, results.MaxExperience);
+            Assert.AreEqual(49, results.TotalExperience);
 
-        //    Assert.AreEqual(3, results.Steps.Count);
-        //    Assert.AreEqual(1, results.Steps[0].Count);
-        //    Assert.AreEqual("Thorns", results.Steps[0][0].Name);
-        //    Assert.AreEqual(2, results.Steps[1].Count);
-        //    Assert.AreEqual("Blast Protection", results.Steps[1][0].Name);
-        //    Assert.AreEqual("Unbreaking", results.Steps[1][1].Name);
-        //    Assert.AreEqual(3, results.Steps[2].Count);
-        //    Assert.AreEqual("Respiration", results.Steps[2][0].Name);
-        //    Assert.AreEqual("Aqua Affinity", results.Steps[2][1].Name);
-        //    Assert.AreEqual("Mending", results.Steps[2][2].Name);
-        //}
+            Assert.AreEqual(3, results.Steps.Count);
+            Assert.AreEqual(1, results.Steps[0].Count);
+            Assert.AreEqual("Thorns", results.Steps[0][0].Name);
+            Assert.AreEqual(2, results.Steps[1].Count);
+            Assert.AreEqual("Blast Protection", results.Steps[1][0].Name);
+            Assert.AreEqual("Mending", results.Steps[1][1].Name);
+            Assert.AreEqual(3, results.Steps[2].Count);
+            Assert.AreEqual("Respiration", results.Steps[2][0].Name);
+            Assert.AreEqual("Aqua Affinity", results.Steps[2][1].Name);
+            Assert.AreEqual("Unbreaking", results.Steps[2][2].Name);
+        }
 
         [Test]
         public void SevenBookOrderTest()
