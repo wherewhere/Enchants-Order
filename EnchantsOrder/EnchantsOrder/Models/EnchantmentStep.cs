@@ -7,6 +7,9 @@ namespace EnchantsOrder.Models
     {
         public int Step { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="EnchantmentStep" />.
+        /// </summary>
         public EnchantmentStep(int step)
         {
             Step = step;

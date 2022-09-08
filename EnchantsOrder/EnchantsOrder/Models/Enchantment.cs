@@ -10,6 +10,9 @@ namespace EnchantsOrder.Models
         public int Weight { get; set; }
         public long Experience => (long)Level * Weight;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="Enchantment" />.
+        /// </summary>
         public Enchantment(string name, int level, int weight)
         {
             Name = name;

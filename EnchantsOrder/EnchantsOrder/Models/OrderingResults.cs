@@ -9,15 +9,26 @@ namespace EnchantsOrder.Models
         public double MaxExperience { get; set; }
         public double TotalExperience { get; set; }
         public IList<EnchantmentStep> Steps { get; set; }
+        public TooExpensiveException Exception { get; set; }
 
-        public OrderingResults(IList<EnchantmentStep> steps, int penalty, double maxExperience, double totalExperience)
+        /// <summary>
+        /// Initializes a new instance of <see cref="OrderingResults" />.
+        /// </summary>
+        public OrderingResults(IList<EnchantmentStep> steps, int penalty, double maxExperience, double totalExperience, TooExpensiveException exception = null)
         {
             Steps = steps;
             Penalty = penalty;
+            Exception = exception;
             MaxExperience = maxExperience;
             TotalExperience = totalExperience;
         }
 
+        /// <summary>
+        /// Throw Exception.
+        /// </summary>
+        public void Throw() { throw Exception; }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();

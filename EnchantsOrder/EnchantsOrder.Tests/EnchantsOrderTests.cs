@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using EnchantsOrder.Models;
 using System.Collections.Generic;
+using System;
 
 namespace EnchantsOrder.Tests
 {
@@ -10,6 +11,15 @@ namespace EnchantsOrder.Tests
     [TestFixture]
     public class EnchantsOrderTests
     {
+        [Test]
+        public void NoneBookOrderTest()
+        {
+            List<Enchantment> enchantmentlist = null;
+            _ = Assert.Throws<ArgumentNullException>(() => _ = enchantmentlist.Ordering());
+            enchantmentlist = new List<Enchantment>();
+            _ = Assert.Throws<ArgumentNullException>(() => _ = enchantmentlist.Ordering());
+        }
+
         [Test]
         public void OneBookOrderTest()
         {
@@ -63,7 +73,7 @@ namespace EnchantsOrder.Tests
 
             Assert.AreEqual(2, results.Penalty);
             Assert.AreEqual(7, results.MaxExperience);
-            Assert.AreEqual(15, results.TotalExperience);
+            Assert.AreEqual(13, results.TotalExperience);
 
             Assert.AreEqual(2, results.Steps.Count);
             Assert.AreEqual(1, results.Steps[0].Count);
@@ -178,7 +188,7 @@ namespace EnchantsOrder.Tests
 
             Assert.AreEqual(3, results.Penalty);
             Assert.AreEqual(17, results.MaxExperience);
-            Assert.AreEqual(58, results.TotalExperience);
+            Assert.AreEqual(52, results.TotalExperience);
 
             Assert.AreEqual(3, results.Steps.Count);
             Assert.AreEqual(1, results.Steps[0].Count);
