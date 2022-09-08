@@ -15,6 +15,7 @@ namespace EnchantsOrder.Models
             Step = step;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             string str = $"Step {Step}:";

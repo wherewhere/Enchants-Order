@@ -1,4 +1,6 @@
-﻿namespace EnchantsOrder
+﻿using System;
+
+namespace EnchantsOrder
 {
     internal static class Extensions
     {
@@ -22,5 +24,12 @@
             }
             return results;
         }
+
+        public static long PenaltyToExperience(long penalty) => Math.Max(0, Convert.ToInt64(Math.Pow(2, penalty)) - 1);
+
+        public static double LevelToExperience(long level) =>
+            level <= 16
+                ? Math.Pow(level, 2) + 6 * level : level <= 31
+                    ? 2.5 * Math.Pow(level, 2) - 40.5 * level + 360 : 4.5 * Math.Pow(level, 2) - 162.5 * level + 2220;
     }
 }

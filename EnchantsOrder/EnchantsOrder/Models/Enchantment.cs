@@ -20,8 +20,10 @@ namespace EnchantsOrder.Models
             Weight = weight;
         }
 
+        /// <inheritdoc/>
         public override string ToString() => $"{Name} {Level.GetLoumaNumber()}";
 
+        /// <inheritdoc/>
         public int CompareTo(Enchantment other)
         {
             int value = Experience.CompareTo(other.Experience);

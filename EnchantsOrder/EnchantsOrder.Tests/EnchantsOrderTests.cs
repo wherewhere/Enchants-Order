@@ -110,34 +110,34 @@ namespace EnchantsOrder.Tests
             Assert.AreEqual("Riptide", results.Steps[2][0].Name);
         }
 
-        //[TestMethod]
-        //public void FiveBookOrderTest()
-        //{
-        //    List<Enchantment> enchantmentlist = new List<Enchantment>
-        //    {
-        //        new Enchantment("Punch", 2, 2),
-        //        new Enchantment("Flame", 1, 2),
-        //        new Enchantment("Unbreaking", 3, 1),
-        //        new Enchantment("Infinity", 1, 4),
-        //        new Enchantment("Power", 5, 1)
-        //    };
+        [Test]
+        public void FiveBookOrderTest()
+        {
+            List<Enchantment> enchantmentlist = new List<Enchantment>
+            {
+                new Enchantment("Punch", 2, 2),
+                new Enchantment("Flame", 1, 2),
+                new Enchantment("Unbreaking", 3, 1),
+                new Enchantment("Infinity", 1, 4),
+                new Enchantment("Power", 5, 1)
+            };
 
-        //    OrderingResults results = enchantmentlist.Ordering();
+            OrderingResults results = enchantmentlist.Ordering();
 
-        //    Assert.AreEqual(3, results.Penalty);
-        //    Assert.AreEqual(10, results.MaxExperience);
-        //    Assert.AreEqual(30, results.TotalExperience);
+            Assert.AreEqual(3, results.Penalty);
+            Assert.AreEqual(10, results.MaxExperience);
+            Assert.AreEqual(30, results.TotalExperience);
 
-        //    Assert.AreEqual(3, results.Steps.Count);
-        //    Assert.AreEqual(1, results.Steps[0].Count);
-        //    Assert.AreEqual("Power", results.Steps[0][0].Name);
-        //    Assert.AreEqual(2, results.Steps[1].Count);
-        //    Assert.AreEqual("Infinity", results.Steps[1][0].Name);
-        //    Assert.AreEqual("Unbreaking", results.Steps[1][1].Name);
-        //    Assert.AreEqual(2, results.Steps[2].Count);
-        //    Assert.AreEqual("Punch", results.Steps[2][0].Name);
-        //    Assert.AreEqual("Flame", results.Steps[2][1].Name);
-        //}
+            Assert.AreEqual(3, results.Steps.Count);
+            Assert.AreEqual(1, results.Steps[0].Count);
+            Assert.AreEqual("Power", results.Steps[0][0].Name);
+            Assert.AreEqual(2, results.Steps[1].Count);
+            Assert.AreEqual("Infinity", results.Steps[1][0].Name);
+            Assert.AreEqual("Unbreaking", results.Steps[1][1].Name);
+            Assert.AreEqual(2, results.Steps[2].Count);
+            Assert.AreEqual("Punch", results.Steps[2][0].Name);
+            Assert.AreEqual("Flame", results.Steps[2][1].Name);
+        }
 
         //[TestMethod]
         //public void SixBookOrderTest()
