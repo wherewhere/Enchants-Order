@@ -5,7 +5,7 @@
     <Copyright>Copyright © 2017 - 2022 wherewhere. All Rights Reserved.</Copyright>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <IncludeSymbols>True</IncludeSymbols>
-	<LangVersion>preview</LangVersion>
+    <LangVersion>preview</LangVersion>
     <PackageProjectUrl>https://github.com/wherewhere/Enchants-Order</PackageProjectUrl>
     <PackageTags>Minecraft;Enchants;Order;MC;附魔;我的世界;麦块</PackageTags>
     <RepositoryType>git</RepositoryType>

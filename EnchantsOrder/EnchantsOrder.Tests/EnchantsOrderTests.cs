@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using EnchantsOrder.Models;
-using System.Collections.Generic;
+﻿using EnchantsOrder.Models;
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace EnchantsOrder.Tests
 {

@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using EnchantsOrder.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using EnchantsOrder.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,8 +49,17 @@ namespace EnchantsOrder.Demo
 
             Console.WriteLine("Start ordering...");
             Console.WriteLine("*****************");
-            OrderingResults results = enchantment_list.Ordering();
-            Console.WriteLine(results.ToString());
+
+            try
+            {
+                OrderingResults results = enchantment_list.Ordering();
+                Console.WriteLine(results.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             Console.Write("Press any key to exit...");
             Console.ReadKey(true);
         }

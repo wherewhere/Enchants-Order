@@ -1,10 +1,7 @@
 ﻿using EnchantsOrder.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
 
 namespace EnchantsOrder
 {
@@ -17,7 +14,7 @@ namespace EnchantsOrder
         {
             if (wantedlist == null || !wantedlist.Any())
             {
-                throw new ArgumentNullException(nameof(wantedlist), "Cannot enchant: no enchantment given");
+                throw new ArgumentNullException(nameof(wantedlist), "Cannot enchant: No enchantment given.");
             }
 
             //get the xp required and in（tobe_enchanted it
@@ -43,9 +40,9 @@ namespace EnchantsOrder
             }
 
             List<long>[] ordering_num = OrderEnchants(numlist, max_step, inital_penalty);
-            var level_list = ComputeExperience(ordering_num);
-            var xp_list = GetExperienceList(level_list, inital_penalty);
-            var xp_sum = GetExperience(level_list, inital_penalty);
+            List<EnchantItem> level_list = ComputeExperience(ordering_num);
+            List<long> xp_list = GetExperienceList(level_list, inital_penalty);
+            long xp_sum = GetExperience(level_list, inital_penalty);
 
             double xp_max = xp_list.Max();
             if (xp_max > max_experience)
@@ -138,11 +135,11 @@ namespace EnchantsOrder
                 return ordering_num;
             }
 
-            var list1 = MethodOne();
-            var list2 = MethodTwo();
+            List<long>[] list1 = MethodOne();
+            List<long>[] list2 = MethodTwo();
 
-            var value1 = GetExperience(list1, inital_penalty);
-            var value2 = GetExperience(list2, inital_penalty);
+            long value1 = GetExperience(list1, inital_penalty);
+            long value2 = GetExperience(list2, inital_penalty);
 
             return value1 < value2 ? list1 : list2;
         }
@@ -163,14 +160,14 @@ namespace EnchantsOrder
             List<EnchantItem> xplist = new List<EnchantItem>();
             List<EnchantItem>[] step_list = ordering_num.Select((x) => x.Select((x) => new EnchantItem(x)).ToList()).ToArray();
 
-            foreach(List<EnchantItem> step in step_list)
+            foreach (List<EnchantItem> step in step_list)
             {
                 List<EnchantItem> temp = step;
                 while (temp.Count > 1)
                 {
                     List<EnchantItem> result = new List<EnchantItem>();
                     EnchantItem item = new EnchantItem();
-                    foreach (var num in temp)
+                    foreach (EnchantItem num in temp)
                     {
                         int index = temp.IndexOf(num) + 1;
                         if (index % 2 == 1)

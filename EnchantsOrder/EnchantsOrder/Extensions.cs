@@ -29,7 +29,7 @@ namespace EnchantsOrder
 
         public static double LevelToExperience(long level) =>
             level <= 16
-                ? Math.Pow(level, 2) + 6 * level : level <= 31
-                    ? 2.5 * Math.Pow(level, 2) - 40.5 * level + 360 : 4.5 * Math.Pow(level, 2) - 162.5 * level + 2220;
+                ? Math.Pow(level, 2) + (6 * level) : level <= 31
+                    ? (2.5 * Math.Pow(level, 2)) - (40.5 * level) + 360 : (4.5 * Math.Pow(level, 2)) - (162.5 * level) + 2220;
     }
 }
