@@ -96,6 +96,7 @@ namespace EnchantsOrder
             {
                 List<long> nums = numlist.ToList();
                 List<List<long>> ordering_num = new List<List<long>>();
+
                 foreach (long step in max_step)
                 {
                     List<long> list = new List<long>();
@@ -107,6 +108,20 @@ namespace EnchantsOrder
                     }
                     ordering_num.Add(list);
                 }
+
+                for (int j = ordering_num.Count - 1; j > 0; j--)
+                {
+                    if (ordering_num[j].Count == ordering_num[j - 1].Count)
+                    {
+                        if (ordering_num[j].Sum() > ordering_num[j - 1].Sum())
+                        {
+                            List<long> temp = ordering_num[j];
+                            ordering_num[j] = ordering_num[j - 1];
+                            ordering_num[j - 1] = temp;
+                        }
+                    }
+                }
+
                 return ordering_num.ToArray();
             }
 
@@ -173,7 +188,7 @@ namespace EnchantsOrder
                         if (index % 2 == 1)
                         {
                             item = num;
-                            if (index == step.Count)
+                            if (index == temp.Count)
                             {
                                 result.Add(item);
                             }

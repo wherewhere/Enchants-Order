@@ -125,7 +125,7 @@ namespace EnchantsOrder.Tests
             OrderingResults results = enchantmentlist.Ordering();
 
             Assert.AreEqual(3, results.Penalty);
-            Assert.AreEqual(11, results.MaxExperience);
+            Assert.AreEqual(10, results.MaxExperience);
             Assert.AreEqual(29, results.TotalExperience);
 
             Assert.AreEqual(3, results.Steps.Count);
@@ -133,10 +133,10 @@ namespace EnchantsOrder.Tests
             Assert.AreEqual("Power", results.Steps[0][0].Name);
             Assert.AreEqual(2, results.Steps[1].Count);
             Assert.AreEqual("Punch", results.Steps[1][0].Name);
-            Assert.AreEqual("Flame", results.Steps[1][1].Name);
+            Assert.AreEqual("Unbreaking", results.Steps[1][1].Name);
             Assert.AreEqual(2, results.Steps[2].Count);
             Assert.AreEqual("Infinity", results.Steps[2][0].Name);
-            Assert.AreEqual("Unbreaking", results.Steps[2][1].Name);
+            Assert.AreEqual("Flame", results.Steps[2][1].Name);
         }
 
         [Test]
