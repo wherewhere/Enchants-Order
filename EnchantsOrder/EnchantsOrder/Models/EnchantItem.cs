@@ -1,4 +1,5 @@
 ﻿using System;
+using EnchantsOrder.Common;
 
 namespace EnchantsOrder.Models
 {

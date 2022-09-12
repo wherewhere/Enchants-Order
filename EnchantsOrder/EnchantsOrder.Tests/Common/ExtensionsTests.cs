@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace EnchantsOrder.Tests
+namespace EnchantsOrder.Common.Tests
 {
     /// <summary>
     /// Tests the <see cref="Extensions"/> class.
