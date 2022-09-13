@@ -3,8 +3,9 @@ Get the best order for enchanting. Base on the [Python Version](https://github.c
 
 [![Issues](https://img.shields.io/github/issues/wherewhere/Enchants-Order.svg?label=Issues&style=flat-square)](https://github.com/wherewhere/Enchants-Order/issues "Issues")
 [![Stargazers](https://img.shields.io/github/stars/wherewhere/Enchants-Order.svg?label=Stars&style=flat-square)](https://github.com/wherewhere/Enchants-Order/stargazers "Stargazers")
+[![NuGet](https://img.shields.io/nuget/dt/EnchantsOrder.svg?logo=NuGet&style=flat-square)](https://www.nuget.org/packages/EnchantsOrder "NuGet")
 
-![image](https://user-images.githubusercontent.com/27689196/188638113-d1a4bdae-c9f0-483e-8b2b-9a226892dcaf.png)
+![image](https://user-images.githubusercontent.com/27689196/189876551-bfe8fac6-31f3-4f57-afdc-5ed654122f35.png)
 
 ## Support Platform
 - Silverlight 4
