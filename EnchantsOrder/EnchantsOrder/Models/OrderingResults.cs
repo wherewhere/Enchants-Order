@@ -60,7 +60,7 @@ namespace EnchantsOrder.Models
             }
             builder.AppendLine($"Penalty Level: {Penalty}");
             builder.AppendLine($"Max Experience Level: {MaxExperience}");
-            builder.AppendLine($"Total Experience Level: {TotalExperience}");
+            builder.Append($"Total Experience Level: {TotalExperience}");
             return builder.ToString();
         }
 
