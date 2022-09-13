@@ -7,7 +7,7 @@ namespace System.Reflection
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
     internal sealed class AssemblyMetadataAttribute : Attribute
     {
-        public AssemblyMetadataAttribute(string key, string? value)
+        public AssemblyMetadataAttribute(string key, string value)
         {
             Key = key;
             Value = value;
