@@ -21,7 +21,7 @@ namespace System.Linq
                 builder[i] = item;
             }
 
-            return builder.ToArray();
+            return builder;
         }
 
         public static List<TSource> ToList<TSource>(this IEnumerable<TSource> source)
