@@ -5,11 +5,18 @@ using System.Linq;
 
 namespace EnchantsOrder
 {
+    /// <summary>
+    /// Root of EnchantsOrder.
+    /// </summary>
     public static class Instance
     {
-        internal static short max_penalty = 6;
-        internal static short max_experience = 39;
-
+        /// <summary>
+        /// Ordering enchantments.
+        /// </summary>
+        /// <param name="wantedlist">Enchantments you want to enchant.</param>
+        /// <param name="inital_penalty">The penalty of your item which you want to enchant.</param>
+        /// <returns>The step list and some eigenvalue of this result.</returns>
+        /// <exception cref="ArgumentNullException">The list of enchantments you want to enchant is empty or null.</exception>
         public static OrderingResults Ordering(this IEnumerable<Enchantment> wantedlist, int inital_penalty = 0)
         {
             if (wantedlist == null || !wantedlist.Any())
@@ -32,12 +39,7 @@ namespace EnchantsOrder
 
             List<EnchantmentStep> ordering = new List<EnchantmentStep>();
 
-            TooExpensiveException exception = null;
             int penalty = inital_penalty + max_step.Count;
-            if (penalty > max_penalty)
-            {
-                exception = new TooExpensiveException(TooExpensiveReason.Penalty);
-            }
 
             List<long>[] ordering_num = OrderEnchants(numlist, max_step, inital_penalty);
             List<EnchantItem> level_list = ComputeExperience(ordering_num);
@@ -45,10 +47,6 @@ namespace EnchantsOrder
             long xp_sum = GetExperience(level_list, inital_penalty);
 
             double xp_max = xp_list.Max();
-            if (xp_max > max_experience)
-            {
-                exception = new TooExpensiveException(TooExpensiveReason.Experience);
-            }
 
             //penalty of merged books
             int enchantment_step = 0;

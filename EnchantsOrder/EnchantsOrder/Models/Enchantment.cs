@@ -3,12 +3,29 @@ using EnchantsOrder.Common;
 
 namespace EnchantsOrder.Models
 {
-    public class Enchantment : IComparable<Enchantment>
+    /// <summary>
+    /// Enchantment class.
+    /// </summary>
+    public class Enchantment : IComparable<Enchantment>, IEquatable<Enchantment>
     {
+        /// <summary>
+        /// The name of this enchantment.
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The level of this enchantment.
+        /// </summary>
         public int Level { get; set; }
+
+        /// <summary>
+        /// The weight for enchant of this enchantment.
+        /// </summary>
         public int Weight { get; set; }
+
+        /// <summary>
+        /// The experience level when enchant request of this enchantment.
+        /// </summary>
         public long Experience => (long)Level * Weight;
 
         /// <summary>
@@ -38,5 +55,20 @@ namespace EnchantsOrder.Models
             }
             return value;
         }
+
+        /// <inheritdoc/>
+        public bool Equals(Enchantment other) => CompareTo(other) == 0;
+
+        /// <inheritdoc/>
+        public static bool operator >(Enchantment left, Enchantment right) => left.CompareTo(right) == 1;
+
+        /// <inheritdoc/>
+        public static bool operator >=(Enchantment left, Enchantment right) => left.CompareTo(right) != -1;
+
+        /// <inheritdoc/>
+        public static bool operator <(Enchantment left, Enchantment right) => left.CompareTo(right) == -1;
+
+        /// <inheritdoc/>
+        public static bool operator <=(Enchantment left, Enchantment right) => left.CompareTo(right) != 1;
     }
 }

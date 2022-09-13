@@ -3,8 +3,14 @@ using System.Linq;
 
 namespace EnchantsOrder.Models
 {
+    /// <summary>
+    /// The step of Enchant.
+    /// </summary>
     public class EnchantmentStep : List<Enchantment>
     {
+        /// <summary>
+        /// The index of step.
+        /// </summary>
         public int Step { get; set; }
 
         /// <summary>

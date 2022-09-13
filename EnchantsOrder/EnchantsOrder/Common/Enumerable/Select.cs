@@ -100,7 +100,7 @@ namespace System.Linq
         {
             private readonly IEnumerable<TSource> _source;
             private readonly Func<TSource, TResult> _selector;
-            private IEnumerator<TSource>? _enumerator;
+            private IEnumerator<TSource> _enumerator;
 
             public SelectEnumerableIterator(IEnumerable<TSource> source, Func<TSource, TResult> selector)
             {

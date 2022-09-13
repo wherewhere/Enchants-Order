@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace System.Linq
 {
     /// <summary>
-    /// Contains helper methods for System.Linq. Please put enumerable-related methods in <see cref="EnumerableHelpers"/>.
+    /// Contains helper methods for System.Linq. Please put enumerable-related methods in EnumerableHelpers/>.
     /// </summary>
     internal static class Utilities
     {
@@ -18,7 +18,7 @@ namespace System.Linq
         /// <param name="left">The first comparer.</param>
         /// <param name="right">The second comparer.</param>
         /// <returns><c>true</c> if the equality comparers are equal; otherwise, <c>false</c>.</returns>
-        public static bool AreEqualityComparersEqual<TSource>(IEqualityComparer<TSource>? left, IEqualityComparer<TSource>? right)
+        public static bool AreEqualityComparersEqual<TSource>(IEqualityComparer<TSource> left, IEqualityComparer<TSource> right)
         {
             if (left == right)
             {

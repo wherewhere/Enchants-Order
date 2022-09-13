@@ -470,7 +470,7 @@ namespace System.Linq
 
             comparer ??= Comparer<TSource>.Default;
 
-            TSource? value = default;
+            TSource value = default;
             using (IEnumerator<TSource> e = source.GetEnumerator())
             {
                 if (value == null)
