@@ -11,7 +11,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/wherewhere/Enchants-Order</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <TargetFrameworks>net2.0-client;net3.5-client;net4.0-client;net4.5.2;net4.6.2;net4.8.1;net6.0;netcore50;netcoreapp3.1;netstandard1.1;sl4;wp8.0</TargetFrameworks>
+    <TargetFrameworks>net2.0-client;net3.5-client;net4.0-client;net4.5.2;net4.6.2;net4.8.1;net6.0;netcore50;netcoreapp3.1;netstandard1.1;sl4;wp7.0;wp8.0</TargetFrameworks>
     <Title>Enchants Order - Get the best order for enchanting</Title>
     <VersionPrefix>0.0.1</VersionPrefix>
     <Description>Get the best order for enchanting. Base on the Python Version by @hqqaazz (https://github.com/hqqaazz/ordered-Enchanting-Demo).</Description>
