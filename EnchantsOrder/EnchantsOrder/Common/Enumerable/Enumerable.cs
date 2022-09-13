@@ -1,4 +1,4 @@
-﻿#if SILVERLIGHT
+﻿#if NET20 || SILVERLIGHT || WINDOWSPHONE
 using System.Collections.Generic;
 
 namespace System.Linq

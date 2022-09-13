@@ -7,6 +7,8 @@ Get the best order for enchanting. Base on the [Python Version](https://github.c
 ![image](https://user-images.githubusercontent.com/27689196/188638113-d1a4bdae-c9f0-483e-8b2b-9a226892dcaf.png)
 
 ## Support Platform
+- Silverlight 4
+- .NET Framework 2.0
 - .NET Framework 3.5
 - .NET Framework 4.0
 - .NET Framework 4.5.2

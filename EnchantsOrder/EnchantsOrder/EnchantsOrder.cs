@@ -182,9 +182,10 @@ namespace EnchantsOrder
                 {
                     List<EnchantItem> result = new List<EnchantItem>();
                     EnchantItem item = new EnchantItem();
-                    foreach (EnchantItem num in temp)
+                    for (int i = 0; i < temp.Count; i++)
                     {
-                        int index = temp.IndexOf(num) + 1;
+                        EnchantItem num = temp[i];
+                        int index = i + 1;
                         if (index % 2 == 1)
                         {
                             item = num;
@@ -207,12 +208,12 @@ namespace EnchantsOrder
             return xplist;
         }
 
-        private static List<long> GetExperienceList(List<EnchantItem> xplist, int inital_penalty)
+        private static List<long> GetExperienceList(IList<EnchantItem> xplist, int inital_penalty)
         {
             List<long> results = new List<long>();
-            foreach (EnchantItem level in xplist)
+            for (int index = 0; index < xplist.Count; index++)
             {
-                int index = xplist.IndexOf(level);
+                EnchantItem level = xplist[index];
                 EnchantItem item = new EnchantItem(0, index + inital_penalty);
                 item += level;
                 results.Add(item.StepLevel);
@@ -220,7 +221,7 @@ namespace EnchantsOrder
             return results;
         }
 
-        private static long GetExperience(List<EnchantItem> xplist, int inital_penalty)
+        private static long GetExperience(IEnumerable<EnchantItem> xplist, int inital_penalty)
         {
             EnchantItem item = new EnchantItem(0, inital_penalty);
             foreach (EnchantItem level in xplist)

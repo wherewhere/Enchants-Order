@@ -1,4 +1,4 @@
-﻿#if SILVERLIGHT
+﻿#if NET20 || SILVERLIGHT
 namespace System
 {
     public delegate TResult Func<in T, out TResult>(T arg);
