@@ -17,13 +17,4 @@
     <Description>Get the best order for enchanting. Base on the Python Version by @hqqaazz (https://github.com/hqqaazz/ordered-Enchanting-Demo).</Description>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcore50'">
-    <NugetTargetMoniker>.NETCore,Version=v5.0</NugetTargetMoniker>
-  </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcore50'">
-    <PackageReference Include="Microsoft.NETCore" Version="5.0.2" />
-    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.2" />
-  </ItemGroup>
-
 </Project>
