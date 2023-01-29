@@ -40,10 +40,8 @@ namespace System.Linq
                 return collection.Count != 0;
             }
 
-            using (IEnumerator<TSource> e = source.GetEnumerator())
-            {
-                return e.MoveNext();
-            }
+            using IEnumerator<TSource> e = source.GetEnumerator();
+            return e.MoveNext();
         }
     }
 }

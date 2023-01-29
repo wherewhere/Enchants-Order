@@ -11,12 +11,7 @@ namespace System.Linq
         public static TSource Last<TSource>(this IEnumerable<TSource> source)
         {
             TSource last = source.TryGetLast(out bool found);
-            if (!found)
-            {
-                throw new Exception("NoElementsException");
-            }
-
-            return last!;
+            return !found ? throw new Exception("NoElementsException") : last;
         }
 
         public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source) =>
@@ -57,20 +52,18 @@ namespace System.Linq
             }
             else
             {
-                using (IEnumerator<TSource> e = source.GetEnumerator())
+                using IEnumerator<TSource> e = source.GetEnumerator();
+                if (e.MoveNext())
                 {
-                    if (e.MoveNext())
+                    TSource result;
+                    do
                     {
-                        TSource result;
-                        do
-                        {
-                            result = e.Current;
-                        }
-                        while (e.MoveNext());
-
-                        found = true;
-                        return result;
+                        result = e.Current;
                     }
+                    while (e.MoveNext());
+
+                    found = true;
+                    return result;
                 }
             }
 

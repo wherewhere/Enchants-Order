@@ -12,12 +12,7 @@ namespace System.Linq
         public static TSource First<TSource>(this IEnumerable<TSource> source)
         {
             TSource first = source.TryGetFirst(out bool found);
-            if (!found)
-            {
-                throw new Exception("NoElementsException");
-            }
-
-            return first!;
+            return !found ? throw new Exception("NoElementsException") : first;
         }
 
         public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source) =>
@@ -57,13 +52,11 @@ namespace System.Linq
             }
             else
             {
-                using (IEnumerator<TSource> e = source.GetEnumerator())
+                using IEnumerator<TSource> e = source.GetEnumerator();
+                if (e.MoveNext())
                 {
-                    if (e.MoveNext())
-                    {
-                        found = true;
-                        return e.Current;
-                    }
+                    found = true;
+                    return e.Current;
                 }
             }
 

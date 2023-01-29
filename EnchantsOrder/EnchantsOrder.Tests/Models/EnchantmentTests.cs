@@ -9,8 +9,8 @@ namespace EnchantsOrder.Models.Tests
         [Test]
         public void CompareToTest()
         {
-            Enchantment enchantment1 = new Enchantment("X", 1, 2);
-            Enchantment enchantment2 = new Enchantment("Y", 3, 4);
+            Enchantment enchantment1 = new("X", 1, 2);
+            Enchantment enchantment2 = new("Y", 3, 4);
             Assert.AreEqual(-1, enchantment1.CompareTo(enchantment2));
 
             enchantment1.Level = 6;
@@ -28,11 +28,11 @@ namespace EnchantsOrder.Models.Tests
         [Test]
         public void ExperienceTest()
         {
-            Random random = new Random();
+            Random random = new();
             int level = random.Next();
             int weight = random.Next();
             string name = "ExperienceTest";
-            Enchantment enchantment = new Enchantment(name, level, weight);
+            Enchantment enchantment = new(name, level, weight);
             Assert.AreEqual((long)level * weight, enchantment.Experience);
         }
     }

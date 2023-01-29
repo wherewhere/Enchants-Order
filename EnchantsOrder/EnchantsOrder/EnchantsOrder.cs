@@ -1,6 +1,7 @@
 ﻿using EnchantsOrder.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace EnchantsOrder
@@ -17,19 +18,19 @@ namespace EnchantsOrder
         /// <param name="inital_penalty">The penalty of your item which you want to enchant.</param>
         /// <returns>The step list and some eigenvalue of this result.</returns>
         /// <exception cref="ArgumentNullException">The list of enchantments you want to enchant is empty or null.</exception>
-        public static OrderingResults Ordering(this IEnumerable<Enchantment> wantedlist, int inital_penalty = 0)
+        public static OrderingResults Ordering(this IList<Enchantment> wantedlist, int inital_penalty = 0)
         {
             if (wantedlist == null || !wantedlist.Any())
             {
                 throw new ArgumentNullException(nameof(wantedlist), "Cannot enchant: No enchantment given.");
             }
 
-            //get the xp required and in（tobe_enchanted it
+            // get the xp required and into be enchanted it
             List<Enchantment> sortedlist = wantedlist.ToList();
             sortedlist.Sort((x, y) => y.CompareTo(x));
             List<long> numlist = wantedlist.Select((x) => x.Experience).ToList();
 
-            List<object> priority_list = new List<object>();
+            List<object> priority_list = new();
 
             // generate base enchantment level list
             // i.e. add the sum of penalty level by item and merged books
@@ -37,7 +38,7 @@ namespace EnchantsOrder
             int total_enchantment = numlist.Count;
             List<int> max_step = EnchantLayer(total_enchantment, inital_penalty);
 
-            List<EnchantmentStep> ordering = new List<EnchantmentStep>();
+            List<EnchantmentStep> ordering = new();
 
             int penalty = inital_penalty + max_step.Count;
 
@@ -48,16 +49,16 @@ namespace EnchantsOrder
 
             double xp_max = xp_list.Max();
 
-            //penalty of merged books
+            // penalty of merged books
             int enchantment_step = 0;
             foreach (List<long> element in ordering_num)
             {
                 if (element == null) { continue; }
                 enchantment_step++;
                 ordering.Add(new EnchantmentStep(enchantment_step));
-                //penalty for merge book
+                // penalty for merge book
 
-                //list steps with name
+                // list steps with name
                 foreach (long j in element)
                 {
                     foreach (Enchantment k in sortedlist)
@@ -77,7 +78,7 @@ namespace EnchantsOrder
 
         private static List<int> EnchantLayer(int total_enchantment, int inital_penalty)
         {
-            List<int> max_step = new List<int>();
+            List<int> max_step = new();
             int step = 0 + inital_penalty;
             while (total_enchantment > 0)
             {
@@ -93,11 +94,11 @@ namespace EnchantsOrder
             List<long>[] MethodOne()
             {
                 List<long> nums = numlist.ToList();
-                List<List<long>> ordering_num = new List<List<long>>();
+                List<List<long>> ordering_num = new();
 
                 foreach (long step in max_step)
                 {
-                    List<long> list = new List<long>();
+                    List<long> list = new();
                     for (int i = 1; i <= step; i++)
                     {
                         long tobe_enchanted = i % 2 == 1 ? nums.Max() : nums.Min();
@@ -113,9 +114,15 @@ namespace EnchantsOrder
                     {
                         if (ordering_num[j].Sum() > ordering_num[j - 1].Sum())
                         {
+#if !NET47_OR_GREATER && !NETCOREAPP
+#pragma warning disable IDE0180 // 使用元组交换值
                             List<long> temp = ordering_num[j];
+#pragma warning restore IDE0180 // 使用元组交换值
                             ordering_num[j] = ordering_num[j - 1];
                             ordering_num[j - 1] = temp;
+#else
+                            (ordering_num[j - 1], ordering_num[j]) = (ordering_num[j], ordering_num[j - 1]);
+#endif
                         }
                     }
                 }
@@ -129,7 +136,7 @@ namespace EnchantsOrder
                 List<long>[] ordering_num = new List<long>[max_step.Count];
                 while (nums.Any())
                 {
-                    List<double> temp_xp_list = new List<double>();
+                    List<double> temp_xp_list = new();
 
                     foreach (double i in max_step)
                     {
@@ -160,7 +167,7 @@ namespace EnchantsOrder
         private static long GetExperience(IEnumerable<long>[] ordering_num, int inital_penalty)
         {
             List<EnchantItem> xplist = ComputeExperience(ordering_num);
-            EnchantItem item = new EnchantItem(0, inital_penalty);
+            EnchantItem item = new(0, inital_penalty);
             foreach (EnchantItem level in xplist)
             {
                 item += level;
@@ -170,7 +177,7 @@ namespace EnchantsOrder
 
         private static List<EnchantItem> ComputeExperience(IEnumerable<long>[] ordering_num)
         {
-            List<EnchantItem> xplist = new List<EnchantItem>();
+            List<EnchantItem> xplist = new();
             List<EnchantItem>[] step_list = ordering_num.Select((x) => x.Select((x) => new EnchantItem(x)).ToList()).ToArray();
 
             foreach (List<EnchantItem> step in step_list)
@@ -178,8 +185,8 @@ namespace EnchantsOrder
                 List<EnchantItem> temp = step;
                 while (temp.Count > 1)
                 {
-                    List<EnchantItem> result = new List<EnchantItem>();
-                    EnchantItem item = new EnchantItem();
+                    List<EnchantItem> result = new();
+                    EnchantItem item = new();
                     for (int i = 0; i < temp.Count; i++)
                     {
                         EnchantItem num = temp[i];
@@ -208,11 +215,11 @@ namespace EnchantsOrder
 
         private static List<long> GetExperienceList(IList<EnchantItem> xplist, int inital_penalty)
         {
-            List<long> results = new List<long>();
+            List<long> results = new();
             for (int index = 0; index < xplist.Count; index++)
             {
                 EnchantItem level = xplist[index];
-                EnchantItem item = new EnchantItem(0, index + inital_penalty);
+                EnchantItem item = new(0, index + inital_penalty);
                 item += level;
                 results.Add(item.StepLevel);
             }
@@ -221,7 +228,7 @@ namespace EnchantsOrder
 
         private static long GetExperience(IEnumerable<EnchantItem> xplist, int inital_penalty)
         {
-            EnchantItem item = new EnchantItem(0, inital_penalty);
+            EnchantItem item = new(0, inital_penalty);
             foreach (EnchantItem level in xplist)
             {
                 item += level;

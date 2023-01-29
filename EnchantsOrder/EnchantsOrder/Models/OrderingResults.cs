@@ -53,7 +53,7 @@ namespace EnchantsOrder.Models
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
+            StringBuilder builder = new();
             foreach (EnchantmentStep step in Steps)
             {
                 builder.AppendLine(step.ToString());

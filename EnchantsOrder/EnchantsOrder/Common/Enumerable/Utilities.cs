@@ -25,7 +25,7 @@ namespace System.Linq
                 return true;
             }
 
-            var defaultComparer = EqualityComparer<TSource>.Default;
+            EqualityComparer<TSource> defaultComparer = EqualityComparer<TSource>.Default;
 
             if (left == null)
             {
@@ -35,12 +35,7 @@ namespace System.Linq
                 return right == defaultComparer || right!.Equals(defaultComparer);
             }
 
-            if (right == null)
-            {
-                return left == defaultComparer || left.Equals(defaultComparer);
-            }
-
-            return left.Equals(right);
+            return right == null ? left == defaultComparer || left.Equals(defaultComparer) : left.Equals(right);
         }
 
         /// <summary>

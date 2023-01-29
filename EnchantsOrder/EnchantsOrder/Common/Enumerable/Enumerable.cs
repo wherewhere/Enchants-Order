@@ -26,12 +26,7 @@ namespace System.Linq
 
         public static List<TSource> ToList<TSource>(this IEnumerable<TSource> source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            return new List<TSource>(source);
+            return source == null ? throw new ArgumentNullException(nameof(source)) : new List<TSource>(source);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using EnchantsOrder.Common;
+﻿using EnchantsOrder.Common;
+using System;
 
 namespace EnchantsOrder.Models
 {
@@ -17,6 +17,9 @@ namespace EnchantsOrder.Models
             Penalty = penalty;
             HistoryLevel = historyExperience;
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => $"Level:{Level} Penalty:{Penalty}";
 
         /// <inheritdoc/>
         public int CompareTo(EnchantItem other)
@@ -61,7 +64,7 @@ namespace EnchantsOrder.Models
         /// <inheritdoc/>
         public static EnchantItem operator +(EnchantItem left, EnchantItem right)
         {
-            EnchantItem level = new EnchantItem
+            EnchantItem level = new()
             {
                 Level = left.Level + right.Level,
                 Penalty = Math.Max(left.Penalty, right.Penalty) + 1,
@@ -80,14 +83,14 @@ namespace EnchantsOrder.Models
             {
                 PenaltyLevel += Extensions.PenaltyToExperience(left.Penalty + i - 2) + Extensions.PenaltyToExperience(left.Penalty);
             }
-            EnchantItem level = new EnchantItem
+            EnchantItem level = new()
             {
                 Level = left.Level * right,
                 Penalty = Math.Max(left.Penalty + right - 1, 0),
-                StepLevel = left.Level * Math.Max(right - 1, 0) + PenaltyLevel
+                StepLevel = (left.Level * Math.Max(right - 1, 0)) + PenaltyLevel
             };
-            level.HistoryLevel = level.StepLevel + left.HistoryLevel * right;
-            level.HistoryExperience = Convert.ToInt64(Extensions.LevelToExperience(level.StepLevel)) + left.HistoryExperience * right;
+            level.HistoryLevel = level.StepLevel + (left.HistoryLevel * right);
+            level.HistoryExperience = Convert.ToInt64(Extensions.LevelToExperience(level.StepLevel)) + (left.HistoryExperience * right);
             return level;
         }
 

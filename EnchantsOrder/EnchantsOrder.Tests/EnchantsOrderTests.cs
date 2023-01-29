@@ -23,7 +23,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void OneBookOrderTest()
         {
-            List<Enchantment> enchantmentlist = new List<Enchantment>
+            List<Enchantment> enchantmentlist = new()
             {
                 new Enchantment("Efficiency", 5, 1)
             };
@@ -40,7 +40,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void TwoBookOrderTest()
         {
-            List<Enchantment> enchantmentlist = new List<Enchantment>
+            List<Enchantment> enchantmentlist = new()
             {
                 new Enchantment("Mending", 1, 2),
                 new Enchantment("Unbreaking", 3, 1)
@@ -62,7 +62,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void ThreeBookOrderTest()
         {
-            List<Enchantment> enchantmentlist = new List<Enchantment>
+            List<Enchantment> enchantmentlist = new()
             {
                 new Enchantment("Mending", 1, 2),
                 new Enchantment("Unbreaking", 3, 1),
@@ -86,7 +86,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void FourBookOrderTest()
         {
-            List<Enchantment> enchantmentlist = new List<Enchantment>
+            List<Enchantment> enchantmentlist = new()
             {
                 new Enchantment("Riptide", 3, 2),
                 new Enchantment("Mending", 1, 2),
@@ -113,7 +113,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void FiveBookOrderTest()
         {
-            List<Enchantment> enchantmentlist = new List<Enchantment>
+            List<Enchantment> enchantmentlist = new()
             {
                 new Enchantment("Punch", 2, 2),
                 new Enchantment("Flame", 1, 2),
@@ -142,7 +142,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void SixBookOrderTest()
         {
-            List<Enchantment> enchantmentlist = new List<Enchantment>
+            List<Enchantment> enchantmentlist = new()
             {
                 new Enchantment("Aqua Affinity", 1, 2),
                 new Enchantment("Respiration", 3, 2),
@@ -173,7 +173,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void SevenBookOrderTest()
         {
-            List<Enchantment> enchantmentlist = new List<Enchantment>
+            List<Enchantment> enchantmentlist = new()
             {
                 new Enchantment("Knockback", 2, 1),
                 new Enchantment("Fire Aspect", 2, 2),

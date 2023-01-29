@@ -31,19 +31,13 @@ namespace System.Linq
 
             if (source is IList<TSource> ilist)
             {
-                if (source is TSource[] array)
-                {
-                    return array.Length == 0 ?
+                return source is TSource[] array
+                    ? array.Length == 0 ?
                         new List<TResult>() :
-                        new SelectArrayIterator<TSource, TResult>(array, selector);
-                }
-
-                if (source is List<TSource> list)
-                {
-                    return new SelectListIterator<TSource, TResult>(list, selector);
-                }
-
-                return new SelectIListIterator<TSource, TResult>(ilist, selector);
+                        new SelectArrayIterator<TSource, TResult>(array, selector)
+                    : source is List<TSource> list
+                    ? new SelectListIterator<TSource, TResult>(list, selector)
+                    : new SelectIListIterator<TSource, TResult>(ilist, selector);
             }
 
             if (source is IPartition<TSource> partition)
@@ -64,17 +58,9 @@ namespace System.Linq
 
         public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            if (selector == null)
-            {
-                throw new ArgumentNullException(nameof(selector));
-            }
-
-            return SelectIterator(source, selector);
+            return source == null
+                ? throw new ArgumentNullException(nameof(source))
+                : selector == null ? throw new ArgumentNullException(nameof(selector)) : SelectIterator(source, selector);
         }
 
         private static IEnumerable<TResult> SelectIterator<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, int, TResult> selector)

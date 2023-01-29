@@ -10,8 +10,8 @@ namespace EnchantsOrder.Models.Tests
         [Test]
         public void AddTest()
         {
-            EnchantItem item1 = new EnchantItem(9, 3, 18);
-            EnchantItem item2 = new EnchantItem(5, 5, 7);
+            EnchantItem item1 = new(9, 3, 18);
+            EnchantItem item2 = new(5, 5, 7);
             EnchantItem result = item1 + item2;
 
             Assert.AreEqual(14, result.Level);

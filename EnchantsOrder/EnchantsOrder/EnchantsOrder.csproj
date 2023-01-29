@@ -2,19 +2,26 @@
 
   <PropertyGroup>
     <Authors>wherewhere</Authors>
-    <Copyright>Copyright © 2017 - 2022 wherewhere. All Rights Reserved.</Copyright>
+    <Copyright>Copyright © 2017 - 2023 wherewhere. All Rights Reserved.</Copyright>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <IncludeSymbols>True</IncludeSymbols>
     <LangVersion>preview</LangVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/wherewhere/Enchants-Order</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>Minecraft;Enchants;Order;MC;附魔;我的世界;麦块</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/wherewhere/Enchants-Order</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFrameworks>net2.0-client;net3.5-client;net4.0-client;net4.5.2;net4.6.2;net4.8.1;net6.0;netcore50;netcoreapp3.1;netstandard1.1;sl4;wp7.0;wp8.0</TargetFrameworks>
     <Title>Enchants Order - Get the best order for enchanting</Title>
-    <VersionPrefix>0.0.3</VersionPrefix>
+    <VersionPrefix>0.0.4</VersionPrefix>
     <Description>Get the best order for enchanting. Base on the Python Version by @hqqaazz (https://github.com/hqqaazz/ordered-Enchanting-Demo).</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="EnchantsOrder.Tests" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
+  </ItemGroup>
 
 </Project>
