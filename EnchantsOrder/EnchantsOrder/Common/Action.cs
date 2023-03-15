@@ -1,4 +1,4 @@
-﻿#if NET20 || SILVERLIGHT || WINDOWSPHONE7_0
+﻿#if NET20 || SILVERLIGHT3_0 || WINDOWSPHONE7_0
 namespace System
 {
     internal delegate TResult Func<in T, out TResult>(T arg);
