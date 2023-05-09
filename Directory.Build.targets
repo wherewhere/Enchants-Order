@@ -11,7 +11,7 @@
 
   <!-- In order to support .NET Native, we need to include an appropriate .rd.xml for UWP (remove from everything else) -->
   <ItemGroup Condition="'$(TargetFramework)' != 'native' and '$(TargetFramework)' != 'uap10.0'">
-    <EmbeddedResource Remove="Properties\UnicodeStyle.rd.xml" />
+    <EmbeddedResource Remove="Properties\EnchantsOrder.rd.xml" />
   </ItemGroup>
 
 </Project>

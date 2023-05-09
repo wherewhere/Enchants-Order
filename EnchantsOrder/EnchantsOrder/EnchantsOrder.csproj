@@ -2,31 +2,43 @@
 
   <PropertyGroup>
     <Authors>wherewhere</Authors>
-    <Deterministic>true</Deterministic>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <Copyright>Copyright © 2017 - 2023 wherewhere. All Rights Reserved.</Copyright>
+    <Deterministic>true</Deterministic>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <IncludeSymbols>True</IncludeSymbols>
     <LangVersion>preview</LangVersion>
     <NoWarn>NU1603</NoWarn>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/wherewhere/Enchants-Order</PackageProjectUrl>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageTags>Minecraft;Enchants;Order;MC;附魔;我的世界;麦块</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/wherewhere/Enchants-Order</RepositoryUrl>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework Condition="'$(GITHUB_ACTIONS)' == 'true'">netstandard2.0</TargetFramework>
-    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'true'">net2.0-client;net3.5-client;net4.0-client;net4.5.2;net4.6.2;net4.8.1;net6.0;netcore50;netcoreapp3.1;netstandard1.1;netstandard2.0;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'true'">native;net2.0-client;net3.5-client;net4.0-client;net4.5.2;net4.6.2;net4.8.1;net6.0;netcore50;netcoreapp3.1;netstandard1.1;netstandard2.0;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
     <Title>Enchants Order - Get the best order for enchanting</Title>
     <VersionPrefix>0.0.5</VersionPrefix>
     <Description>Get the best order for enchanting. Base on the Python Version by @hqqaazz (https://github.com/hqqaazz/ordered-Enchanting-Demo).</Description>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <NuspecFile Condition="'$(GITHUB_ACTIONS)' != 'true'">EnchantsOrder.nuspec</NuspecFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/wherewhere/Enchants-Order</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>Minecraft;Enchants;Order;MC;附魔;我的世界;麦块</PackageTags>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NuspecProperties>id=$(AssemblyName);version=$(VersionPrefix);title=$(Title);authors=$(Authors);requireLicenseAcceptance=$(PackageRequireLicenseAcceptance);license=$(PackageLicenseExpression);projectUrl=$(PackageProjectUrl);description=$(Description);copyright=$(Copyright);repositoryType=$(RepositoryType);repositoryUrl=$(PackageProjectUrl);repositoryCommit=$(RepositoryCommit);buildOutput=bin\$(Configuration)</NuspecProperties>
+  </PropertyGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="EnchantsOrder.Tests" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="EnchantsOrder.nuspec" />
   </ItemGroup>
 
 </Project>

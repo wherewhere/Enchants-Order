@@ -12,7 +12,7 @@ namespace EnchantsOrder.Demo
         private static void Main(string[] args)
         {
             string text = string.Empty;
-            List<Enchantment> enchantment_list = new();
+            List<IEnchantment> enchantment_list = new();
             string jsonfile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.json");   //JSON文件路径
 
             using (StreamReader file = File.OpenText(jsonfile))

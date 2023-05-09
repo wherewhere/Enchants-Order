@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+#if WINRT
+using Windows.Foundation.Metadata;
+#endif
+
 namespace EnchantsOrder
 {
     /// <summary>
@@ -10,6 +14,16 @@ namespace EnchantsOrder
     /// </summary>
     public static class Instance
     {
+#if WINRT
+        /// <summary>
+        /// Ordering enchantments.
+        /// </summary>
+        /// <param name="wantedlist">Enchantments you want to enchant.</param>
+        /// <returns>The step list and some eigenvalue of this result.</returns>
+        /// <exception cref="ArgumentNullException">The list of enchantments you want to enchant is empty or null.</exception>
+        public static OrderingResults Ordering(this IEnumerable<Enchantment> wantedlist) => wantedlist.Ordering(0);
+#endif
+
         /// <summary>
         /// Ordering enchantments.
         /// </summary>
@@ -17,7 +31,40 @@ namespace EnchantsOrder
         /// <param name="inital_penalty">The penalty of your item which you want to enchant.</param>
         /// <returns>The step list and some eigenvalue of this result.</returns>
         /// <exception cref="ArgumentNullException">The list of enchantments you want to enchant is empty or null.</exception>
-        public static OrderingResults Ordering(this IList<Enchantment> wantedlist, int inital_penalty = 0)
+        public static OrderingResults Ordering(this IEnumerable<Enchantment> wantedlist, int inital_penalty
+#if !WINRT
+            = 0
+#endif
+            ) => wantedlist.Cast<IEnchantment>().Ordering(inital_penalty);
+
+#if WINRT
+        /// <summary>
+        /// Ordering enchantments.
+        /// </summary>
+        /// <param name="wantedlist">Enchantments you want to enchant.</param>
+        /// <returns>The step list and some eigenvalue of this result.</returns>
+        /// <exception cref="ArgumentNullException">The list of enchantments you want to enchant is empty or null.</exception>
+#if WINRT
+        [DefaultOverload]
+#endif
+        public static OrderingResults Ordering(this IEnumerable<IEnchantment> wantedlist) => wantedlist.Ordering(0);
+#endif
+
+        /// <summary>
+        /// Ordering enchantments.
+        /// </summary>
+        /// <param name="wantedlist">Enchantments you want to enchant.</param>
+        /// <param name="inital_penalty">The penalty of your item which you want to enchant.</param>
+        /// <returns>The step list and some eigenvalue of this result.</returns>
+        /// <exception cref="ArgumentNullException">The list of enchantments you want to enchant is empty or null.</exception>
+#if WINRT
+        [DefaultOverload]
+#endif
+        public static OrderingResults Ordering(this IEnumerable<IEnchantment> wantedlist, int inital_penalty
+#if !WINRT
+            = 0
+#endif
+            )
         {
             if (wantedlist == null || !wantedlist.Any())
             {
@@ -25,7 +72,7 @@ namespace EnchantsOrder
             }
 
             // get the xp required and into be enchanted it
-            List<Enchantment> sortedlist = wantedlist.ToList();
+            List<IEnchantment> sortedlist = wantedlist.ToList();
             sortedlist.Sort((x, y) => y.CompareTo(x));
             List<long> numlist = wantedlist.Select((x) => x.Experience).ToList();
 
@@ -37,7 +84,7 @@ namespace EnchantsOrder
             int total_enchantment = numlist.Count;
             List<int> max_step = EnchantLayer(total_enchantment, inital_penalty);
 
-            List<EnchantmentStep> ordering = new();
+            List<IEnchantmentStep> ordering = new();
 
             int penalty = inital_penalty + max_step.Count;
 
@@ -60,7 +107,7 @@ namespace EnchantsOrder
                 // list steps with name
                 foreach (long j in element)
                 {
-                    foreach (Enchantment k in sortedlist)
+                    foreach (IEnchantment k in sortedlist)
                     {
                         if (k.Experience == j)
                         {

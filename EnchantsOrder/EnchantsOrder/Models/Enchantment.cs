@@ -1,12 +1,22 @@
 ﻿using EnchantsOrder.Common;
-using System;
+
+#if WINRT
+using Windows.Foundation;
+#endif
 
 namespace EnchantsOrder.Models
 {
     /// <summary>
-    /// Enchantment class.
+    /// A value of enchantment.
     /// </summary>
-    public class Enchantment : IComparable<Enchantment>, IEquatable<Enchantment>
+    public
+#if WINRT
+        sealed
+#endif
+        class Enchantment : IEnchantment
+#if WINRT
+        , IStringable
+#endif
     {
         /// <summary>
         /// The name of this enchantment.
@@ -42,7 +52,7 @@ namespace EnchantsOrder.Models
         public override string ToString() => $"{Name} {Level.GetLoumaNumber()}";
 
         /// <inheritdoc/>
-        public int CompareTo(Enchantment other)
+        public int CompareTo(IEnchantment other)
         {
             int value = Experience.CompareTo(other.Experience);
             if (value == 0)
@@ -57,8 +67,9 @@ namespace EnchantsOrder.Models
         }
 
         /// <inheritdoc/>
-        public bool Equals(Enchantment other) => CompareTo(other) == 0;
+        public bool Equals(IEnchantment other) => CompareTo(other) == 0;
 
+#if !WINRT
         /// <inheritdoc/>
         public static bool operator >(Enchantment left, Enchantment right) => left.CompareTo(right) == 1;
 
@@ -70,5 +81,6 @@ namespace EnchantsOrder.Models
 
         /// <inheritdoc/>
         public static bool operator <=(Enchantment left, Enchantment right) => left.CompareTo(right) != 1;
+#endif
     }
 }

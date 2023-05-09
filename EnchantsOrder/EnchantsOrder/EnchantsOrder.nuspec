@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$authors$</authors>
+    <owners></owners>
+    <requireLicenseAcceptance>$requireLicenseAcceptance$</requireLicenseAcceptance>
+    <license type="expression">$license$</license>
+    <projectUrl>$projectUrl$</projectUrl>
+    <description>$description$</description>
+    <copyright>$copyright$</copyright>
+    <tags>Unicode;Text;Style</tags>
+    <repository type="$repositoryType$" url="$repositoryUrl$" commit="$repositoryCommit$" />
+    <dependencies>
+      <group targetFramework=".NETCore5.0" />
+      <group targetFramework=".NETFramework2.0" />
+      <group targetFramework=".NETFramework3.5" />
+      <group targetFramework=".NETFramework4.0" />
+      <group targetFramework=".NETFramework4.5.2" />
+      <group targetFramework=".NETFramework4.6.2" />
+      <group targetFramework=".NETFramework4.8.1" />
+      <group targetFramework=".NETStandard1.1">
+        <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="Silverlight3.0" />
+      <group targetFramework="Silverlight5.0" />
+      <group targetFramework="WindowsPhone7.0" />
+      <group targetFramework="WindowsPhone8.0" />
+      <group targetFramework=".NETCoreApp3.1" />
+      <group targetFramework="net6.0" />
+      <group targetFramework=".NETStandard2.0" />
+      <group targetFramework="native0.0" />
+      <group targetFramework="UAP10.0.15138" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="$buildOutput$\native\EnchantsOrder.*" target="lib\native\" />
+    <file src="$buildOutput$\net2.0-client\EnchantsOrder.*" target="lib\net20\" />
+    <file src="$buildOutput$\net3.5-client\EnchantsOrder.*" target="lib\net35\" />
+    <file src="$buildOutput$\net4.0-client\EnchantsOrder.*" target="lib\net40\" />
+    <file src="$buildOutput$\net4.5.2\EnchantsOrder.*" target="lib\net452\" />
+    <file src="$buildOutput$\net4.6.2\EnchantsOrder.*" target="lib\net462\" />
+    <file src="$buildOutput$\net4.8.1\EnchantsOrder.*" target="lib\net481\" />
+    <file src="$buildOutput$\net6.0\EnchantsOrder.*" target="lib\net6.0\" />
+    <file src="$buildOutput$\netcore50\EnchantsOrder.*" target="lib\netcore50\" />
+    <file src="$buildOutput$\netcoreapp3.1\EnchantsOrder.*" target="lib\netcoreapp3.1\" />
+    <file src="$buildOutput$\netstandard1.1\EnchantsOrder.*" target="lib\netstandard1.1\" />
+    <file src="$buildOutput$\netstandard2.0\EnchantsOrder.*" target="lib\netstandard2.0\" />
+    <file src="$buildOutput$\sl3\EnchantsOrder.*" target="lib\sl3\" />
+    <file src="$buildOutput$\sl5\EnchantsOrder.*" target="lib\sl5\" />
+    <file src="$buildOutput$\uap10.0\EnchantsOrder.*" target="lib\uap10.0.15138\" />
+    <file src="$buildOutput$\wp7.0\EnchantsOrder.*" target="lib\wp7\" />
+    <file src="$buildOutput$\wp8.0\EnchantsOrder.*" target="lib\wp8\" />
+  </files>
+</package>

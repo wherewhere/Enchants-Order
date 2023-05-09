@@ -1,13 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
+
+#if WINRT
+using Windows.Foundation;
+#endif
 
 namespace EnchantsOrder.Models
 {
     /// <summary>
     /// The result of ordering.
     /// </summary>
-    public class OrderingResults : IComparable<OrderingResults>
+    public
+#if WINRT
+        sealed
+#endif
+        class OrderingResults : IOrderingResults
+#if WINRT
+        , IStringable
+#endif
     {
         /// <summary>
         /// The penalty of item.
@@ -27,22 +37,22 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// The steps of enchant.
         /// </summary>
-        public IList<EnchantmentStep> Steps { get; set; }
+        public IList<IEnchantmentStep> Steps { get; set; }
 
         /// <summary>
         /// Too expensive because max experience level max than 39.
         /// </summary>
-        public bool TooExpensive => MaxExperience > max_experience;
+        public bool IsTooExpensive => MaxExperience > max_experience;
 
         /// <summary>
         /// Max penalty max than 6 so that you cannot enchant any more.
         /// </summary>
-        public bool TooManyPenalty => Penalty > max_penalty;
+        public bool IsTooManyPenalty => Penalty > max_penalty;
 
         /// <summary>
         /// Initializes a new instance of <see cref="OrderingResults" />.
         /// </summary>
-        public OrderingResults(IList<EnchantmentStep> steps, int penalty, double maxExperience, double totalExperience)
+        public OrderingResults(IList<IEnchantmentStep> steps, int penalty, double maxExperience, double totalExperience)
         {
             Steps = steps;
             Penalty = penalty;
@@ -65,7 +75,7 @@ namespace EnchantsOrder.Models
         }
 
         /// <inheritdoc/>
-        public int CompareTo(OrderingResults other)
+        public int CompareTo(IOrderingResults other)
         {
             int value = Penalty.CompareTo(other.Penalty);
             if (value == 0)
@@ -76,10 +86,10 @@ namespace EnchantsOrder.Models
                     value = MaxExperience.CompareTo(other.MaxExperience);
                     if (value == 0)
                     {
-                        int GetStepNum(IList<EnchantmentStep> steps)
+                        static int GetStepNum(IList<IEnchantmentStep> steps)
                         {
                             int num = 0;
-                            foreach (EnchantmentStep step in Steps)
+                            foreach (IEnchantmentStep step in steps)
                             {
                                 num += step.Count;
                             }
@@ -92,6 +102,7 @@ namespace EnchantsOrder.Models
             return value;
         }
 
+#if !WINRT
         /// <inheritdoc/>
         public static bool operator >(OrderingResults left, OrderingResults right) => left.CompareTo(right) == 1;
 
@@ -103,6 +114,7 @@ namespace EnchantsOrder.Models
 
         /// <inheritdoc/>
         public static bool operator <=(OrderingResults left, OrderingResults right) => left.CompareTo(right) != 1;
+#endif
 
         internal const short max_penalty = 6;
         internal const short max_experience = 39;
