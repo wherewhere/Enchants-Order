@@ -9,7 +9,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <LangVersion>preview</LangVersion>
-	<PackageIcon>Icon.png</PackageIcon>
+    <PackageIcon>Icon.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/wherewhere/Enchants-Order/main/logo.png</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/wherewhere/Enchants-Order</PackageProjectUrl>
