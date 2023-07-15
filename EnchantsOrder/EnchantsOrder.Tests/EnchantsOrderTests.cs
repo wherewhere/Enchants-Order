@@ -6,11 +6,14 @@ using System.Collections.Generic;
 namespace EnchantsOrder.Tests
 {
     /// <summary>
-    /// Tests the <see cref="Instance"/> class.
+    /// Tests the <see cref="EnchantsOrder"/> class.
     /// </summary>
     [TestFixture]
     public class EnchantsOrderTests
     {
+        /// <summary>
+        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// </summary>
         [Test]
         public void NoneBookOrderTest()
         {
@@ -20,6 +23,9 @@ namespace EnchantsOrder.Tests
             _ = Assert.Throws<ArgumentNullException>(() => _ = enchantmentlist.Ordering());
         }
 
+        /// <summary>
+        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// </summary>
         [Test]
         public void OneBookOrderTest()
         {
@@ -37,6 +43,9 @@ namespace EnchantsOrder.Tests
             Assert.AreEqual("Efficiency", results.Steps[0][0].Name);
         }
 
+        /// <summary>
+        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// </summary>
         [Test]
         public void TwoBookOrderTest()
         {
@@ -59,6 +68,9 @@ namespace EnchantsOrder.Tests
             Assert.AreEqual("Mending", results.Steps[1][0].Name);
         }
 
+        /// <summary>
+        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// </summary>
         [Test]
         public void ThreeBookOrderTest()
         {
@@ -83,6 +95,9 @@ namespace EnchantsOrder.Tests
             Assert.AreEqual("Mending", results.Steps[1][1].Name);
         }
 
+        /// <summary>
+        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// </summary>
         [Test]
         public void FourBookOrderTest()
         {
@@ -110,6 +125,9 @@ namespace EnchantsOrder.Tests
             Assert.AreEqual("Riptide", results.Steps[2][0].Name);
         }
 
+        /// <summary>
+        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// </summary>
         [Test]
         public void FiveBookOrderTest()
         {
@@ -139,6 +157,9 @@ namespace EnchantsOrder.Tests
             Assert.AreEqual("Flame", results.Steps[2][1].Name);
         }
 
+        /// <summary>
+        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// </summary>
         [Test]
         public void SixBookOrderTest()
         {
@@ -170,6 +191,9 @@ namespace EnchantsOrder.Tests
             Assert.AreEqual("Unbreaking", results.Steps[2][2].Name);
         }
 
+        /// <summary>
+        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// </summary>
         [Test]
         public void SevenBookOrderTest()
         {

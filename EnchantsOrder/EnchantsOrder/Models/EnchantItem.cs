@@ -3,20 +3,13 @@ using System;
 
 namespace EnchantsOrder.Models
 {
-    internal class EnchantItem : IComparable<EnchantItem>
+    internal class EnchantItem(long num = 0, long penalty = 0, long historyExperience = 0) : IComparable<EnchantItem>
     {
-        public long Level { get; set; }
-        public long Penalty { get; set; }
+        public long Level { get; set; } = num;
+        public long Penalty { get; set; } = penalty;
         public long StepLevel { get; private set; }
-        public long HistoryLevel { get; set; }
+        public long HistoryLevel { get; set; } = historyExperience;
         public long HistoryExperience { get; set; }
-
-        public EnchantItem(long num = 0, long penalty = 0, long historyExperience = 0)
-        {
-            Level = num;
-            Penalty = penalty;
-            HistoryLevel = historyExperience;
-        }
 
         /// <inheritdoc/>
         public override string ToString() => $"Level:{Level} Penalty:{Penalty}";
@@ -24,41 +17,41 @@ namespace EnchantsOrder.Models
         /// <inheritdoc/>
         public int CompareTo(EnchantItem other)
         {
-            long thisvalue = Level + Extensions.PenaltyToExperience(Penalty);
-            long othervalue = other.Level + Extensions.PenaltyToExperience(other.Penalty);
-            return thisvalue.CompareTo(othervalue);
+            long leftValue = Level + Extensions.PenaltyToExperience(Penalty);
+            long rightValue = other.Level + Extensions.PenaltyToExperience(other.Penalty);
+            return leftValue.CompareTo(rightValue);
         }
 
         /// <inheritdoc/>
         public static bool operator >(EnchantItem left, EnchantItem right)
         {
-            long leftvalue = left.Level + Extensions.PenaltyToExperience(left.Penalty);
-            long rightvalue = right.Level + Extensions.PenaltyToExperience(right.Penalty);
-            return leftvalue > rightvalue;
+            long leftValue = left.Level + Extensions.PenaltyToExperience(left.Penalty);
+            long rightValue = right.Level + Extensions.PenaltyToExperience(right.Penalty);
+            return leftValue > rightValue;
         }
 
         /// <inheritdoc/>
         public static bool operator >=(EnchantItem left, EnchantItem right)
         {
-            long leftvalue = left.Level + Extensions.PenaltyToExperience(left.Penalty);
-            long rightvalue = right.Level + Extensions.PenaltyToExperience(right.Penalty);
-            return leftvalue >= rightvalue;
+            long leftValue = left.Level + Extensions.PenaltyToExperience(left.Penalty);
+            long rightValue = right.Level + Extensions.PenaltyToExperience(right.Penalty);
+            return leftValue >= rightValue;
         }
 
         /// <inheritdoc/>
         public static bool operator <(EnchantItem left, EnchantItem right)
         {
-            long leftvalue = left.Level + Extensions.PenaltyToExperience(left.Penalty);
-            long rightvalue = right.Level + Extensions.PenaltyToExperience(right.Penalty);
-            return leftvalue < rightvalue;
+            long leftValue = left.Level + Extensions.PenaltyToExperience(left.Penalty);
+            long rightValue = right.Level + Extensions.PenaltyToExperience(right.Penalty);
+            return leftValue < rightValue;
         }
 
         /// <inheritdoc/>
         public static bool operator <=(EnchantItem left, EnchantItem right)
         {
-            long leftvalue = left.Level + Extensions.PenaltyToExperience(left.Penalty);
-            long rightvalue = right.Level + Extensions.PenaltyToExperience(right.Penalty);
-            return leftvalue <= rightvalue;
+            long leftValue = left.Level + Extensions.PenaltyToExperience(left.Penalty);
+            long rightValue = right.Level + Extensions.PenaltyToExperience(right.Penalty);
+            return leftValue <= rightValue;
         }
 
         /// <inheritdoc/>

@@ -13,9 +13,9 @@ namespace EnchantsOrder.Demo
         {
             string text = string.Empty;
             List<IEnchantment> enchantment_list = new();
-            string jsonfile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.json");   //JSON文件路径
+            string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.json");   //JSON文件路径
 
-            using (StreamReader file = File.OpenText(jsonfile))
+            using (StreamReader file = File.OpenText(json))
             {
                 using JsonTextReader reader = new(file);
                 JObject token = (JObject)JToken.ReadFrom(reader);

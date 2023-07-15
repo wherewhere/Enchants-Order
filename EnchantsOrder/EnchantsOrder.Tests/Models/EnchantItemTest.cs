@@ -5,8 +5,12 @@ namespace EnchantsOrder.Models.Tests
     /// <summary>
     /// Tests the <see cref="EnchantItem"/> class.
     /// </summary>
-    internal class EnchantItemTest
+    [TestFixture]
+    public class EnchantItemTest
     {
+        /// <summary>
+        /// Tests the <see langword="+"/> operator of <see cref="EnchantItem"/>.
+        /// </summary>
         [Test]
         public void AddTest()
         {

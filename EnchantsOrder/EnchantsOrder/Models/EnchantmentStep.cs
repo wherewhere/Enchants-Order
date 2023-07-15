@@ -11,7 +11,7 @@ namespace EnchantsOrder.Models
 #if WINRT
         sealed
 #endif
-        class EnchantmentStep :
+        class EnchantmentStep(int step) :
 #if !WINRT
         List<IEnchantment>,
 #endif
@@ -20,7 +20,7 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// The index of step.
         /// </summary>
-        public int Step { get; set; }
+        public int Step { get; set; } = step;
 
 #if WINRT
         internal List<IEnchantment> Enchantments { get; set; }
@@ -39,11 +39,6 @@ namespace EnchantsOrder.Models
         }
 #endif
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="EnchantmentStep" />.
-        /// </summary>
-        public EnchantmentStep(int step) => Step = step;
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -51,9 +46,9 @@ namespace EnchantsOrder.Models
             int half = Count / 2;
             for (int i = half; i > 0; i--)
             {
-                bool istwo = Count == 2;
+                bool flag = Count == 2;
                 int index = (half * 2) - (i * 2);
-                str += $" {(istwo ? "" : "(")}{this[index]} + {this[index + 1]}{(istwo ? "" : ")")}";
+                str += $" {(flag ? "" : "(")}{this[index]} + {this[index + 1]}{(flag ? "" : ")")}";
             }
             if (Count % 2 == 1)
             {

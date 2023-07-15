@@ -14,7 +14,7 @@ namespace EnchantsOrder.Models
 #if WINRT
         sealed
 #endif
-        class OrderingResults : IOrderingResults
+        class OrderingResults(IList<IEnchantmentStep> steps, int penalty, double maxExperience, double totalExperience) : IOrderingResults
 #if WINRT
         , IStringable
 #endif
@@ -22,22 +22,22 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// The penalty of item.
         /// </summary>
-        public int Penalty { get; set; }
+        public int Penalty { get; set; } = penalty;
 
         /// <summary>
         /// The max experience level request during enchant.
         /// </summary>
-        public double MaxExperience { get; set; }
+        public double MaxExperience { get; set; } = maxExperience;
 
         /// <summary>
         /// The total experience level request during enchant.
         /// </summary>
-        public double TotalExperience { get; set; }
+        public double TotalExperience { get; set; } = totalExperience;
 
         /// <summary>
         /// The steps of enchant.
         /// </summary>
-        public IList<IEnchantmentStep> Steps { get; set; }
+        public IList<IEnchantmentStep> Steps { get; set; } = steps;
 
         /// <summary>
         /// Too expensive because max experience level max than 39.
@@ -49,22 +49,11 @@ namespace EnchantsOrder.Models
         /// </summary>
         public bool IsTooManyPenalty => Penalty > max_penalty;
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="OrderingResults" />.
-        /// </summary>
-        public OrderingResults(IList<IEnchantmentStep> steps, int penalty, double maxExperience, double totalExperience)
-        {
-            Steps = steps;
-            Penalty = penalty;
-            MaxExperience = maxExperience;
-            TotalExperience = totalExperience;
-        }
-
         /// <inheritdoc/>
         public override string ToString()
         {
             StringBuilder builder = new();
-            foreach (EnchantmentStep step in Steps)
+            foreach (IEnchantmentStep step in Steps)
             {
                 builder.AppendLine(step.ToString());
             }

@@ -3,9 +3,15 @@ using System;
 
 namespace EnchantsOrder.Models.Tests
 {
+    /// <summary>
+    /// Tests the <see cref="Enchantment"/> class.
+    /// </summary>
     [TestFixture]
     public class EnchantmentTests
     {
+        /// <summary>
+        /// Tests the <see cref="Enchantment.CompareTo(IEnchantment)"/> method.
+        /// </summary>
         [Test]
         public void CompareToTest()
         {
@@ -25,6 +31,9 @@ namespace EnchantsOrder.Models.Tests
             Assert.AreEqual(0, enchantment1.CompareTo(enchantment2));
         }
 
+        /// <summary>
+        /// Tests the <see cref="Enchantment.Experience"/> method.
+        /// </summary>
         [Test]
         public void ExperienceTest()
         {
