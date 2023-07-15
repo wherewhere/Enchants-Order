@@ -11,6 +11,7 @@
     <projectUrl>$projectUrl$</projectUrl>
     <iconUrl>$iconUrl$</iconUrl>
     <description>$description$</description>
+    <releaseNotes>$releaseNotes$</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>Minecraft;Enchants;Order;MC;附魔;我的世界;麦块</tags>
     <repository type="$repositoryType$" url="$repositoryUrl$" commit="$repositoryCommit$" />
@@ -50,6 +51,7 @@
     <file src="$buildOutput$\net4.6.2\EnchantsOrder.*" target="lib\net462\" />
     <file src="$buildOutput$\net4.8.1\EnchantsOrder.*" target="lib\net481\" />
     <file src="$buildOutput$\net6.0\EnchantsOrder.*" target="lib\net6.0\" />
+    <file src="$buildOutput$\net8.0\EnchantsOrder.*" target="lib\net8.0\" />
     <file src="$buildOutput$\netcore50\EnchantsOrder.*" target="lib\netcore50\" />
     <file src="$buildOutput$\netcoreapp2.1\EnchantsOrder.*" target="lib\netcoreapp2.1\" />
     <file src="$buildOutput$\netcoreapp3.1\EnchantsOrder.*" target="lib\netcoreapp3.1\" />
