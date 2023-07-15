@@ -10,10 +10,10 @@
     <IncludeSymbols>true</IncludeSymbols>
     <LangVersion>preview</LangVersion>
 	<PackageIcon>Icon.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/wherewhere/Unicode-Style/main/logo.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/wherewhere/Enchants-Order/main/logo.png</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/wherewhere/Enchants-Order</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/wherewhere/Unicode-Style/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/wherewhere/Enchants-Order/releases</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>Minecraft;Enchants;Order;MC;附魔;我的世界;麦块</PackageTags>
     <RepositoryType>git</RepositoryType>
