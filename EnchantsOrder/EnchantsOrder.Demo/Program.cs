@@ -21,7 +21,7 @@ namespace EnchantsOrder.Demo
                 JObject token = (JObject)JToken.ReadFrom(reader);
                 while (text.ToUpper() != "Q")
                 {
-                    Console.WriteLine("Input the name of enchantment(type q to order): ");
+                    Console.WriteLine("Input the name of enchantment (type q to order): ");
                     text = Console.ReadLine();
                     if (text.ToUpper() == "Q") { break; }
                     if (token.TryGetValue(text, out JToken v))

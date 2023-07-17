@@ -17,10 +17,10 @@ namespace EnchantsOrder.Tests
         [Test]
         public void NoneBookOrderTest()
         {
-            List<IEnchantment> enchantmentlist = null;
-            _ = Assert.Throws<ArgumentNullException>(() => _ = enchantmentlist.Ordering());
-            enchantmentlist = new List<IEnchantment>();
-            _ = Assert.Throws<ArgumentNullException>(() => _ = enchantmentlist.Ordering());
+            List<IEnchantment> enchantmentList = null;
+            _ = Assert.Throws<ArgumentNullException>(() => _ = enchantmentList.Ordering());
+            enchantmentList = new List<IEnchantment>();
+            _ = Assert.Throws<ArgumentNullException>(() => _ = enchantmentList.Ordering());
         }
 
         /// <summary>
@@ -29,12 +29,12 @@ namespace EnchantsOrder.Tests
         [Test]
         public void OneBookOrderTest()
         {
-            List<IEnchantment> enchantmentlist = new()
+            List<IEnchantment> enchantmentList = new()
             {
                 new Enchantment("Efficiency", 5, 1)
             };
 
-            OrderingResults results = enchantmentlist.Ordering();
+            OrderingResults results = enchantmentList.Ordering();
             Assert.AreEqual(1, results.Penalty);
             Assert.AreEqual(5, results.MaxExperience);
             Assert.AreEqual(5, results.TotalExperience);
@@ -49,13 +49,13 @@ namespace EnchantsOrder.Tests
         [Test]
         public void TwoBookOrderTest()
         {
-            List<IEnchantment> enchantmentlist = new()
+            List<IEnchantment> enchantmentList = new()
             {
                 new Enchantment("Mending", 1, 2),
                 new Enchantment("Unbreaking", 3, 1)
             };
 
-            OrderingResults results = enchantmentlist.Ordering();
+            OrderingResults results = enchantmentList.Ordering();
 
             Assert.AreEqual(2, results.Penalty);
             Assert.AreEqual(3, results.MaxExperience);
@@ -74,14 +74,14 @@ namespace EnchantsOrder.Tests
         [Test]
         public void ThreeBookOrderTest()
         {
-            List<IEnchantment> enchantmentlist = new()
+            List<IEnchantment> enchantmentList = new()
             {
                 new Enchantment("Mending", 1, 2),
                 new Enchantment("Unbreaking", 3, 1),
                 new Enchantment("Projectile Protection", 4, 1)
             };
 
-            OrderingResults results = enchantmentlist.Ordering();
+            OrderingResults results = enchantmentList.Ordering();
 
             Assert.AreEqual(2, results.Penalty);
             Assert.AreEqual(7, results.MaxExperience);
@@ -101,7 +101,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void FourBookOrderTest()
         {
-            List<IEnchantment> enchantmentlist = new()
+            List<IEnchantment> enchantmentList = new()
             {
                 new Enchantment("Riptide", 3, 2),
                 new Enchantment("Mending", 1, 2),
@@ -109,7 +109,7 @@ namespace EnchantsOrder.Tests
                 new Enchantment("Impaling", 5, 2)
             };
 
-            OrderingResults results = enchantmentlist.Ordering();
+            OrderingResults results = enchantmentList.Ordering();
 
             Assert.AreEqual(3, results.Penalty);
             Assert.AreEqual(10, results.MaxExperience);
@@ -131,7 +131,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void FiveBookOrderTest()
         {
-            List<IEnchantment> enchantmentlist = new()
+            List<IEnchantment> enchantmentList = new()
             {
                 new Enchantment("Punch", 2, 2),
                 new Enchantment("Flame", 1, 2),
@@ -140,7 +140,7 @@ namespace EnchantsOrder.Tests
                 new Enchantment("Power", 5, 1)
             };
 
-            OrderingResults results = enchantmentlist.Ordering();
+            OrderingResults results = enchantmentList.Ordering();
 
             Assert.AreEqual(3, results.Penalty);
             Assert.AreEqual(10, results.MaxExperience);
@@ -163,7 +163,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void SixBookOrderTest()
         {
-            List<IEnchantment> enchantmentlist = new()
+            List<IEnchantment> enchantmentList = new()
             {
                 new Enchantment("Aqua Affinity", 1, 2),
                 new Enchantment("Respiration", 3, 2),
@@ -173,7 +173,7 @@ namespace EnchantsOrder.Tests
                 new Enchantment("Thorns", 3, 4)
             };
 
-            OrderingResults results = enchantmentlist.Ordering();
+            OrderingResults results = enchantmentList.Ordering();
 
             Assert.AreEqual(3, results.Penalty);
             Assert.AreEqual(17, results.MaxExperience);
@@ -197,7 +197,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void SevenBookOrderTest()
         {
-            List<IEnchantment> enchantmentlist = new()
+            List<IEnchantment> enchantmentList = new()
             {
                 new Enchantment("Knockback", 2, 1),
                 new Enchantment("Fire Aspect", 2, 2),
@@ -208,7 +208,7 @@ namespace EnchantsOrder.Tests
                 new Enchantment("Sweeping Edge", 3, 2)
             };
 
-            OrderingResults results = enchantmentlist.Ordering();
+            OrderingResults results = enchantmentList.Ordering();
 
             Assert.AreEqual(3, results.Penalty);
             Assert.AreEqual(17, results.MaxExperience);

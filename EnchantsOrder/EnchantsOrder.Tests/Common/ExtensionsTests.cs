@@ -6,19 +6,25 @@ namespace EnchantsOrder.Common.Tests
     /// Tests the <see cref="Extensions"/> class.
     /// </summary>
     [TestFixture]
-    internal class ExtensionsTests
+    public class ExtensionsTests
     {
+        /// <summary>
+        /// Tests the <see cref="Extensions.GetRomanNumber(int, int)"/> method.
+        /// </summary>
         [Test]
-        public void GetLoumaNumberTest()
+        public void GetRomanNumberTest()
         {
             string[] strings = new string[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
             for (int i = 1; i <= 10; i++)
             {
-                Assert.AreEqual(strings[i - 1], i.GetLoumaNumber());
+                Assert.AreEqual(strings[i - 1], i.GetRomanNumber());
             }
-            Assert.AreEqual("MCCXXXIV", 1234.GetLoumaNumber());
+            Assert.AreEqual("MCCXXXIV", 1234.GetRomanNumber());
         }
 
+        /// <summary>
+        /// Tests the <see cref="Extensions.PenaltyToExperience(long)"/> method.
+        /// </summary>
         [Test]
         public void PenaltyToExperience()
         {
@@ -29,16 +35,16 @@ namespace EnchantsOrder.Common.Tests
             }
         }
 
-        [Test]
-        public void LevelToExperience()
-        {
-            Assert.AreEqual(160, Extensions.LevelToExperience(10));
-            Assert.AreEqual(550, Extensions.LevelToExperience(20));
-            Assert.AreEqual(2920, Extensions.LevelToExperience(40));
-            Assert.AreEqual(18020, Extensions.LevelToExperience(80));
-            Assert.AreEqual(657220, Extensions.LevelToExperience(400));
-            Assert.AreEqual(161027220, Extensions.LevelToExperience(6000));
-            Assert.AreEqual(448377220, Extensions.LevelToExperience(10000));
-        }
+        /// <summary>
+        /// Tests the <see cref="Extensions.LevelToExperience(long)"/> method.
+        /// </summary>
+        [TestCase(160, 10)]
+        [TestCase(550, 20)]
+        [TestCase(2920, 40)]
+        [TestCase(18020, 80)]
+        [TestCase(657220, 400)]
+        [TestCase(161027220, 6000)]
+        [TestCase(448377220, 10000)]
+        public void LevelToExperience(long xp, long level) => Assert.AreEqual(xp, Extensions.LevelToExperience(level));
     }
 }
