@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace EnchantsOrder.Demo
@@ -13,7 +14,7 @@ namespace EnchantsOrder.Demo
         {
             string text = string.Empty;
             List<IEnchantment> enchantment_list = new();
-            string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.json");   //JSON文件路径
+            string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", CultureInfo.CurrentCulture.TwoLetterISOLanguageName.StartsWith("zh") ? "Enchants.zh-CN.json" : "Enchants.en-US.json");
 
             using (StreamReader file = File.OpenText(json))
             {

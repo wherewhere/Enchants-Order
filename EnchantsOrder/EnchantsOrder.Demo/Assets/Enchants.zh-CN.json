@@ -1,0 +1,523 @@
+{
+    "水下速掘": {
+        "levelMax": "1",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "helmet",
+            "turtle_shell"
+        ]
+    },
+    "节肢杀手": {
+        "levelMax": "5",
+        "weight": "1",
+        "incompatible": [
+            "Cleaving",
+            "亡灵杀手",
+            "锋利"
+        ],
+        "items": [
+            "sword",
+            "axe"
+        ]
+    },
+    "爆炸保护": {
+        "levelMax": "4",
+        "weight": "2",
+        "incompatible": [
+            "火焰保护",
+            "保护",
+            "弹射物保护"
+        ],
+        "items": [
+            "helmet",
+            "chestplate",
+            "leggings",
+            "boots",
+            "turtle_shell"
+        ]
+    },
+    "引雷": {
+        "levelMax": "1",
+        "weight": "4",
+        "incompatible": [
+            "激流"
+        ],
+        "items": [
+            "trident"
+        ]
+    },
+    "Cleaving": {
+        "levelMax": "3",
+        "weight": "1",
+        "incompatible": [
+            "锋利",
+            "节肢杀手",
+            "亡灵杀手"
+        ],
+        "items": [
+            "axe"
+        ]
+    },
+    "绑定诅咒": {
+        "levelMax": "1",
+        "weight": "4",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "helmet",
+            "chestplate",
+            "leggings",
+            "boots",
+            "elytra",
+            "pumpkin",
+            "head",
+            "turtle_shell"
+        ]
+    },
+    "消失诅咒": {
+        "levelMax": "1",
+        "weight": "4",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "helmet",
+            "chestplate",
+            "leggings",
+            "boots",
+            "pickaxe",
+            "shovel",
+            "axe",
+            "sword",
+            "hoe",
+            "fishing_rod",
+            "bow",
+            "shears",
+            "flint_and_steel",
+            "compass",
+            "carrot_on_a_stick",
+            "warped_fungus_on_a_stick",
+            "shield",
+            "elytra",
+            "pumpkin",
+            "head",
+            "trident",
+            "turtle_shell",
+            "crossbow"
+        ]
+    },
+    "深海探索者": {
+        "levelMax": "3",
+        "weight": "2",
+        "incompatible": [
+            "冰霜行者"
+        ],
+        "items": [
+            "boots"
+        ]
+    },
+    "效率": {
+        "levelMax": "5",
+        "weight": "1",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "pickaxe",
+            "shovel",
+            "axe",
+            "hoe",
+            "shears"
+        ]
+    },
+    "摔落保护": {
+        "levelMax": "4",
+        "weight": "1",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "boots"
+        ]
+    },
+    "火焰附加": {
+        "levelMax": "2",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "sword"
+        ]
+    },
+    "火焰保护": {
+        "levelMax": "4",
+        "weight": "1",
+        "incompatible": [
+            "爆炸保护",
+            "保护",
+            "弹射物保护"
+        ],
+        "items": [
+            "helmet",
+            "chestplate",
+            "leggings",
+            "boots",
+            "turtle_shell"
+        ]
+    },
+    "火矢": {
+        "levelMax": "1",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "bow"
+        ]
+    },
+    "时运": {
+        "levelMax": "3",
+        "weight": "2",
+        "incompatible": [
+            "精准采集"
+        ],
+        "items": [
+            "pickaxe",
+            "shovel",
+            "axe",
+            "hoe"
+        ]
+    },
+    "冰霜行者": {
+        "levelMax": "2",
+        "weight": "2",
+        "incompatible": [
+            "深海探索者"
+        ],
+        "items": [
+            "boots"
+        ]
+    },
+    "穿刺": {
+        "levelMax": "5",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "trident"
+        ]
+    },
+    "无限": {
+        "levelMax": "1",
+        "weight": "4",
+        "incompatible": [
+            "经验修补"
+        ],
+        "items": [
+            "bow"
+        ]
+    },
+    "击退": {
+        "levelMax": "2",
+        "weight": "1",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "sword"
+        ]
+    },
+    "抢夺": {
+        "levelMax": "3",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "sword"
+        ]
+    },
+    "忠诚": {
+        "levelMax": "3",
+        "weight": "1",
+        "incompatible": [
+            "激流"
+        ],
+        "items": [
+            "trident"
+        ]
+    },
+    "海之眷顾": {
+        "levelMax": "3",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "fishing_rod"
+        ]
+    },
+    "饵钓": {
+        "levelMax": "3",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "fishing_rod"
+        ]
+    },
+    "经验修补": {
+        "levelMax": "1",
+        "weight": "2",
+        "incompatible": [
+            "无限"
+        ],
+        "items": [
+            "helmet",
+            "chestplate",
+            "leggings",
+            "boots",
+            "pickaxe",
+            "shovel",
+            "axe",
+            "sword",
+            "hoe",
+            "fishing_rod",
+            "bow",
+            "shears",
+            "flint_and_steel",
+            "compass",
+            "carrot_on_a_stick",
+            "warped_fungus_on_a_stick",
+            "shield",
+            "elytra",
+            "trident",
+            "turtle_shell",
+            "crossbow"
+        ]
+    },
+    "多重射击": {
+        "levelMax": "1",
+        "weight": "2",
+        "incompatible": [
+            "穿透"
+        ],
+        "items": [
+            "crossbow"
+        ]
+    },
+    "穿透": {
+        "levelMax": "4",
+        "weight": "1",
+        "incompatible": [
+            "多重射击"
+        ],
+        "items": [
+            "crossbow"
+        ]
+    },
+    "力量": {
+        "levelMax": "5",
+        "weight": "1",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "bow"
+        ]
+    },
+    "弹射物保护": {
+        "levelMax": "4",
+        "weight": "1",
+        "incompatible": [
+            "保护",
+            "爆炸保护",
+            "火焰保护."
+        ],
+        "items": [
+            "helmet",
+            "chestplate",
+            "leggings",
+            "boots",
+            "turtle_shell"
+        ]
+    },
+    "保护": {
+        "levelMax": "4",
+        "weight": "1",
+        "incompatible": [
+            "爆炸保护",
+            "火焰保护",
+            "弹射物保护"
+        ],
+        "items": [
+            "helmet",
+            "chestplate",
+            "leggings",
+            "boots",
+            "turtle_shell"
+        ]
+    },
+    "冲击": {
+        "levelMax": "2",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "bow"
+        ]
+    },
+    "快速装填": {
+        "levelMax": "3",
+        "weight": "1",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "crossbow"
+        ]
+    },
+    "水下呼吸": {
+        "levelMax": "3",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "helmet",
+            "turtle_shell"
+        ]
+    },
+    "激流": {
+        "levelMax": "3",
+        "weight": "2",
+        "incompatible": [
+            "Channelling",
+            "忠诚"
+        ],
+        "items": [
+            "crossbow"
+        ]
+    },
+    "锋利": {
+        "levelMax": "5",
+        "weight": "1",
+        "incompatible": [
+            "节肢杀手",
+            "Cleaving",
+            "亡灵杀手"
+        ],
+        "items": [
+            "sword"
+        ]
+    },
+    "精准采集": {
+        "levelMax": "1",
+        "weight": "4",
+        "incompatible": [
+            "时运"
+        ],
+        "items": [
+            "pickaxe",
+            "shovel",
+            "axe",
+            "hoe",
+            "shears"
+        ]
+    },
+    "亡灵杀手": {
+        "levelMax": "5",
+        "weight": "1",
+        "incompatible": [
+            "节肢杀手",
+            "Cleaving",
+            "锋利"
+        ],
+        "items": [
+            "sword",
+            "axe"
+        ]
+    },
+    "灵魂疾行": {
+        "levelMax": "3",
+        "weight": "4",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "boots"
+        ]
+    },
+    "横扫之刃": {
+        "levelMax": "3",
+        "weight": "2",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "sowrd"
+        ]
+    },
+    "迅捷潛行": {
+        "levelMax": "3",
+        "weight": "1",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "leggings"
+        ]
+    },
+    "荆棘": {
+        "levelMax": "3",
+        "weight": "4",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "helmet",
+            "chestplate",
+            "leggings",
+            "boots",
+            "turtle_shell"
+        ]
+    },
+    "耐久": {
+        "levelMax": "3",
+        "weight": "1",
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "helmet",
+            "chestplate",
+            "leggings",
+            "boots",
+            "pickaxe",
+            "shovel",
+            "axe",
+            "sword",
+            "hoe",
+            "fishing_rod",
+            "bow",
+            "shears",
+            "flint_and_steel",
+            "compass",
+            "carrot_on_a_stick",
+            "warped_fungus_on_a_stick",
+            "shield",
+            "elytra",
+            "trident",
+            "turtle_shell",
+            "crossbow"
+        ]
+    }
+}

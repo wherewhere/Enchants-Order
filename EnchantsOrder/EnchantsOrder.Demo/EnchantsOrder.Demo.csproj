@@ -15,7 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="output.json">
+    <None Update="Assets\Enchants.en-US.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Enchants.zh-CN.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
