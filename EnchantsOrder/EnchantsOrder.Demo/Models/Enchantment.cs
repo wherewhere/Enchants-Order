@@ -1,7 +1,7 @@
 ﻿using EnchantsOrder.Common;
 using EnchantsOrder.Models;
 using Newtonsoft.Json.Linq;
-using System.Collections.Immutable;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EnchantsOrder.Demo.Models
@@ -15,8 +15,8 @@ namespace EnchantsOrder.Demo.Models
 
         public string Name { get; set; }
 
-        public ImmutableArray<string> Items { get; set; } = ImmutableArray<string>.Empty;
-        public ImmutableArray<string> Incompatible { get; set; } = ImmutableArray<string>.Empty;
+        public IEnumerable<string> Items { get; set; }
+        public IEnumerable<string> Incompatible { get; set; }
 
         public long Experience => (long)Level * Weight;
 
@@ -46,12 +46,12 @@ namespace EnchantsOrder.Demo.Models
 
                     if (v.TryGetValue("items", out JToken items))
                     {
-                        Items = items.Select((x) => x.ToString()).ToImmutableArray();
+                        Items = items.Select((x) => x.ToString());
                     }
 
                     if (v.TryGetValue("incompatible", out JToken incompatible))
                     {
-                        Incompatible = incompatible.Select((x) => x.ToString()).ToImmutableArray();
+                        Incompatible = incompatible.Select((x) => x.ToString());
                     }
                 }
             }

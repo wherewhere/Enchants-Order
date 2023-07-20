@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace EnchantsOrder.Models
 {
@@ -42,19 +43,20 @@ namespace EnchantsOrder.Models
         /// <inheritdoc/>
         public override string ToString()
         {
-            string str = $"Step {Step}:";
+            StringBuilder builder = new();
+            _ = builder.Append($"Step {Step}:");
             int half = Count / 2;
             for (int i = half; i > 0; i--)
             {
                 bool flag = Count == 2;
                 int index = (half * 2) - (i * 2);
-                str += $" {(flag ? "" : "(")}{this[index]} + {this[index + 1]}{(flag ? "" : ")")}";
+                _ = builder.Append($" {(flag ? "" : "(")}{this[index]} + {this[index + 1]}{(flag ? "" : ")")}{(index + 2 == Count ? "" : " +")}");
             }
             if (Count % 2 == 1)
             {
-                str += $"{(Count == 1 ? "" : " +")} {this.Last()}";
+                _ = builder.Append($" {this.Last()}");
             }
-            return str;
+            return builder.ToString();
         }
 
 #if WINRT

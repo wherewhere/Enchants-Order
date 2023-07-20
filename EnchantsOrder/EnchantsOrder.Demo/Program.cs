@@ -21,6 +21,7 @@ namespace EnchantsOrder.Demo
             while (!(text?.Equals("exit", StringComparison.OrdinalIgnoreCase) == true))
             {
                 Console.WriteLine("Input the command (type exit to quit): ");
+                Console.Write("> ");
                 text = Console.ReadLine();
                 Console.WriteLine();
                 switch (text.ToLowerInvariant())
@@ -31,14 +32,19 @@ namespace EnchantsOrder.Demo
                     case "list":
                         ListOrderedEnchantments();
                         break;
+                    case "lang":
+                        ChangeLanguage();
+                        break;
                     case "helper":
                         Console.WriteLine("*****************");
                         Console.WriteLine("Helper");
                         Console.WriteLine("*****************");
+                        Console.WriteLine("Commands:");
                         Console.WriteLine("order: Order enchantments");
                         Console.WriteLine("list: List ordered enchantments");
+                        Console.WriteLine("lang: Change language");
                         Console.WriteLine("helper: Show this helper");
-                        Console.WriteLine("exit: Quit");
+                        Console.WriteLine("exit: Exit");
                         break;
                     case "exit":
                         break;
@@ -52,12 +58,33 @@ namespace EnchantsOrder.Demo
 
         private static void InitEnchantments()
         {
+            Enchantments.Clear();
             string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", CultureInfo.CurrentCulture.TwoLetterISOLanguageName.StartsWith("zh") ? "Enchants.zh-CN.json" : "Enchants.en-US.json");
             using StreamReader file = File.OpenText(json);
             using JsonTextReader reader = new(file);
             foreach (JToken token in JToken.ReadFrom(reader))
             {
                 Enchantments.Add(new(token));
+            }
+        }
+
+        private static void ChangeLanguage()
+        {
+            try
+            {
+                Console.WriteLine($"Current language is {CultureInfo.CurrentCulture.DisplayName}");
+                Console.WriteLine("Input the language code to change language (type exit to quit): ");
+                Console.Write("> ");
+                string text = Console.ReadLine();
+                if (text.Equals("exit", StringComparison.OrdinalIgnoreCase)) { return; }
+                CultureInfo culture = new(text);
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+                InitEnchantments();
+                Console.WriteLine($"Current language is changed to {CultureInfo.CurrentCulture.DisplayName}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -68,6 +95,7 @@ namespace EnchantsOrder.Demo
             while (text.ToUpper() != "Q")
             {
                 Console.WriteLine("Input the name of enchantment (type q to order): ");
+                Console.Write("> ");
                 text = Console.ReadLine();
                 if (text.ToUpper() == "Q") { break; }
                 if (Enchantments.FirstOrDefault((x) => x.Name == text) is Enchantment enchantment)
@@ -101,6 +129,7 @@ namespace EnchantsOrder.Demo
             while (!text.Equals("exit", StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine("Input the name of item (type exit to quit): ");
+                Console.Write("> ");
                 text = Console.ReadLine();
                 if (text.Equals("exit", StringComparison.OrdinalIgnoreCase)) { break; }
                 IEnumerable<Enchantment> enchantments = Enchantments.Where((x) => !x.Hidden && x.Items.Contains(text));

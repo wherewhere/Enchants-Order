@@ -55,12 +55,12 @@ namespace EnchantsOrder.Models
             StringBuilder builder = new();
             foreach (IEnchantmentStep step in Steps)
             {
-                builder.AppendLine(step.ToString());
+                _ = builder.AppendLine(step.ToString());
             }
-            builder.AppendLine($"Penalty Level: {Penalty}");
-            builder.AppendLine($"Max Experience Level: {MaxExperience}");
-            builder.Append($"Total Experience Level: {TotalExperience}");
-            return builder.ToString();
+            return builder.AppendLine($"Penalty Level: {Penalty}")
+                .AppendLine($"Max Experience Level: {MaxExperience}")
+                .Append($"Total Experience Level: {TotalExperience}")
+                .ToString();
         }
 
         /// <inheritdoc/>
