@@ -50,6 +50,7 @@
         ]
     },
     "Cleaving": {
+        "hidden": "true",
         "levelMax": "3",
         "weight": "1",
         "incompatible": [
@@ -62,6 +63,7 @@
         ]
     },
     "Curse of Binding": {
+        "hidden": "true",
         "levelMax": "1",
         "weight": "4",
         "incompatible": [
@@ -79,6 +81,7 @@
         ]
     },
     "Curse of Vanishing": {
+        "hidden": "true",
         "levelMax": "1",
         "weight": "4",
         "incompatible": [
@@ -99,8 +102,10 @@
             "shears",
             "flint_and_steel",
             "compass",
+            "recovery_compass",
             "carrot_on_a_stick",
             "warped_fungus_on_a_stick",
+            "brush",
             "shield",
             "elytra",
             "pumpkin",
@@ -296,6 +301,7 @@
             "compass",
             "carrot_on_a_stick",
             "warped_fungus_on_a_stick",
+            "brush",
             "shield",
             "elytra",
             "trident",
@@ -463,7 +469,7 @@
             ""
         ],
         "items": [
-            "sowrd"
+            "sword"
         ]
     },
     "Swift Sneak": {
@@ -513,6 +519,7 @@
             "compass",
             "carrot_on_a_stick",
             "warped_fungus_on_a_stick",
+            "brush",
             "shield",
             "elytra",
             "trident",

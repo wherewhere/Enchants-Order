@@ -6,8 +6,8 @@
             ""
         ],
         "items": [
-            "helmet",
-            "turtle_shell"
+            "头盔",
+            "海龟壳"
         ]
     },
     "节肢杀手": {
@@ -19,8 +19,8 @@
             "锋利"
         ],
         "items": [
-            "sword",
-            "axe"
+            "剑",
+            "斧"
         ]
     },
     "爆炸保护": {
@@ -32,11 +32,11 @@
             "弹射物保护"
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "头盔",
+            "胸甲",
+            "护腿",
+            "靴子",
+            "海龟壳"
         ]
     },
     "引雷": {
@@ -46,10 +46,11 @@
             "激流"
         ],
         "items": [
-            "trident"
+            "三叉戟"
         ]
     },
     "Cleaving": {
+        "hidden": "true",
         "levelMax": "3",
         "weight": "1",
         "incompatible": [
@@ -58,56 +59,60 @@
             "亡灵杀手"
         ],
         "items": [
-            "axe"
+            "斧"
         ]
     },
     "绑定诅咒": {
+        "hidden": "true",
         "levelMax": "1",
         "weight": "4",
         "incompatible": [
             ""
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "elytra",
-            "pumpkin",
-            "head",
-            "turtle_shell"
+            "头盔",
+            "胸甲",
+            "护腿",
+            "靴子",
+            "鞘翅",
+            "南瓜",
+            "头颅",
+            "海龟壳"
         ]
     },
     "消失诅咒": {
+        "hidden": "true",
         "levelMax": "1",
         "weight": "4",
         "incompatible": [
             ""
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "pickaxe",
-            "shovel",
-            "axe",
-            "sword",
-            "hoe",
-            "fishing_rod",
-            "bow",
-            "shears",
-            "flint_and_steel",
-            "compass",
-            "carrot_on_a_stick",
-            "warped_fungus_on_a_stick",
-            "shield",
-            "elytra",
-            "pumpkin",
-            "head",
-            "trident",
-            "turtle_shell",
-            "crossbow"
+            "头盔",
+            "胸甲",
+            "护腿",
+            "靴子",
+            "稿",
+            "锹",
+            "斧",
+            "剑",
+            "锄",
+            "钓鱼竿",
+            "弓",
+            "剪刀",
+            "打火石",
+            "指南针",
+            "追溯指针",
+            "胡萝卜钓竿",
+            "诡异菌钓竿",
+            "刷子",
+            "盾牌",
+            "鞘翅",
+            "南瓜",
+            "头颅",
+            "三叉戟",
+            "海龟壳",
+            "弩"
         ]
     },
     "深海探索者": {
@@ -117,7 +122,7 @@
             "冰霜行者"
         ],
         "items": [
-            "boots"
+            "靴子"
         ]
     },
     "效率": {
@@ -127,11 +132,11 @@
             ""
         ],
         "items": [
-            "pickaxe",
-            "shovel",
-            "axe",
-            "hoe",
-            "shears"
+            "稿",
+            "锹",
+            "斧",
+            "锄",
+            "剪刀"
         ]
     },
     "摔落保护": {
@@ -141,7 +146,7 @@
             ""
         ],
         "items": [
-            "boots"
+            "靴子"
         ]
     },
     "火焰附加": {
@@ -151,7 +156,7 @@
             ""
         ],
         "items": [
-            "sword"
+            "剑"
         ]
     },
     "火焰保护": {
@@ -163,11 +168,11 @@
             "弹射物保护"
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "头盔",
+            "胸甲",
+            "护腿",
+            "靴子",
+            "海龟壳"
         ]
     },
     "火矢": {
@@ -177,7 +182,7 @@
             ""
         ],
         "items": [
-            "bow"
+            "弓"
         ]
     },
     "时运": {
@@ -187,10 +192,10 @@
             "精准采集"
         ],
         "items": [
-            "pickaxe",
-            "shovel",
-            "axe",
-            "hoe"
+            "稿",
+            "锹",
+            "斧",
+            "锄"
         ]
     },
     "冰霜行者": {
@@ -200,7 +205,7 @@
             "深海探索者"
         ],
         "items": [
-            "boots"
+            "靴子"
         ]
     },
     "穿刺": {
@@ -210,7 +215,7 @@
             ""
         ],
         "items": [
-            "trident"
+            "三叉戟"
         ]
     },
     "无限": {
@@ -220,7 +225,7 @@
             "经验修补"
         ],
         "items": [
-            "bow"
+            "弓"
         ]
     },
     "击退": {
@@ -230,7 +235,7 @@
             ""
         ],
         "items": [
-            "sword"
+            "剑"
         ]
     },
     "抢夺": {
@@ -240,7 +245,7 @@
             ""
         ],
         "items": [
-            "sword"
+            "剑"
         ]
     },
     "忠诚": {
@@ -250,7 +255,7 @@
             "激流"
         ],
         "items": [
-            "trident"
+            "三叉戟"
         ]
     },
     "海之眷顾": {
@@ -260,7 +265,7 @@
             ""
         ],
         "items": [
-            "fishing_rod"
+            "钓鱼竿"
         ]
     },
     "饵钓": {
@@ -270,7 +275,7 @@
             ""
         ],
         "items": [
-            "fishing_rod"
+            "钓鱼竿"
         ]
     },
     "经验修补": {
@@ -280,27 +285,28 @@
             "无限"
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "pickaxe",
-            "shovel",
-            "axe",
-            "sword",
-            "hoe",
-            "fishing_rod",
-            "bow",
-            "shears",
-            "flint_and_steel",
-            "compass",
-            "carrot_on_a_stick",
-            "warped_fungus_on_a_stick",
-            "shield",
-            "elytra",
-            "trident",
-            "turtle_shell",
-            "crossbow"
+            "头盔",
+            "胸甲",
+            "护腿",
+            "靴子",
+            "稿",
+            "锹",
+            "斧",
+            "剑",
+            "锄",
+            "钓鱼竿",
+            "弓",
+            "剪刀",
+            "打火石",
+            "指南针",
+            "胡萝卜钓竿",
+            "诡异菌钓竿",
+            "刷子",
+            "盾牌",
+            "鞘翅",
+            "三叉戟",
+            "海龟壳",
+            "弩"
         ]
     },
     "多重射击": {
@@ -310,7 +316,7 @@
             "穿透"
         ],
         "items": [
-            "crossbow"
+            "弩"
         ]
     },
     "穿透": {
@@ -320,7 +326,7 @@
             "多重射击"
         ],
         "items": [
-            "crossbow"
+            "弩"
         ]
     },
     "力量": {
@@ -330,7 +336,7 @@
             ""
         ],
         "items": [
-            "bow"
+            "弓"
         ]
     },
     "弹射物保护": {
@@ -342,11 +348,11 @@
             "火焰保护."
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "头盔",
+            "胸甲",
+            "护腿",
+            "靴子",
+            "海龟壳"
         ]
     },
     "保护": {
@@ -358,11 +364,11 @@
             "弹射物保护"
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "头盔",
+            "胸甲",
+            "护腿",
+            "靴子",
+            "海龟壳"
         ]
     },
     "冲击": {
@@ -372,7 +378,7 @@
             ""
         ],
         "items": [
-            "bow"
+            "弓"
         ]
     },
     "快速装填": {
@@ -382,7 +388,7 @@
             ""
         ],
         "items": [
-            "crossbow"
+            "弩"
         ]
     },
     "水下呼吸": {
@@ -392,8 +398,8 @@
             ""
         ],
         "items": [
-            "helmet",
-            "turtle_shell"
+            "头盔",
+            "海龟壳"
         ]
     },
     "激流": {
@@ -404,7 +410,7 @@
             "忠诚"
         ],
         "items": [
-            "crossbow"
+            "弩"
         ]
     },
     "锋利": {
@@ -416,7 +422,7 @@
             "亡灵杀手"
         ],
         "items": [
-            "sword"
+            "剑"
         ]
     },
     "精准采集": {
@@ -426,11 +432,11 @@
             "时运"
         ],
         "items": [
-            "pickaxe",
-            "shovel",
-            "axe",
-            "hoe",
-            "shears"
+            "稿",
+            "锹",
+            "斧",
+            "锄",
+            "剪刀"
         ]
     },
     "亡灵杀手": {
@@ -442,8 +448,8 @@
             "锋利"
         ],
         "items": [
-            "sword",
-            "axe"
+            "剑",
+            "斧"
         ]
     },
     "灵魂疾行": {
@@ -453,7 +459,7 @@
             ""
         ],
         "items": [
-            "boots"
+            "靴子"
         ]
     },
     "横扫之刃": {
@@ -463,17 +469,17 @@
             ""
         ],
         "items": [
-            "sowrd"
+            "剑"
         ]
     },
-    "迅捷潛行": {
+    "迅捷潜行": {
         "levelMax": "3",
         "weight": "1",
         "incompatible": [
             ""
         ],
         "items": [
-            "leggings"
+            "护腿"
         ]
     },
     "荆棘": {
@@ -483,11 +489,11 @@
             ""
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "头盔",
+            "胸甲",
+            "护腿",
+            "靴子",
+            "海龟壳"
         ]
     },
     "耐久": {
@@ -497,27 +503,28 @@
             ""
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "pickaxe",
-            "shovel",
-            "axe",
-            "sword",
-            "hoe",
-            "fishing_rod",
-            "bow",
-            "shears",
-            "flint_and_steel",
-            "compass",
-            "carrot_on_a_stick",
-            "warped_fungus_on_a_stick",
-            "shield",
-            "elytra",
-            "trident",
-            "turtle_shell",
-            "crossbow"
+            "头盔",
+            "胸甲",
+            "护腿",
+            "靴子",
+            "稿",
+            "锹",
+            "斧",
+            "剑",
+            "锄",
+            "钓鱼竿",
+            "弓",
+            "剪刀",
+            "打火石",
+            "指南针",
+            "胡萝卜钓竿",
+            "诡异菌钓竿",
+            "刷子",
+            "盾牌",
+            "鞘翅",
+            "三叉戟",
+            "海龟壳",
+            "弩"
         ]
     }
 }

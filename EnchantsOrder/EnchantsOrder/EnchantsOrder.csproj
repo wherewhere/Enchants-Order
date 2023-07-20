@@ -25,6 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="EnchantsOrder.Demo" />
     <InternalsVisibleTo Include="EnchantsOrder.Tests" />
   </ItemGroup>
 

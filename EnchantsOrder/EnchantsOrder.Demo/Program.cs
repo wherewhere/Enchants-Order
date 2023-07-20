@@ -5,44 +5,79 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using Enchantment = EnchantsOrder.Demo.Models.Enchantment;
 
 namespace EnchantsOrder.Demo
 {
     internal class Program
     {
+        private static readonly List<Enchantment> Enchantments = new();
+
         private static void Main(string[] args)
         {
-            string text = string.Empty;
-            List<IEnchantment> enchantment_list = new();
-            string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", CultureInfo.CurrentCulture.TwoLetterISOLanguageName.StartsWith("zh") ? "Enchants.zh-CN.json" : "Enchants.en-US.json");
-
-            using (StreamReader file = File.OpenText(json))
+            InitEnchantments();
+            string text = args.FirstOrDefault();
+            while (!(text?.Equals("exit", StringComparison.OrdinalIgnoreCase) == true))
             {
-                using JsonTextReader reader = new(file);
-                JObject token = (JObject)JToken.ReadFrom(reader);
-                while (text.ToUpper() != "Q")
+                Console.WriteLine("Input the command (type exit to quit): ");
+                text = Console.ReadLine();
+                Console.WriteLine();
+                switch (text.ToLowerInvariant())
                 {
-                    Console.WriteLine("Input the name of enchantment (type q to order): ");
-                    text = Console.ReadLine();
-                    if (text.ToUpper() == "Q") { break; }
-                    if (token.TryGetValue(text, out JToken v))
-                    {
-                        JObject value = (JObject)v;
-                        if (value.TryGetValue("levelMax", out JToken levelMax) && value.TryGetValue("weight", out JToken weight))
-                        {
-                            Enchantment enchantment = new(text, levelMax.ToObject<int>(), weight.ToObject<int>());
-                            enchantment_list.Add(enchantment);
-                            Console.WriteLine($"{text} Added");
-                        }
-                        else
-                        {
-                            Console.WriteLine("The source of this enchantment is broken");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No such that enchantment");
-                    }
+                    case "order":
+                        OrderEnchantments();
+                        break;
+                    case "list":
+                        ListOrderedEnchantments();
+                        break;
+                    case "helper":
+                        Console.WriteLine("*****************");
+                        Console.WriteLine("Helper");
+                        Console.WriteLine("*****************");
+                        Console.WriteLine("order: Order enchantments");
+                        Console.WriteLine("list: List ordered enchantments");
+                        Console.WriteLine("helper: Show this helper");
+                        Console.WriteLine("exit: Quit");
+                        break;
+                    case "exit":
+                        break;
+                    default:
+                        Console.WriteLine("Unknown command");
+                        break;
+                }
+                Console.WriteLine();
+            }
+        }
+
+        private static void InitEnchantments()
+        {
+            string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", CultureInfo.CurrentCulture.TwoLetterISOLanguageName.StartsWith("zh") ? "Enchants.zh-CN.json" : "Enchants.en-US.json");
+            using StreamReader file = File.OpenText(json);
+            using JsonTextReader reader = new(file);
+            foreach (JToken token in JToken.ReadFrom(reader))
+            {
+                Enchantments.Add(new(token));
+            }
+        }
+
+        private static void OrderEnchantments()
+        {
+            string text = string.Empty;
+            List<IEnchantment> enchantmentList = new();
+            while (text.ToUpper() != "Q")
+            {
+                Console.WriteLine("Input the name of enchantment (type q to order): ");
+                text = Console.ReadLine();
+                if (text.ToUpper() == "Q") { break; }
+                if (Enchantments.FirstOrDefault((x) => x.Name == text) is Enchantment enchantment)
+                {
+                    enchantmentList.Add(enchantment);
+                    Console.WriteLine($"{text} Added");
+                }
+                else
+                {
+                    Console.WriteLine("No such that enchantment");
                 }
             }
 
@@ -51,16 +86,84 @@ namespace EnchantsOrder.Demo
 
             try
             {
-                OrderingResults results = enchantment_list.Ordering();
+                OrderingResults results = enchantmentList.Ordering();
                 Console.WriteLine(results.ToString());
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+        }
 
-            Console.Write("Press any key to exit...");
-            Console.ReadKey(true);
+        private static void ListOrderedEnchantments()
+        {
+            string text = string.Empty;
+            while (!text.Equals("exit", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine("Input the name of item (type exit to quit): ");
+                text = Console.ReadLine();
+                if (text.Equals("exit", StringComparison.OrdinalIgnoreCase)) { break; }
+                IEnumerable<Enchantment> enchantments = Enchantments.Where((x) => !x.Hidden && x.Items.Contains(text));
+                if (enchantments.Any())
+                {
+                    IEnumerable<Enchantment> incompatibles = enchantments.Where((x) =>
+                    {
+                        foreach (Enchantment enchantment in enchantments)
+                        {
+                            if (x.Incompatible.Contains(enchantment.Name))
+                            {
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
+                    if (incompatibles.Any())
+                    {
+                        IEnumerable<Enchantment> lists = enchantments.Where((x) =>
+                        {
+                            foreach (Enchantment enchantment in incompatibles)
+                            {
+                                if (x.Name == enchantment.Name)
+                                {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        });
+                        foreach (Enchantment enchantment in incompatibles)
+                        {
+                            try
+                            {
+                                Console.WriteLine("*****************");
+                                OrderingResults results = lists.Append(enchantment).Ordering();
+                                Console.WriteLine(results.ToString());
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Console.WriteLine("*****************");
+                            OrderingResults results = enchantments.Ordering();
+                            Console.WriteLine(results.ToString());
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No such that item");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
