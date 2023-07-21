@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "EnchantsOrder.Demo": {
-      "commandName": "Project",
-      "commandLineArgs": "lang en-US"
-    }
-  }
-}

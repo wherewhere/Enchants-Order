@@ -1,12 +1,12 @@
-﻿using EnchantsOrder.Demo.Properties;
+﻿using EnchantsOrder.Demo.Common;
 using EnchantsOrder.Demo.Properties.Resource;
 using EnchantsOrder.Models;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
-using System.CommandLine.Completions;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -18,9 +18,11 @@ namespace EnchantsOrder.Demo
     internal class Program
     {
         private static readonly List<Enchantment> Enchantments = new();
+        private static readonly IConfigurationRoot Configuration = new ConfigurationBuilder().AddWritableJsonFile(Path.Combine("Assets", "AppSettings.json"), true, true).Build();
 
         private static async Task<int> Main(string[] args)
         {
+            InitSettings();
             InitLanguage();
             InitEnchantments();
 
@@ -117,9 +119,17 @@ namespace EnchantsOrder.Demo
             }
         }
 
+        private static void InitSettings()
+        {
+            if (string.IsNullOrEmpty(Configuration["Language"]))
+            {
+                Configuration["Language"] = "default";
+            }
+        }
+
         private static void InitLanguage()
         {
-            string code = Settings.Default.Language;
+            string code = Configuration["Language"];
             if(!code.Equals("default"))
             {
                 try
@@ -130,8 +140,7 @@ namespace EnchantsOrder.Demo
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Settings.Default.Language = "default";
-                    Settings.Default.Save();
+                    Configuration["Language"] = "default";
                 }
             }
         }
@@ -139,7 +148,7 @@ namespace EnchantsOrder.Demo
         private static void InitEnchantments()
         {
             Enchantments.Clear();
-            string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", Resource.EnchantsFileName);
+            string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Enchants", Resource.EnchantsFileName);
             using StreamReader file = File.OpenText(json);
             using JsonTextReader reader = new(file);
             foreach (JToken token in JToken.ReadFrom(reader))
@@ -170,15 +179,13 @@ namespace EnchantsOrder.Demo
                 if (text.Equals("null", StringComparison.OrdinalIgnoreCase) || text.Equals("default", StringComparison.OrdinalIgnoreCase))
                 {
                     CultureInfo.DefaultThreadCurrentCulture = null;
-                    Settings.Default.Language = "default";
-                    Settings.Default.Save();
+                    Configuration["Language"] = "default";
                 }
                 else
                 {
                     CultureInfo culture = new(text);
                     CultureInfo.DefaultThreadCurrentCulture = culture;
-                    Settings.Default.Language = text;
-                    Settings.Default.Save();
+                    Configuration["Language"] = text;
                 }
 
                 InitEnchantments();
