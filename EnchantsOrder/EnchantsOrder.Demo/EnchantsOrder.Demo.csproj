@@ -3,7 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <LangVersion>preview</LangVersion>
-    <TargetFramework>net4.8</TargetFramework>
+    <TargetFramework Condition="'$(IsWindows)' == 'True'">net4.8</TargetFramework>
+    <TargetFramework Condition="'$(IsWindows)' != 'True'">net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

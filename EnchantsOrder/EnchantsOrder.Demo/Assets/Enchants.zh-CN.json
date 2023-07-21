@@ -52,7 +52,7 @@
     "Cleaving": {
         "hidden": "true",
         "levelMax": "3",
-        "weight": "1",
+        "weight": "2",
         "incompatible": [
             "锋利",
             "节肢杀手",
