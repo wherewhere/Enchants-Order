@@ -1,4 +1,5 @@
 ﻿using EnchantsOrder.Demo.Properties;
+using EnchantsOrder.Demo.Properties.Resource;
 using EnchantsOrder.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,40 +23,40 @@ namespace EnchantsOrder.Demo
             InitLanguage();
             InitEnchantments();
 
-            Option<IEnumerable<string>> enchantmentArgument = new("--enchantments", Array.Empty<string>, "Set the enchantments which you want to enchant")
+            Option<IEnumerable<string>> enchantmentArgument = new("--enchantments", Array.Empty<string>, Resource.EnchantmentArgument)
             {
                 AllowMultipleArgumentsPerToken = true
             };
             enchantmentArgument.AddAlias("-e");
 
-            Option<int> penaltyOption = new("--penalty", () => 0, "Set the penalty of your item which you want to enchant");
+            Option<int> penaltyOption = new("--penalty", () => 0, Resource.PenaltyOption);
             penaltyOption.AddAlias("-p");
 
-            Command orderCommand = new("order", "Ordering the enchantments")
+            Command orderCommand = new("order", Resource.OrderCommand)
             {
                 enchantmentArgument,
                 penaltyOption
             };
             orderCommand.SetHandler(OrderCommandHandler, enchantmentArgument, penaltyOption);
 
-            Argument<string> itemArgument = new("item", () => string.Empty, "Set the item which you want to list enchantments");
+            Argument<string> itemArgument = new("item", () => string.Empty, Resource.ItemArgument);
 
-            Command listCommand = new("list", "List ordered enchantments of item")
+            Command listCommand = new("list", Resource.ListCommand)
             {
                 itemArgument,
                 penaltyOption
             };
             listCommand.SetHandler(ListCommandHandler, itemArgument, penaltyOption);
 
-            Argument<string> langArgument = new("code", () => string.Empty, "Set the language code you want to change");
+            Argument<string> langArgument = new("code", () => string.Empty, Resource.LangArgument);
 
-            Command langCommand = new("lang", "Change the language of this program")
+            Command langCommand = new("lang", Resource.LangCommand)
             {
                 langArgument,
             };
             langCommand.SetHandler(LangCommandHandler, langArgument);
 
-            RootCommand rootCommand = new("A demo of EnchantsOrder which can order enchantments")
+            RootCommand rootCommand = new(Resource.RootCommand)
             {
                 orderCommand,
                 listCommand,
@@ -71,7 +72,7 @@ namespace EnchantsOrder.Demo
             string text = string.Empty;
             while (!(text?.Equals("exit", StringComparison.OrdinalIgnoreCase) == true))
             {
-                Console.WriteLine("Input the command (type exit to quit): ");
+                Console.WriteLine(Resource.InputCommand);
                 Console.Write("> ");
                 text = Console.ReadLine();
                 Console.WriteLine();
@@ -88,7 +89,7 @@ namespace EnchantsOrder.Demo
                         break;
                     case "helper":
                         Console.WriteLine("Description:");
-                        Console.WriteLine("  Ordering the enchantments");
+                        Console.WriteLine($"  {Resource.RootCommand}");
                         Console.WriteLine();
                         Console.WriteLine("Usage:");
                         Console.WriteLine("  EnchantsOrder.Demo order [options]");
@@ -98,14 +99,14 @@ namespace EnchantsOrder.Demo
                         Console.WriteLine("  -?, -h, --help  Show help and usage information");
                         Console.WriteLine();
                         Console.WriteLine("Commands:");
-                        Console.WriteLine("  order        Ordering the enchantments");
-                        Console.WriteLine("  list <item>  List ordered enchantments of item");
-                        Console.WriteLine("  lang <code>  Change the language of this program");
+                        Console.WriteLine($"  order        {Resource.OrderCommand}");
+                        Console.WriteLine($"  list <item>  {Resource.ListCommand}");
+                        Console.WriteLine($"  lang <code>  {Resource.LangCommand}");
                         break;
                     case "exit":
                         break;
                     default:
-                        Console.WriteLine("Unknown command");
+                        Console.WriteLine(Resource.UnknownCommand);
                         break;
                 }
                 Console.WriteLine();
@@ -134,7 +135,7 @@ namespace EnchantsOrder.Demo
         private static void InitEnchantments()
         {
             Enchantments.Clear();
-            string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", CultureInfo.CurrentCulture.TwoLetterISOLanguageName.StartsWith("zh") ? "Enchants.zh-CN.json" : "Enchants.en-US.json");
+            string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", Resource.EnchantsFileName);
             using StreamReader file = File.OpenText(json);
             using JsonTextReader reader = new(file);
             foreach (JToken token in JToken.ReadFrom(reader))
@@ -150,15 +151,15 @@ namespace EnchantsOrder.Demo
                 string text = code;
                 if (string.IsNullOrWhiteSpace(text))
                 {
-                    Console.WriteLine($"Current language is {CultureInfo.CurrentCulture.DisplayName}");
-                    Console.WriteLine("Input the language code to change language (type exit to quit): ");
+                    Console.WriteLine(string.Format(Resource.CurrentLanguageFormat, CultureInfo.CurrentCulture.DisplayName));
+                    Console.WriteLine(Resource.InputLanguageCode);
                     Console.Write("> ");
                     text = Console.ReadLine();
                 }
 
                 if (text.Equals("exit", StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine($"Function cancelled.");
+                    Console.WriteLine(Resource.FunctionCancelled);
                     return;
                 }
 
@@ -177,7 +178,7 @@ namespace EnchantsOrder.Demo
                 }
 
                 InitEnchantments();
-                Console.WriteLine($"Current language is changed to {CultureInfo.CurrentCulture.DisplayName}");
+                Console.WriteLine(string.Format(Resource.CurrentLanguageChangedFormat, CultureInfo.CurrentCulture.DisplayName));
             }
             catch (Exception ex)
             {
@@ -200,7 +201,7 @@ namespace EnchantsOrder.Demo
                     }
                     else
                     {
-                        Console.WriteLine($"Not found enchantment named {item}.");
+                        Console.WriteLine(string.Format(Resource.NotFoundEnchantmentFormat, item));
                         return null;
                     }
                 }));
@@ -209,23 +210,23 @@ namespace EnchantsOrder.Demo
             {
                 while (text.ToUpper() != "Q")
                 {
-                    Console.WriteLine("Input the name of enchantment (type q to order): ");
+                    Console.WriteLine(Resource.InputEnchantment);
                     Console.Write("> ");
                     text = Console.ReadLine();
                     if (text.ToUpper() == "Q") { break; }
                     if (Enchantments.FirstOrDefault((x) => x.Name == text) is Enchantment enchantment)
                     {
                         enchantmentList.Add(enchantment);
-                        Console.WriteLine($"{text} Added");
+                        Console.WriteLine(string.Format(Resource.AddedFormat, text));
                     }
                     else
                     {
-                        Console.WriteLine($"Not found enchantment named {text}.");
+                        Console.WriteLine(string.Format(Resource.NotFoundEnchantmentFormat, text));
                     }
                 }
             }
 
-            Console.WriteLine("Start ordering...");
+            Console.WriteLine(Resource.StartOrdering);
             Console.WriteLine("*****************");
 
             try
@@ -244,12 +245,12 @@ namespace EnchantsOrder.Demo
             string text = item;
             if (string.IsNullOrWhiteSpace(text))
             {
-                Console.WriteLine("Input the name of item (type exit to quit): ");
+                Console.WriteLine(Resource.InputItem);
                 Console.Write("> ");
                 text = Console.ReadLine();
                 if (text.Equals("exit", StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine($"Function cancelled.");
+                    Console.WriteLine(Resource.FunctionCancelled);
                     return;
                 }
             }
@@ -313,7 +314,7 @@ namespace EnchantsOrder.Demo
             }
             else
             {
-                Console.WriteLine($"Not found item named {text}.");
+                Console.WriteLine(string.Format(Resource.NotFoundItemFormat, text));
             }
         }
     }
