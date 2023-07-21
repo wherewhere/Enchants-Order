@@ -1,7 +1,7 @@
 {
     "Aqua Affinity": {
-        "levelMax": "1",
-        "weight": "2",
+        "levelMax": 1,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -11,8 +11,8 @@
         ]
     },
     "Bane of Arthropods": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             "Cleaving",
             "Smite",
@@ -24,8 +24,8 @@
         ]
     },
     "Blast Protection": {
-        "levelMax": "4",
-        "weight": "2",
+        "levelMax": 4,
+        "weight": 2,
         "incompatible": [
             "Fire Protection",
             "Protection",
@@ -40,8 +40,8 @@
         ]
     },
     "Channeling": {
-        "levelMax": "1",
-        "weight": "4",
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             "Riptide"
         ],
@@ -50,9 +50,9 @@
         ]
     },
     "Cleaving": {
-        "hidden": "true",
-        "levelMax": "3",
-        "weight": "2",
+        "hidden": true,
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             "Sharpness",
             "Bane of Arthropods",
@@ -63,9 +63,9 @@
         ]
     },
     "Curse of Binding": {
-        "hidden": "true",
-        "levelMax": "1",
-        "weight": "4",
+        "hidden": true,
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             ""
         ],
@@ -81,9 +81,9 @@
         ]
     },
     "Curse of Vanishing": {
-        "hidden": "true",
-        "levelMax": "1",
-        "weight": "4",
+        "hidden": true,
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             ""
         ],
@@ -116,8 +116,8 @@
         ]
     },
     "Depth Strider": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             "Frost Walker"
         ],
@@ -126,8 +126,8 @@
         ]
     },
     "Efficiency": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -140,8 +140,8 @@
         ]
     },
     "Feather Falling": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -150,8 +150,8 @@
         ]
     },
     "Fire Aspect": {
-        "levelMax": "2",
-        "weight": "2",
+        "levelMax": 2,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -160,8 +160,8 @@
         ]
     },
     "Fire Protection": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             "Blast Protection",
             "Protection",
@@ -176,8 +176,8 @@
         ]
     },
     "Flame": {
-        "levelMax": "1",
-        "weight": "2",
+        "levelMax": 1,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -186,8 +186,8 @@
         ]
     },
     "Fortune": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             "Silk Touch"
         ],
@@ -199,8 +199,8 @@
         ]
     },
     "Frost Walker": {
-        "levelMax": "2",
-        "weight": "2",
+        "levelMax": 2,
+        "weight": 2,
         "incompatible": [
             "Depth Strider"
         ],
@@ -209,8 +209,8 @@
         ]
     },
     "Impaling": {
-        "levelMax": "5",
-        "weight": "2",
+        "levelMax": 5,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -219,8 +219,8 @@
         ]
     },
     "Infinity": {
-        "levelMax": "1",
-        "weight": "4",
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             "Mending"
         ],
@@ -229,8 +229,8 @@
         ]
     },
     "Knockback": {
-        "levelMax": "2",
-        "weight": "1",
+        "levelMax": 2,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -239,8 +239,8 @@
         ]
     },
     "Looting": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -249,8 +249,8 @@
         ]
     },
     "Loyalty": {
-        "levelMax": "3",
-        "weight": "1",
+        "levelMax": 3,
+        "weight": 1,
         "incompatible": [
             "Riptide"
         ],
@@ -259,8 +259,8 @@
         ]
     },
     "Luck of the Sea": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -269,8 +269,8 @@
         ]
     },
     "Lure": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -279,8 +279,8 @@
         ]
     },
     "Mending": {
-        "levelMax": "1",
-        "weight": "2",
+        "levelMax": 1,
+        "weight": 2,
         "incompatible": [
             "Infinity"
         ],
@@ -310,8 +310,8 @@
         ]
     },
     "Multishot": {
-        "levelMax": "1",
-        "weight": "2",
+        "levelMax": 1,
+        "weight": 2,
         "incompatible": [
             "Piercing"
         ],
@@ -320,8 +320,8 @@
         ]
     },
     "Piercing": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             "Multishot"
         ],
@@ -330,8 +330,8 @@
         ]
     },
     "Power": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -340,8 +340,8 @@
         ]
     },
     "Projectile Protection": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             "Protection",
             "Blast Protection",
@@ -356,8 +356,8 @@
         ]
     },
     "Protection": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             "Blast Protection",
             "Fire Protection",
@@ -372,8 +372,8 @@
         ]
     },
     "Punch": {
-        "levelMax": "2",
-        "weight": "2",
+        "levelMax": 2,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -382,8 +382,8 @@
         ]
     },
     "Quick Charge": {
-        "levelMax": "3",
-        "weight": "1",
+        "levelMax": 3,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -392,8 +392,8 @@
         ]
     },
     "Respiration": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -403,8 +403,8 @@
         ]
     },
     "Riptide": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             "Channelling",
             "Loyalty"
@@ -414,8 +414,8 @@
         ]
     },
     "Sharpness": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             "Bane of Arthropods",
             "Cleaving",
@@ -426,8 +426,8 @@
         ]
     },
     "Silk Touch": {
-        "levelMax": "1",
-        "weight": "4",
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             "Fortune"
         ],
@@ -440,8 +440,8 @@
         ]
     },
     "Smite": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             "Bane of Arthropods",
             "Cleaving",
@@ -453,8 +453,8 @@
         ]
     },
     "Soul Speed": {
-        "levelMax": "3",
-        "weight": "4",
+        "levelMax": 3,
+        "weight": 4,
         "incompatible": [
             ""
         ],
@@ -463,8 +463,8 @@
         ]
     },
     "Sweeping Edge": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -473,8 +473,8 @@
         ]
     },
     "Swift Sneak": {
-        "levelMax": "3",
-        "weight": "1",
+        "levelMax": 3,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -483,8 +483,8 @@
         ]
     },
     "Thorns": {
-        "levelMax": "3",
-        "weight": "4",
+        "levelMax": 3,
+        "weight": 4,
         "incompatible": [
             ""
         ],
@@ -497,8 +497,8 @@
         ]
     },
     "Unbreaking": {
-        "levelMax": "3",
-        "weight": "1",
+        "levelMax": 3,
+        "weight": 1,
         "incompatible": [
             ""
         ],

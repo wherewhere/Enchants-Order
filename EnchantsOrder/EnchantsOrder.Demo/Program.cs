@@ -2,14 +2,13 @@
 using EnchantsOrder.Demo.Properties.Resource;
 using EnchantsOrder.Models;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Enchantment = EnchantsOrder.Demo.Models.Enchantment;
 
@@ -150,8 +149,8 @@ namespace EnchantsOrder.Demo
             Enchantments.Clear();
             string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Enchants", Resource.EnchantsFileName);
             using StreamReader file = File.OpenText(json);
-            using JsonTextReader reader = new(file);
-            foreach (JToken token in JToken.ReadFrom(reader))
+            JsonDocument document = JsonDocument.Parse(file.BaseStream);
+            foreach (JsonProperty token in document.RootElement.EnumerateObject())
             {
                 Enchantments.Add(new(token));
             }

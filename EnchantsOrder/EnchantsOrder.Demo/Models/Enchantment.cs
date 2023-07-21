@@ -1,8 +1,8 @@
 ﻿using EnchantsOrder.Common;
 using EnchantsOrder.Models;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace EnchantsOrder.Demo.Models
 {
@@ -15,45 +15,39 @@ namespace EnchantsOrder.Demo.Models
 
         public string Name { get; set; }
 
-        public IEnumerable<string> Items { get; set; }
-        public IEnumerable<string> Incompatible { get; set; }
+        public string[] Items { get; set; }
+        public string[] Incompatible { get; set; }
 
         public long Experience => (long)Level * Weight;
 
-        public Enchantment(JToken token)
+        public Enchantment(JsonProperty token)
         {
-            if (token != null)
+            Name = token.Name;
+
+            JsonElement value = token.Value;
+            if (value.TryGetProperty("levelMax", out JsonElement levelMaxProperty) && levelMaxProperty.TryGetInt32(out int levelMax))
             {
-                if (token is JProperty property)
-                {
-                    Name = property.Name;
+                Level = levelMax;
+            }
 
-                    JObject v = (JObject)property.Value;
-                    if (v.TryGetValue("levelMax", out JToken levelMax))
-                    {
-                        Level = levelMax.ToObject<int>();
-                    }
+            if (value.TryGetProperty("weight", out JsonElement weightProperty) && weightProperty.TryGetInt32(out int weight))
+            {
+                Weight = weight;
+            }
 
-                    if (v.TryGetValue("weight", out JToken weight))
-                    {
-                        Weight = weight.ToObject<int>();
-                    }
+            if (value.TryGetProperty("hidden", out JsonElement hiddenProperty))
+            {
+                Hidden = hiddenProperty.GetBoolean();
+            }
 
-                    if (v.TryGetValue("hidden", out JToken hidden))
-                    {
-                        Hidden = hidden.ToObject<bool>();
-                    }
+            if (value.TryGetProperty("items", out JsonElement itemsProperty))
+            {
+                Items = itemsProperty.EnumerateArray().Select((x) => x.GetString()).ToArray();
+            }
 
-                    if (v.TryGetValue("items", out JToken items))
-                    {
-                        Items = items.Select((x) => x.ToString());
-                    }
-
-                    if (v.TryGetValue("incompatible", out JToken incompatible))
-                    {
-                        Incompatible = incompatible.Select((x) => x.ToString());
-                    }
-                }
+            if (value.TryGetProperty("incompatible", out JsonElement incompatibleProperty))
+            {
+                Incompatible = incompatibleProperty.EnumerateArray().Select((x) => x.GetString()).ToArray();
             }
         }
 

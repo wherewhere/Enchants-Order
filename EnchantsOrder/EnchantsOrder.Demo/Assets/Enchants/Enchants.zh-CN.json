@@ -1,7 +1,7 @@
 {
     "水下速掘": {
-        "levelMax": "1",
-        "weight": "2",
+        "levelMax": 1,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -11,8 +11,8 @@
         ]
     },
     "节肢杀手": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             "Cleaving",
             "亡灵杀手",
@@ -24,8 +24,8 @@
         ]
     },
     "爆炸保护": {
-        "levelMax": "4",
-        "weight": "2",
+        "levelMax": 4,
+        "weight": 2,
         "incompatible": [
             "火焰保护",
             "保护",
@@ -40,8 +40,8 @@
         ]
     },
     "引雷": {
-        "levelMax": "1",
-        "weight": "4",
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             "激流"
         ],
@@ -50,9 +50,9 @@
         ]
     },
     "Cleaving": {
-        "hidden": "true",
-        "levelMax": "3",
-        "weight": "2",
+        "hidden": true,
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             "锋利",
             "节肢杀手",
@@ -63,9 +63,9 @@
         ]
     },
     "绑定诅咒": {
-        "hidden": "true",
-        "levelMax": "1",
-        "weight": "4",
+        "hidden": true,
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             ""
         ],
@@ -81,9 +81,9 @@
         ]
     },
     "消失诅咒": {
-        "hidden": "true",
-        "levelMax": "1",
-        "weight": "4",
+        "hidden": true,
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             ""
         ],
@@ -116,8 +116,8 @@
         ]
     },
     "深海探索者": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             "冰霜行者"
         ],
@@ -126,8 +126,8 @@
         ]
     },
     "效率": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -140,8 +140,8 @@
         ]
     },
     "摔落保护": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -150,8 +150,8 @@
         ]
     },
     "火焰附加": {
-        "levelMax": "2",
-        "weight": "2",
+        "levelMax": 2,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -160,8 +160,8 @@
         ]
     },
     "火焰保护": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             "爆炸保护",
             "保护",
@@ -176,8 +176,8 @@
         ]
     },
     "火矢": {
-        "levelMax": "1",
-        "weight": "2",
+        "levelMax": 1,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -186,8 +186,8 @@
         ]
     },
     "时运": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             "精准采集"
         ],
@@ -199,8 +199,8 @@
         ]
     },
     "冰霜行者": {
-        "levelMax": "2",
-        "weight": "2",
+        "levelMax": 2,
+        "weight": 2,
         "incompatible": [
             "深海探索者"
         ],
@@ -209,8 +209,8 @@
         ]
     },
     "穿刺": {
-        "levelMax": "5",
-        "weight": "2",
+        "levelMax": 5,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -219,8 +219,8 @@
         ]
     },
     "无限": {
-        "levelMax": "1",
-        "weight": "4",
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             "经验修补"
         ],
@@ -229,8 +229,8 @@
         ]
     },
     "击退": {
-        "levelMax": "2",
-        "weight": "1",
+        "levelMax": 2,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -239,8 +239,8 @@
         ]
     },
     "抢夺": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -249,8 +249,8 @@
         ]
     },
     "忠诚": {
-        "levelMax": "3",
-        "weight": "1",
+        "levelMax": 3,
+        "weight": 1,
         "incompatible": [
             "激流"
         ],
@@ -259,8 +259,8 @@
         ]
     },
     "海之眷顾": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -269,8 +269,8 @@
         ]
     },
     "饵钓": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -279,8 +279,8 @@
         ]
     },
     "经验修补": {
-        "levelMax": "1",
-        "weight": "2",
+        "levelMax": 1,
+        "weight": 2,
         "incompatible": [
             "无限"
         ],
@@ -310,8 +310,8 @@
         ]
     },
     "多重射击": {
-        "levelMax": "1",
-        "weight": "2",
+        "levelMax": 1,
+        "weight": 2,
         "incompatible": [
             "穿透"
         ],
@@ -320,8 +320,8 @@
         ]
     },
     "穿透": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             "多重射击"
         ],
@@ -330,8 +330,8 @@
         ]
     },
     "力量": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -340,8 +340,8 @@
         ]
     },
     "弹射物保护": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             "保护",
             "爆炸保护",
@@ -356,8 +356,8 @@
         ]
     },
     "保护": {
-        "levelMax": "4",
-        "weight": "1",
+        "levelMax": 4,
+        "weight": 1,
         "incompatible": [
             "爆炸保护",
             "火焰保护",
@@ -372,8 +372,8 @@
         ]
     },
     "冲击": {
-        "levelMax": "2",
-        "weight": "2",
+        "levelMax": 2,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -382,8 +382,8 @@
         ]
     },
     "快速装填": {
-        "levelMax": "3",
-        "weight": "1",
+        "levelMax": 3,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -392,8 +392,8 @@
         ]
     },
     "水下呼吸": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -403,8 +403,8 @@
         ]
     },
     "激流": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             "Channelling",
             "忠诚"
@@ -414,8 +414,8 @@
         ]
     },
     "锋利": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             "节肢杀手",
             "Cleaving",
@@ -426,8 +426,8 @@
         ]
     },
     "精准采集": {
-        "levelMax": "1",
-        "weight": "4",
+        "levelMax": 1,
+        "weight": 4,
         "incompatible": [
             "时运"
         ],
@@ -440,8 +440,8 @@
         ]
     },
     "亡灵杀手": {
-        "levelMax": "5",
-        "weight": "1",
+        "levelMax": 5,
+        "weight": 1,
         "incompatible": [
             "节肢杀手",
             "Cleaving",
@@ -453,8 +453,8 @@
         ]
     },
     "灵魂疾行": {
-        "levelMax": "3",
-        "weight": "4",
+        "levelMax": 3,
+        "weight": 4,
         "incompatible": [
             ""
         ],
@@ -463,8 +463,8 @@
         ]
     },
     "横扫之刃": {
-        "levelMax": "3",
-        "weight": "2",
+        "levelMax": 3,
+        "weight": 2,
         "incompatible": [
             ""
         ],
@@ -473,8 +473,8 @@
         ]
     },
     "迅捷潜行": {
-        "levelMax": "3",
-        "weight": "1",
+        "levelMax": 3,
+        "weight": 1,
         "incompatible": [
             ""
         ],
@@ -483,8 +483,8 @@
         ]
     },
     "荆棘": {
-        "levelMax": "3",
-        "weight": "4",
+        "levelMax": 3,
+        "weight": 4,
         "incompatible": [
             ""
         ],
@@ -497,8 +497,8 @@
         ]
     },
     "耐久": {
-        "levelMax": "3",
-        "weight": "1",
+        "levelMax": 3,
+        "weight": 1,
         "incompatible": [
             ""
         ],
