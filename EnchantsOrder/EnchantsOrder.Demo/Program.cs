@@ -21,9 +21,9 @@ namespace EnchantsOrder.Demo
 
         private static async Task<int> Main(string[] args)
         {
-            InitSettings();
-            InitLanguage();
-            InitEnchantments();
+            InitializeSettings();
+            InitializeLanguage();
+            InitializeEnchantments();
 
             Option<IEnumerable<string>> enchantmentArgument = new("--enchantments", Array.Empty<string>, Resource.EnchantmentArgument)
             {
@@ -118,7 +118,7 @@ namespace EnchantsOrder.Demo
             }
         }
 
-        private static void InitSettings()
+        private static void InitializeSettings()
         {
             if (string.IsNullOrEmpty(Configuration["Language"]))
             {
@@ -126,15 +126,16 @@ namespace EnchantsOrder.Demo
             }
         }
 
-        private static void InitLanguage()
+        private static void InitializeLanguage()
         {
             string code = Configuration["Language"];
-            if(!code.Equals("default"))
+            if (!code.Equals("default"))
             {
                 try
                 {
                     CultureInfo culture = new(code);
                     CultureInfo.DefaultThreadCurrentCulture = culture;
+                    CultureInfo.DefaultThreadCurrentUICulture = culture;
                 }
                 catch (Exception ex)
                 {
@@ -144,7 +145,7 @@ namespace EnchantsOrder.Demo
             }
         }
 
-        private static void InitEnchantments()
+        private static void InitializeEnchantments()
         {
             Enchantments.Clear();
             string json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Enchants", Resource.EnchantsFileName);
@@ -178,16 +179,18 @@ namespace EnchantsOrder.Demo
                 if (text.Equals("null", StringComparison.OrdinalIgnoreCase) || text.Equals("default", StringComparison.OrdinalIgnoreCase))
                 {
                     CultureInfo.DefaultThreadCurrentCulture = null;
+                    CultureInfo.DefaultThreadCurrentUICulture = null;
                     Configuration["Language"] = "default";
                 }
                 else
                 {
                     CultureInfo culture = new(text);
                     CultureInfo.DefaultThreadCurrentCulture = culture;
+                    CultureInfo.DefaultThreadCurrentUICulture = culture;
                     Configuration["Language"] = text;
                 }
 
-                InitEnchantments();
+                InitializeEnchantments();
                 Console.WriteLine(string.Format(Resource.CurrentLanguageChangedFormat, CultureInfo.CurrentCulture.DisplayName));
             }
             catch (Exception ex)

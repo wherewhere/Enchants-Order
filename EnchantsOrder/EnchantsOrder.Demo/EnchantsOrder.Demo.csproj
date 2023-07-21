@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <DebugType>embedded</DebugType>
     <OutputType>Exe</OutputType>
+    <PublishSingleFile>true</PublishSingleFile>
     <LangVersion>preview</LangVersion>
     <TargetFramework Condition="'$(IsWindows)' == 'True'">net4.8</TargetFramework>
     <TargetFramework Condition="'$(IsWindows)' != 'True'">net6.0</TargetFramework>
