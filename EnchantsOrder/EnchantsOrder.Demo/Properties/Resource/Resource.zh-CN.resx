@@ -141,6 +141,9 @@
   <data name="RootCommand" xml:space="preserve">
     <value>一个可以排序附魔的 EnchantsOrder 示例</value>
   </data>
+  <data name="InputCommand" xml:space="preserve">
+    <value>输入命令（输入 exit 退出）：</value>
+  </data>
   <data name="AddedFormat" xml:space="preserve">
     <value>已添加 {0}</value>
   </data>

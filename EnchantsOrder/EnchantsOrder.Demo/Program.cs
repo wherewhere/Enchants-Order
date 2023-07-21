@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
+using System.CommandLine.Completions;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace EnchantsOrder.Demo
                 AllowMultipleArgumentsPerToken = true
             };
             enchantmentArgument.AddAlias("-e");
+            enchantmentArgument.AddCompletions(Enchantments.Select((x) => x.Name).ToArray());
 
             Option<int> penaltyOption = new("--penalty", () => 0, Resource.PenaltyOption);
             penaltyOption.AddAlias("-p");
@@ -40,6 +42,7 @@ namespace EnchantsOrder.Demo
             orderCommand.SetHandler(OrderCommandHandler, enchantmentArgument, penaltyOption);
 
             Argument<string> itemArgument = new("item", () => string.Empty, Resource.ItemArgument);
+            itemArgument.AddCompletions(Enchantments.OrderByDescending((x) => x.Items.Count()).FirstOrDefault().Items.ToArray());
 
             Command listCommand = new("list", Resource.ListCommand)
             {
@@ -49,6 +52,7 @@ namespace EnchantsOrder.Demo
             listCommand.SetHandler(ListCommandHandler, itemArgument, penaltyOption);
 
             Argument<string> langArgument = new("code", () => string.Empty, Resource.LangArgument);
+            langArgument.AddCompletions("zh-CN", "en-US");
 
             Command langCommand = new("lang", Resource.LangCommand)
             {
