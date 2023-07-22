@@ -2,7 +2,9 @@
 
   <PropertyGroup>
     <DebugType>embedded</DebugType>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <OutputType>Exe</OutputType>
+    <Optimize>true</Optimize>
     <PublishSingleFile>true</PublishSingleFile>
     <LangVersion>preview</LangVersion>
     <TargetFramework Condition="'$(IsWindows)' == 'True'">net4.8</TargetFramework>

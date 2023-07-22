@@ -159,23 +159,23 @@ namespace EnchantsOrder.Demo
 
         private static void LangCommandHandler(string code = "")
         {
+            string text = code;
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                Console.WriteLine(string.Format(Resource.CurrentLanguageFormat, CultureInfo.CurrentCulture.DisplayName));
+                Console.WriteLine(Resource.InputLanguageCode);
+                Console.Write("> ");
+                text = Console.ReadLine();
+            }
+
+            if (text.Equals("exit", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine(Resource.FunctionCancelled);
+                return;
+            }
+
             try
             {
-                string text = code;
-                if (string.IsNullOrWhiteSpace(text))
-                {
-                    Console.WriteLine(string.Format(Resource.CurrentLanguageFormat, CultureInfo.CurrentCulture.DisplayName));
-                    Console.WriteLine(Resource.InputLanguageCode);
-                    Console.Write("> ");
-                    text = Console.ReadLine();
-                }
-
-                if (text.Equals("exit", StringComparison.OrdinalIgnoreCase))
-                {
-                    Console.WriteLine(Resource.FunctionCancelled);
-                    return;
-                }
-
                 if (text.Equals("null", StringComparison.OrdinalIgnoreCase) || text.Equals("default", StringComparison.OrdinalIgnoreCase))
                 {
                     CultureInfo.DefaultThreadCurrentCulture = null;
@@ -268,6 +268,7 @@ namespace EnchantsOrder.Demo
                 }
             }
 
+            Console.WriteLine(Resource.StartOrdering);
             IEnumerable<Enchantment> enchantments = Enchantments.Where((x) => !x.Hidden && x.Items.Contains(text));
             if (enchantments.Any())
             {
