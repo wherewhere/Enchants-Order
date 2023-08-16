@@ -160,7 +160,7 @@
     <value>操作取消</value>
   </data>
   <data name="InputEnchantment" xml:space="preserve">
-    <value>输入附魔的名字（输入 q 进行排序）：</value>
+    <value>输入附魔的名字（输入 c 添加自定义附魔，输入 q 进行排序）：</value>
   </data>
   <data name="InputItem" xml:space="preserve">
     <value>输入物品的名字（输入 exit 退出）：</value>
@@ -176,5 +176,14 @@
   </data>
   <data name="StartOrdering" xml:space="preserve">
     <value>开始排序……</value>
+  </data>
+  <data name="InputLevel" xml:space="preserve">
+    <value>输入等级：</value>
+  </data>
+  <data name="InputName" xml:space="preserve">
+    <value>输入名称：</value>
+  </data>
+  <data name="InputWeight" xml:space="preserve">
+    <value>输入权重：</value>
   </data>
 </root>

@@ -139,13 +139,22 @@
     <value>Input the command (type exit to quit):</value>
   </data>
   <data name="InputEnchantment" xml:space="preserve">
-    <value>Input the name of enchantment (type q to order):</value>
+    <value>Input the name of enchantment (type c to input custom enchantment, type q to order):</value>
   </data>
   <data name="InputItem" xml:space="preserve">
     <value>Input the name of item (type exit to quit):</value>
   </data>
   <data name="InputLanguageCode" xml:space="preserve">
     <value>Input the language code to change language (type exit to quit):</value>
+  </data>
+  <data name="InputLevel" xml:space="preserve">
+    <value>Input Level:</value>
+  </data>
+  <data name="InputName" xml:space="preserve">
+    <value>Input Name:</value>
+  </data>
+  <data name="InputWeight" xml:space="preserve">
+    <value>Input Weight:</value>
   </data>
   <data name="ItemArgument" xml:space="preserve">
     <value>Set the item which you want to list enchantments</value>

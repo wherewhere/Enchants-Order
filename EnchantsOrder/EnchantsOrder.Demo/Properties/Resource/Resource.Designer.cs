@@ -124,7 +124,7 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
-        ///   查找类似 Input the name of enchantment (type q to order): 的本地化字符串。
+        ///   查找类似 Input the name of enchantment (type c to input custom enchantment, type q to order): 的本地化字符串。
         /// </summary>
         internal static string InputEnchantment {
             get {
@@ -147,6 +147,33 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         internal static string InputLanguageCode {
             get {
                 return ResourceManager.GetString("InputLanguageCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Input Level: 的本地化字符串。
+        /// </summary>
+        internal static string InputLevel {
+            get {
+                return ResourceManager.GetString("InputLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Input Name: 的本地化字符串。
+        /// </summary>
+        internal static string InputName {
+            get {
+                return ResourceManager.GetString("InputName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Input Weight: 的本地化字符串。
+        /// </summary>
+        internal static string InputWeight {
+            get {
+                return ResourceManager.GetString("InputWeight", resourceCulture);
             }
         }
         

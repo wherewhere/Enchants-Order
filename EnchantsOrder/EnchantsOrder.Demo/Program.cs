@@ -223,18 +223,40 @@ namespace EnchantsOrder.Demo
             {
                 while (text.ToUpper() != "Q")
                 {
-                    Console.WriteLine(Resource.InputEnchantment);
-                    Console.Write("> ");
-                    text = Console.ReadLine();
-                    if (text.ToUpper() == "Q") { break; }
-                    if (Enchantments.FirstOrDefault((x) => x.Name == text) is Enchantment enchantment)
+                    try
                     {
-                        enchantmentList.Add(enchantment);
-                        Console.WriteLine(string.Format(Resource.AddedFormat, text));
+                        Console.WriteLine(Resource.InputEnchantment);
+                        Console.Write("> ");
+                        text = Console.ReadLine();
+                        if (text.ToUpper() == "Q") { break; }
+                        else if (text.ToUpper() == "C")
+                        {
+                            Console.WriteLine(Resource.InputName);
+                            Console.Write("> ");
+                            string name = Console.ReadLine();
+                            Console.WriteLine(Resource.InputLevel);
+                            Console.Write("> ");
+                            int.TryParse(Console.ReadLine(), out int level);
+                            Console.WriteLine(Resource.InputWeight);
+                            Console.Write("> ");
+                            int.TryParse(Console.ReadLine(), out int weight);
+                            global::EnchantsOrder.Models.Enchantment enchantment = new(name, level, weight);
+                            enchantmentList.Add(enchantment);
+                            Console.WriteLine(string.Format(Resource.AddedFormat, name));
+                        }
+                        else if (Enchantments.FirstOrDefault((x) => x.Name == text) is Enchantment enchantment)
+                        {
+                            enchantmentList.Add(enchantment);
+                            Console.WriteLine(string.Format(Resource.AddedFormat, text));
+                        }
+                        else
+                        {
+                            Console.WriteLine(string.Format(Resource.NotFoundEnchantmentFormat, text));
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Console.WriteLine(string.Format(Resource.NotFoundEnchantmentFormat, text));
+                        Console.WriteLine(ex.Message);
                     }
                 }
             }
