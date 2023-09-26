@@ -14,7 +14,7 @@ namespace EnchantsOrder.Common.Tests
         [Test]
         public void GetRomanNumberTest()
         {
-            string[] strings = new string[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
+            string[] strings = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
             for (int i = 1; i <= 10; i++)
             {
                 Assert.AreEqual(strings[i - 1], i.GetRomanNumber());
@@ -28,7 +28,7 @@ namespace EnchantsOrder.Common.Tests
         [Test]
         public void PenaltyToExperience()
         {
-            long[] expect = new long[] { 0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023 };
+            long[] expect = [0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023];
             for (int i = 0; i <= 10; i++)
             {
                 Assert.AreEqual(expect[i], Extensions.PenaltyToExperience(i));

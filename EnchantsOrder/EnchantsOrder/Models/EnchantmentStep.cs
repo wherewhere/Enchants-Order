@@ -8,6 +8,7 @@ namespace EnchantsOrder.Models
     /// <summary>
     /// The step of Enchant.
     /// </summary>
+    /// <param name="step">The index of step.</param>
     public
 #if WINRT
         sealed
@@ -19,7 +20,7 @@ namespace EnchantsOrder.Models
         IEnchantmentStep
     {
         /// <summary>
-        /// The index of step.
+        /// Get or set the index of step.
         /// </summary>
         public int Step { get; set; } = step;
 

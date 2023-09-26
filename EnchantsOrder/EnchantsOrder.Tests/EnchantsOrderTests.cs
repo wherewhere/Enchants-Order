@@ -17,9 +17,9 @@ namespace EnchantsOrder.Tests
         [Test]
         public void NoneBookOrderTest()
         {
-            List<IEnchantment> enchantmentList = null;
+            IEnchantment[] enchantmentList = null;
             _ = Assert.Throws<ArgumentNullException>(() => _ = enchantmentList.Ordering());
-            enchantmentList = new List<IEnchantment>();
+            enchantmentList = [];
             _ = Assert.Throws<ArgumentNullException>(() => _ = enchantmentList.Ordering());
         }
 
@@ -29,10 +29,7 @@ namespace EnchantsOrder.Tests
         [Test]
         public void OneBookOrderTest()
         {
-            List<IEnchantment> enchantmentList = new()
-            {
-                new Enchantment("Efficiency", 5, 1)
-            };
+            Enchantment[] enchantmentList = [new Enchantment("Efficiency", 5, 1)];
 
             OrderingResults results = enchantmentList.Ordering();
             Assert.AreEqual(1, results.Penalty);
@@ -49,11 +46,11 @@ namespace EnchantsOrder.Tests
         [Test]
         public void TwoBookOrderTest()
         {
-            List<IEnchantment> enchantmentList = new()
-            {
+            Enchantment[] enchantmentList =
+            [
                 new Enchantment("Mending", 1, 2),
                 new Enchantment("Unbreaking", 3, 1)
-            };
+            ];
 
             OrderingResults results = enchantmentList.Ordering();
 
@@ -74,12 +71,12 @@ namespace EnchantsOrder.Tests
         [Test]
         public void ThreeBookOrderTest()
         {
-            List<IEnchantment> enchantmentList = new()
-            {
+            Enchantment[] enchantmentList =
+            [
                 new Enchantment("Mending", 1, 2),
                 new Enchantment("Unbreaking", 3, 1),
                 new Enchantment("Projectile Protection", 4, 1)
-            };
+            ];
 
             OrderingResults results = enchantmentList.Ordering();
 
@@ -101,13 +98,13 @@ namespace EnchantsOrder.Tests
         [Test]
         public void FourBookOrderTest()
         {
-            List<IEnchantment> enchantmentList = new()
-            {
+            Enchantment[] enchantmentList =
+            [
                 new Enchantment("Riptide", 3, 2),
                 new Enchantment("Mending", 1, 2),
                 new Enchantment("Unbreaking", 3, 1),
                 new Enchantment("Impaling", 5, 2)
-            };
+            ];
 
             OrderingResults results = enchantmentList.Ordering();
 
@@ -131,14 +128,14 @@ namespace EnchantsOrder.Tests
         [Test]
         public void FiveBookOrderTest()
         {
-            List<IEnchantment> enchantmentList = new()
-            {
+            Enchantment[] enchantmentList =
+            [
                 new Enchantment("Punch", 2, 2),
                 new Enchantment("Flame", 1, 2),
                 new Enchantment("Unbreaking", 3, 1),
                 new Enchantment("Infinity", 1, 4),
                 new Enchantment("Power", 5, 1)
-            };
+            ];
 
             OrderingResults results = enchantmentList.Ordering();
 
@@ -163,15 +160,15 @@ namespace EnchantsOrder.Tests
         [Test]
         public void SixBookOrderTest()
         {
-            List<IEnchantment> enchantmentList = new()
-            {
+            Enchantment[] enchantmentList =
+            [
                 new Enchantment("Aqua Affinity", 1, 2),
                 new Enchantment("Respiration", 3, 2),
                 new Enchantment("Mending", 1, 2),
                 new Enchantment("Unbreaking", 3, 1),
                 new Enchantment("Blast Protection", 4, 2),
                 new Enchantment("Thorns", 3, 4)
-            };
+            ];
 
             OrderingResults results = enchantmentList.Ordering();
 
@@ -197,8 +194,8 @@ namespace EnchantsOrder.Tests
         [Test]
         public void SevenBookOrderTest()
         {
-            List<IEnchantment> enchantmentList = new()
-            {
+            Enchantment[] enchantmentList =
+            [
                 new Enchantment("Knockback", 2, 1),
                 new Enchantment("Fire Aspect", 2, 2),
                 new Enchantment("Sharpness", 5, 1),
@@ -206,7 +203,7 @@ namespace EnchantsOrder.Tests
                 new Enchantment("Unbreaking", 3, 1),
                 new Enchantment("Looting", 3, 2),
                 new Enchantment("Sweeping Edge", 3, 2)
-            };
+            ];
 
             OrderingResults results = enchantmentList.Ordering();
 

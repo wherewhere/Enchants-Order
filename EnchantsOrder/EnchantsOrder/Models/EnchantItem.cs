@@ -38,13 +38,17 @@ namespace EnchantsOrder.Models
         /// <inheritdoc/>
         public override int GetHashCode()
         {
+#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+            return HashCode.Combine(Level, Penalty, StepLevel, HistoryLevel, HistoryExperience);
+#else
             int hashCode = 450102560;
-            hashCode = hashCode * -1521134295 + Level.GetHashCode();
-            hashCode = hashCode * -1521134295 + Penalty.GetHashCode();
-            hashCode = hashCode * -1521134295 + StepLevel.GetHashCode();
-            hashCode = hashCode * -1521134295 + HistoryLevel.GetHashCode();
-            hashCode = hashCode * -1521134295 + HistoryExperience.GetHashCode();
+            hashCode = (hashCode * -1521134295) + Level.GetHashCode();
+            hashCode = (hashCode * -1521134295) + Penalty.GetHashCode();
+            hashCode = (hashCode * -1521134295) + StepLevel.GetHashCode();
+            hashCode = (hashCode * -1521134295) + HistoryLevel.GetHashCode();
+            hashCode = (hashCode * -1521134295) + HistoryExperience.GetHashCode();
             return hashCode;
+#endif
         }
 
         /// <inheritdoc/>

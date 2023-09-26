@@ -10,6 +10,10 @@ namespace EnchantsOrder.Models
     /// <summary>
     /// The result of ordering.
     /// </summary>
+    /// <param name="steps">The steps of enchant.</param>
+    /// <param name="penalty">The penalty of item.</param>
+    /// <param name="maxExperience">The max experience level request during enchant.</param>
+    /// <param name="totalExperience">The total experience level request during enchant.</param>
     public
 #if WINRT
         sealed
@@ -20,33 +24,35 @@ namespace EnchantsOrder.Models
 #endif
     {
         /// <summary>
-        /// The penalty of item.
+        /// Get or set the penalty of item.
         /// </summary>
         public int Penalty { get; set; } = penalty;
 
         /// <summary>
-        /// The max experience level request during enchant.
+        /// Get or set the max experience level request during enchant.
         /// </summary>
         public double MaxExperience { get; set; } = maxExperience;
 
         /// <summary>
-        /// The total experience level request during enchant.
+        /// Get or set the total experience level request during enchant.
         /// </summary>
         public double TotalExperience { get; set; } = totalExperience;
 
         /// <summary>
-        /// The steps of enchant.
+        /// Get or set the steps of enchant.
         /// </summary>
         public IList<IEnchantmentStep> Steps { get; set; } = steps;
 
         /// <summary>
-        /// Too expensive because max experience level max than 39.
+        /// Get the status whether it is too expensive.
         /// </summary>
+        /// <remarks>Too expensive because max experience level max than 39.</remarks>
         public bool IsTooExpensive => MaxExperience > max_experience;
 
         /// <summary>
-        /// Max penalty max than 6 so that you cannot enchant any more.
+        /// Get the status whether it is too many penalty.
         /// </summary>
+        /// <remarks>Max penalty max than 6 so that you cannot enchant any more.</remarks>
         public bool IsTooManyPenalty => Penalty > max_penalty;
 
         /// <inheritdoc/>

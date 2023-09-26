@@ -9,6 +9,9 @@ namespace EnchantsOrder.Models
     /// <summary>
     /// A value of enchantment.
     /// </summary>
+    /// <param name="name">The name of this enchantment.</param>
+    /// <param name="level">The level of this enchantment.</param>
+    /// <param name="weight">The weight for enchant of this enchantment.</param>
     public
 #if WINRT
         sealed
@@ -19,22 +22,22 @@ namespace EnchantsOrder.Models
 #endif
     {
         /// <summary>
-        /// The name of this enchantment.
+        /// Get or set the name of this enchantment.
         /// </summary>
         public string Name { get; set; } = name;
 
         /// <summary>
-        /// The level of this enchantment.
+        /// Get or set the level of this enchantment.
         /// </summary>
         public int Level { get; set; } = level;
 
         /// <summary>
-        /// The weight for enchant of this enchantment.
+        /// Get or set the weight for enchant of this enchantment.
         /// </summary>
         public int Weight { get; set; } = weight;
 
         /// <summary>
-        /// The experience level when enchant request of this enchantment.
+        /// Get or set the experience level when enchant request of this enchantment.
         /// </summary>
         public long Experience => (long)Level * Weight;
 

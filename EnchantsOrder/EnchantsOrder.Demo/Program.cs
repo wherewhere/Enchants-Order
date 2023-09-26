@@ -25,12 +25,12 @@ namespace EnchantsOrder.Demo
             InitializeLanguage();
             InitializeEnchantments();
 
-            Option<IEnumerable<string>> enchantmentArgument = new("--enchantments", Array.Empty<string>, Resource.EnchantmentArgument)
+            Option<IEnumerable<string>> enchantmentArgument = new Option<IEnumerable<string>>("--enchantments", Array.Empty<string>, Resource.EnchantmentArgument)
             {
                 AllowMultipleArgumentsPerToken = true
-            };
+            }.AddCompletions([.. Enchantments.Select((x) => x.Name)]);
+
             enchantmentArgument.AddAlias("-e");
-            enchantmentArgument.AddCompletions(Enchantments.Select((x) => x.Name).ToArray());
 
             Option<int> penaltyOption = new("--penalty", () => 0, Resource.PenaltyOption);
             penaltyOption.AddAlias("-p");
@@ -42,8 +42,8 @@ namespace EnchantsOrder.Demo
             };
             orderCommand.SetHandler(OrderCommandHandler, enchantmentArgument, penaltyOption);
 
-            Argument<string> itemArgument = new("item", () => string.Empty, Resource.ItemArgument);
-            itemArgument.AddCompletions(Enchantments.OrderByDescending((x) => x.Items.Count()).FirstOrDefault().Items.ToArray());
+            Argument<string> itemArgument = new Argument<string>("item", () => string.Empty, Resource.ItemArgument)
+                .AddCompletions([.. Enchantments.OrderByDescending((x) => x.Items.Count()).FirstOrDefault().Items]);
 
             Command listCommand = new("list", Resource.ListCommand)
             {
@@ -52,8 +52,8 @@ namespace EnchantsOrder.Demo
             };
             listCommand.SetHandler(ListCommandHandler, itemArgument, penaltyOption);
 
-            Argument<string> langArgument = new("code", () => string.Empty, Resource.LangArgument);
-            langArgument.AddCompletions("zh-CN", "en-US");
+            Argument<string> langArgument = new Argument<string>("code", () => string.Empty, Resource.LangArgument)
+                .AddCompletions("zh-CN", "en-US");
 
             Command langCommand = new("lang", Resource.LangCommand)
             {
@@ -202,7 +202,7 @@ namespace EnchantsOrder.Demo
         private static void OrderCommandHandler(IEnumerable<string> enchantments = null, int initialPenalty = 0)
         {
             string text = string.Empty;
-            List<IEnchantment> enchantmentList = new();
+            List<IEnchantment> enchantmentList = [];
 
             if (enchantments?.Any() == true)
             {
