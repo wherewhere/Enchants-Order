@@ -11,19 +11,14 @@ Get the best order for enchanting. Base on the [Python Version](https://github.c
 - Silverlight 3
 - Silverlight 5
 - .NET Framework 2.0
-- .NET Framework 3.5
 - .NET Framework 4.0
-- .NET Framework 4.5.2
-- .NET Framework 4.6.2
-- .NET Framework 4.8.1
+- .NET Framework 4.7
 - .NET Standard 1.1
 - .NET Standard 2.0
 - .NET Standard 2.1
 - .NET Core 5.0
 - .NET Core App 2.1
-- .NET Core App 3.1
 - .NET 6.0
-- .NET 8.0
 
 ## Example
 

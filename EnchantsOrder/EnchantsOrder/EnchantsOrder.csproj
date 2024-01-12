@@ -7,14 +7,13 @@
   <PropertyGroup Condition="'$(FullTargets)' == 'True'">
     <NoWarn>NU1603;NU1901;NU1902</NoWarn>
     <TargetFrameworks>net6.0;netstandard1.1;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True'">$(TargetFrameworks);net8.0;netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
-    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True' and '$(IsWindows)' == 'True'">$(TargetFrameworks);native;net2.0-client;net3.5-client;net4.0-client;net4.5.2;net4.6.2;net4.8.1;netcore50;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True'">$(TargetFrameworks);netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True' and '$(IsWindows)' == 'True'">$(TargetFrameworks);native;net2.0-client;net4.0-client;net4.7;netcore50;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(FullTargets)' != 'True'">
-    <TargetFrameworks>netstandard1.1;netstandard2.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True'">$(TargetFrameworks);net6.0;net8.0;netcoreapp3.1</TargetFrameworks>
-    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True' and '$(IsWindows)' == 'True'">$(TargetFrameworks);net2.0-client;net3.5-client;net4.5.2;net4.8.1</TargetFrameworks>
+    <TargetFrameworks>net6.0;netcoreapp2.1;netstandard1.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsWindows)' == 'True'">$(TargetFrameworks);net2.0-client;net4.7</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(FullTargets)' == 'True'
