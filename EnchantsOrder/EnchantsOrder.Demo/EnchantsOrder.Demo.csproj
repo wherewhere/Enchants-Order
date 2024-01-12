@@ -1,26 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <DebugType>embedded</DebugType>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <OutputType>Exe</OutputType>
-    <Optimize>true</Optimize>
     <PublishSingleFile>true</PublishSingleFile>
     <LangVersion>preview</LangVersion>
     <TargetFramework Condition="'$(IsWindows)' == 'True'">net4.8</TargetFramework>
-    <TargetFramework Condition="'$(IsWindows)' != 'True'">net6.0</TargetFramework>
+    <TargetFramework Condition="'$(IsWindows)' != 'True'">net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
-    <PackageReference Include="Resource.Embedder" Version="2.2.0" PrivateAssets="all" />
-    <PackageReference Include="Costura.Fody" Version="5.7.0" PrivateAssets="all">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -52,8 +42,6 @@
     <None Update="Assets\Enchants\Enchants.zh-CN.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Remove="FodyWeavers.xml" Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'" />
-    <None Remove="FodyWeavers.xsd" />
   </ItemGroup>
 
 </Project>

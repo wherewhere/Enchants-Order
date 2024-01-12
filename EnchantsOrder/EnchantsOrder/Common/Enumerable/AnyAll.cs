@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #if NET20 || SILVERLIGHT || WINDOWSPHONE
-using System;
 using System.Collections;
 using System.Collections.Generic;
 

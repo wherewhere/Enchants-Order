@@ -132,18 +132,10 @@ namespace EnchantsOrder
 
                 for (int j = orderingSteps.Length - 1; j > 0; j--)
                 {
-                    if (orderingSteps[j].Count == orderingSteps[j - 1].Count)
+                    if (orderingSteps[j].Count == orderingSteps[j - 1].Count
+                        && orderingSteps[j].Sum() > orderingSteps[j - 1].Sum())
                     {
-                        if (orderingSteps[j].Sum() > orderingSteps[j - 1].Sum())
-                        {
-#if !NET47_OR_GREATER && !NETCOREAPP
-                            List<long> temp = orderingSteps[j];
-                            orderingSteps[j] = orderingSteps[j - 1];
-                            orderingSteps[j - 1] = temp;
-#else
-                            (orderingSteps[j - 1], orderingSteps[j]) = (orderingSteps[j], orderingSteps[j - 1]);
-#endif
-                        }
+                        (orderingSteps[j - 1], orderingSteps[j]) = (orderingSteps[j], orderingSteps[j - 1]);
                     }
                 }
 

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+#if WINRT
+using Windows.Foundation;
+#endif
+
 namespace EnchantsOrder.Models
 {
     /// <summary>
@@ -14,7 +18,9 @@ namespace EnchantsOrder.Models
         sealed
 #endif
         class EnchantmentStep(int step) :
-#if !WINRT
+#if WINRT
+        IStringable,
+#else
         List<IEnchantment>,
 #endif
         IEnchantmentStep
@@ -45,17 +51,17 @@ namespace EnchantsOrder.Models
         public override string ToString()
         {
             StringBuilder builder = new();
-            _ = builder.Append($"Step {Step}:");
+            _ = builder.AppendFormat("Step {0}:", Step);
             int half = Count / 2;
             for (int i = half; i > 0; i--)
             {
                 bool flag = Count == 2;
                 int index = (half * 2) - (i * 2);
-                _ = builder.Append($" {(flag ? "" : "(")}{this[index]} + {this[index + 1]}{(flag ? "" : ")")}{(index + 2 == Count ? "" : " +")}");
+                _ = builder.AppendFormat(" {0}{1} + {2}{3}{4}", flag ? "" : "(", this[index], this[index + 1], flag ? "" : ")", index + 2 == Count ? "" : " +");
             }
             if (Count % 2 == 1)
             {
-                _ = builder.Append($" {this.Last()}");
+                _ = builder.AppendFormat(" {0}", this.Last());
             }
             return builder.ToString();
         }

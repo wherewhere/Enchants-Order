@@ -11,12 +11,7 @@ namespace System.Linq
     {
         public static IEnumerable<TResult> OfType<TResult>(this IEnumerable source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            return OfTypeIterator<TResult>(source);
+            return source == null ? throw new ArgumentNullException(nameof(source)) : OfTypeIterator<TResult>(source);
         }
 
         private static IEnumerable<TResult> OfTypeIterator<TResult>(IEnumerable source)
@@ -32,17 +27,9 @@ namespace System.Linq
 
         public static IEnumerable<TResult> Cast<TResult>(this IEnumerable source)
         {
-            if (source is IEnumerable<TResult> typedSource)
-            {
-                return typedSource;
-            }
-
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            return CastIterator<TResult>(source);
+            return source is IEnumerable<TResult> typedSource
+                ? typedSource
+                : source == null ? throw new ArgumentNullException(nameof(source)) : CastIterator<TResult>(source);
         }
 
         private static IEnumerable<TResult> CastIterator<TResult>(IEnumerable source)
