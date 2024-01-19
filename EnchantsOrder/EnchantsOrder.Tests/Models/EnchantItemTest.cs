@@ -18,11 +18,11 @@ namespace EnchantsOrder.Models.Tests
             EnchantItem item2 = new(5, 5, 7);
             EnchantItem result = item1 + item2;
 
-            Assert.AreEqual(14, result.Level);
-            Assert.AreEqual(6, result.Penalty);
-            Assert.AreEqual(43, result.StepLevel);
-            Assert.AreEqual(68, result.HistoryLevel);
-            Assert.AreEqual(3553, result.HistoryExperience);
+            Assert.That(result.Level, Is.EqualTo(14));
+            Assert.That(result.Penalty, Is.EqualTo(6));
+            Assert.That(result.StepLevel, Is.EqualTo(43));
+            Assert.That(result.HistoryLevel, Is.EqualTo(68));
+            Assert.That(result.HistoryExperience, Is.EqualTo(3553));
         }
     }
 }

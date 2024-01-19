@@ -17,18 +17,18 @@ namespace EnchantsOrder.Models.Tests
         {
             Enchantment enchantment1 = new("X", 1, 2);
             Enchantment enchantment2 = new("Y", 3, 4);
-            Assert.AreEqual(-1, enchantment1.CompareTo(enchantment2));
+            Assert.That(enchantment1.CompareTo(enchantment2), Is.EqualTo(-1));
 
             enchantment1.Level = 6;
             enchantment1.Weight = 2;
-            Assert.AreEqual(1, enchantment1.CompareTo(enchantment2));
+            Assert.That(enchantment1.CompareTo(enchantment2), Is.EqualTo(1));
 
             enchantment1.Level = 3;
             enchantment1.Weight = 4;
-            Assert.AreEqual(-1, enchantment1.CompareTo(enchantment2));
+            Assert.That(enchantment1.CompareTo(enchantment2), Is.EqualTo(-1));
 
             enchantment1.Name = "Y";
-            Assert.AreEqual(0, enchantment1.CompareTo(enchantment2));
+            Assert.That(enchantment1.CompareTo(enchantment2), Is.EqualTo(0));
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace EnchantsOrder.Models.Tests
             int weight = random.Next();
             string name = "ExperienceTest";
             Enchantment enchantment = new(name, level, weight);
-            Assert.AreEqual((long)level * weight, enchantment.Experience);
+            Assert.That(enchantment.Experience, Is.EqualTo((long)level * weight));
         }
     }
 }

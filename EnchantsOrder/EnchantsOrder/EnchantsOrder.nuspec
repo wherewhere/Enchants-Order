@@ -18,11 +18,8 @@
     <dependencies>
       <group targetFramework=".NETCore5.0" />
       <group targetFramework=".NETFramework2.0" />
-      <group targetFramework=".NETFramework3.5" />
       <group targetFramework=".NETFramework4.0" />
-      <group targetFramework=".NETFramework4.5.2" />
-      <group targetFramework=".NETFramework4.6.2" />
-      <group targetFramework=".NETFramework4.8.1" />
+      <group targetFramework=".NETFramework4.7" />
       <group targetFramework=".NETStandard1.1">
         <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
       </group>
@@ -31,9 +28,7 @@
       <group targetFramework="WindowsPhone7.0" />
       <group targetFramework="WindowsPhone8.0" />
       <group targetFramework=".NETCoreApp2.1" />
-      <group targetFramework=".NETCoreApp3.1" />
       <group targetFramework="net6.0" />
-      <group targetFramework="net8.0" />
       <group targetFramework=".NETStandard2.0" />
       <group targetFramework=".NETStandard2.1" />
       <group targetFramework="native0.0" />
@@ -45,16 +40,11 @@
     <file src="EnchantsOrder.targets" target="build\native\EnchantsOrder.targets" />
     <file src="$buildOutput$\native\EnchantsOrder.*" target="lib\native\" />
     <file src="$buildOutput$\net2.0-client\EnchantsOrder.*" target="lib\net20\" />
-    <file src="$buildOutput$\net3.5-client\EnchantsOrder.*" target="lib\net35\" />
     <file src="$buildOutput$\net4.0-client\EnchantsOrder.*" target="lib\net40\" />
-    <file src="$buildOutput$\net4.5.2\EnchantsOrder.*" target="lib\net452\" />
-    <file src="$buildOutput$\net4.6.2\EnchantsOrder.*" target="lib\net462\" />
-    <file src="$buildOutput$\net4.8.1\EnchantsOrder.*" target="lib\net481\" />
+    <file src="$buildOutput$\net4.7\EnchantsOrder.*" target="lib\net47\" />
     <file src="$buildOutput$\net6.0\EnchantsOrder.*" target="lib\net6.0\" />
-    <file src="$buildOutput$\net8.0\EnchantsOrder.*" target="lib\net8.0\" />
-    <file src="$buildOutput$\netcore50\EnchantsOrder.*" target="lib\netcore50\" />
+    <file src="$buildOutput$\netcore5.0\EnchantsOrder.*" target="lib\netcore50\" />
     <file src="$buildOutput$\netcoreapp2.1\EnchantsOrder.*" target="lib\netcoreapp2.1\" />
-    <file src="$buildOutput$\netcoreapp3.1\EnchantsOrder.*" target="lib\netcoreapp3.1\" />
     <file src="$buildOutput$\netstandard1.1\EnchantsOrder.*" target="lib\netstandard1.1\" />
     <file src="$buildOutput$\netstandard2.0\EnchantsOrder.*" target="lib\netstandard2.0\" />
     <file src="$buildOutput$\netstandard2.1\EnchantsOrder.*" target="lib\netstandard2.1\" />

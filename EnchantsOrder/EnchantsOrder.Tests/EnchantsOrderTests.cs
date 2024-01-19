@@ -32,12 +32,14 @@ namespace EnchantsOrder.Tests
             Enchantment[] enchantmentList = [new Enchantment("Efficiency", 5, 1)];
 
             OrderingResults results = enchantmentList.Ordering();
-            Assert.AreEqual(1, results.Penalty);
-            Assert.AreEqual(5, results.MaxExperience);
-            Assert.AreEqual(5, results.TotalExperience);
-            Assert.AreEqual(1, results.Steps.Count);
-            Assert.AreEqual(1, results.Steps[0].Count);
-            Assert.AreEqual("Efficiency", results.Steps[0][0].Name);
+
+            Assert.That(results.Penalty, Is.EqualTo(1));
+            Assert.That(results.MaxExperience, Is.EqualTo(5));
+            Assert.That(results.TotalExperience, Is.EqualTo(5));
+
+            Assert.That(results.Steps.Count, Is.EqualTo(1));
+            Assert.That(results.Steps[0].Count, Is.EqualTo(1));
+            Assert.That(results.Steps[0][0].Name, Is.EqualTo("Efficiency"));
         }
 
         /// <summary>
@@ -54,15 +56,16 @@ namespace EnchantsOrder.Tests
 
             OrderingResults results = enchantmentList.Ordering();
 
-            Assert.AreEqual(2, results.Penalty);
-            Assert.AreEqual(3, results.MaxExperience);
-            Assert.AreEqual(6, results.TotalExperience);
+            Assert.That(results.Penalty, Is.EqualTo(2));
+            Assert.That(results.MaxExperience, Is.EqualTo(3));
+            Assert.That(results.TotalExperience, Is.EqualTo(6));
 
-            Assert.AreEqual(2, results.Steps.Count);
-            Assert.AreEqual(1, results.Steps[0].Count);
-            Assert.AreEqual("Unbreaking", results.Steps[0][0].Name);
-            Assert.AreEqual(1, results.Steps[1].Count);
-            Assert.AreEqual("Mending", results.Steps[1][0].Name);
+            Assert.That(results.Steps.Count, Is.EqualTo(2));
+            Assert.That(results.Steps[0].Count, Is.EqualTo(1));
+            Assert.That(results.Steps[0][0].Name, Is.EqualTo("Unbreaking"));
+
+            Assert.That(results.Steps[1].Count, Is.EqualTo(1));
+            Assert.That(results.Steps[1][0].Name, Is.EqualTo("Mending"));
         }
 
         /// <summary>
@@ -80,16 +83,17 @@ namespace EnchantsOrder.Tests
 
             OrderingResults results = enchantmentList.Ordering();
 
-            Assert.AreEqual(2, results.Penalty);
-            Assert.AreEqual(7, results.MaxExperience);
-            Assert.AreEqual(13, results.TotalExperience);
+            Assert.That(results.Penalty, Is.EqualTo(2));
+            Assert.That(results.MaxExperience, Is.EqualTo(7));
+            Assert.That(results.TotalExperience, Is.EqualTo(13));
 
-            Assert.AreEqual(2, results.Steps.Count);
-            Assert.AreEqual(1, results.Steps[0].Count);
-            Assert.AreEqual("Projectile Protection", results.Steps[0][0].Name);
-            Assert.AreEqual(2, results.Steps[1].Count);
-            Assert.AreEqual("Unbreaking", results.Steps[1][0].Name);
-            Assert.AreEqual("Mending", results.Steps[1][1].Name);
+            Assert.That(results.Steps.Count, Is.EqualTo(2));
+            Assert.That(results.Steps[0].Count, Is.EqualTo(1));
+            Assert.That(results.Steps[0][0].Name, Is.EqualTo("Projectile Protection"));
+
+            Assert.That(results.Steps[1].Count, Is.EqualTo(2));
+            Assert.That(results.Steps[1][0].Name, Is.EqualTo("Unbreaking"));
+            Assert.That(results.Steps[1][1].Name, Is.EqualTo("Mending"));
         }
 
         /// <summary>
@@ -108,18 +112,20 @@ namespace EnchantsOrder.Tests
 
             OrderingResults results = enchantmentList.Ordering();
 
-            Assert.AreEqual(3, results.Penalty);
-            Assert.AreEqual(10, results.MaxExperience);
-            Assert.AreEqual(28, results.TotalExperience);
+            Assert.That(results.Penalty, Is.EqualTo(3));
+            Assert.That(results.MaxExperience, Is.EqualTo(10));
+            Assert.That(results.TotalExperience, Is.EqualTo(28));
 
-            Assert.AreEqual(3, results.Steps.Count);
-            Assert.AreEqual(1, results.Steps[0].Count);
-            Assert.AreEqual("Impaling", results.Steps[0][0].Name);
-            Assert.AreEqual(2, results.Steps[1].Count);
-            Assert.AreEqual("Unbreaking", results.Steps[1][0].Name);
-            Assert.AreEqual("Mending", results.Steps[1][1].Name);
-            Assert.AreEqual(1, results.Steps[2].Count);
-            Assert.AreEqual("Riptide", results.Steps[2][0].Name);
+            Assert.That(results.Steps.Count, Is.EqualTo(3));
+            Assert.That(results.Steps[0].Count, Is.EqualTo(1));
+            Assert.That(results.Steps[0][0].Name, Is.EqualTo("Impaling"));
+
+            Assert.That(results.Steps[1].Count, Is.EqualTo(2));
+            Assert.That(results.Steps[1][0].Name, Is.EqualTo("Unbreaking"));
+            Assert.That(results.Steps[1][1].Name, Is.EqualTo("Mending"));
+
+            Assert.That(results.Steps[2].Count, Is.EqualTo(1));
+            Assert.That(results.Steps[2][0].Name, Is.EqualTo("Riptide"));
         }
 
         /// <summary>
@@ -139,19 +145,21 @@ namespace EnchantsOrder.Tests
 
             OrderingResults results = enchantmentList.Ordering();
 
-            Assert.AreEqual(3, results.Penalty);
-            Assert.AreEqual(10, results.MaxExperience);
-            Assert.AreEqual(29, results.TotalExperience);
+            Assert.That(results.Penalty, Is.EqualTo(3));
+            Assert.That(results.MaxExperience, Is.EqualTo(10));
+            Assert.That(results.TotalExperience, Is.EqualTo(29));
 
-            Assert.AreEqual(3, results.Steps.Count);
-            Assert.AreEqual(1, results.Steps[0].Count);
-            Assert.AreEqual("Power", results.Steps[0][0].Name);
-            Assert.AreEqual(2, results.Steps[1].Count);
-            Assert.AreEqual("Punch", results.Steps[1][0].Name);
-            Assert.AreEqual("Unbreaking", results.Steps[1][1].Name);
-            Assert.AreEqual(2, results.Steps[2].Count);
-            Assert.AreEqual("Infinity", results.Steps[2][0].Name);
-            Assert.AreEqual("Flame", results.Steps[2][1].Name);
+            Assert.That(results.Steps.Count, Is.EqualTo(3));
+            Assert.That(results.Steps[0].Count, Is.EqualTo(1));
+            Assert.That(results.Steps[0][0].Name, Is.EqualTo("Power"));
+
+            Assert.That(results.Steps[1].Count, Is.EqualTo(2));
+            Assert.That(results.Steps[1][0].Name, Is.EqualTo("Punch"));
+            Assert.That(results.Steps[1][1].Name, Is.EqualTo("Unbreaking"));
+
+            Assert.That(results.Steps[2].Count, Is.EqualTo(2));
+            Assert.That(results.Steps[2][0].Name, Is.EqualTo("Infinity"));
+            Assert.That(results.Steps[2][1].Name, Is.EqualTo("Flame"));
         }
 
         /// <summary>
@@ -172,20 +180,22 @@ namespace EnchantsOrder.Tests
 
             OrderingResults results = enchantmentList.Ordering();
 
-            Assert.AreEqual(3, results.Penalty);
-            Assert.AreEqual(17, results.MaxExperience);
-            Assert.AreEqual(49, results.TotalExperience);
+            Assert.That(results.Penalty, Is.EqualTo(3));
+            Assert.That(results.MaxExperience, Is.EqualTo(17));
+            Assert.That(results.TotalExperience, Is.EqualTo(49));
 
-            Assert.AreEqual(3, results.Steps.Count);
-            Assert.AreEqual(1, results.Steps[0].Count);
-            Assert.AreEqual("Thorns", results.Steps[0][0].Name);
-            Assert.AreEqual(2, results.Steps[1].Count);
-            Assert.AreEqual("Blast Protection", results.Steps[1][0].Name);
-            Assert.AreEqual("Mending", results.Steps[1][1].Name);
-            Assert.AreEqual(3, results.Steps[2].Count);
-            Assert.AreEqual("Respiration", results.Steps[2][0].Name);
-            Assert.AreEqual("Aqua Affinity", results.Steps[2][1].Name);
-            Assert.AreEqual("Unbreaking", results.Steps[2][2].Name);
+            Assert.That(results.Steps.Count, Is.EqualTo(3));
+            Assert.That(results.Steps[0].Count, Is.EqualTo(1));
+            Assert.That(results.Steps[0][0].Name, Is.EqualTo("Thorns"));
+
+            Assert.That(results.Steps[1].Count, Is.EqualTo(2));
+            Assert.That(results.Steps[1][0].Name, Is.EqualTo("Blast Protection"));
+            Assert.That(results.Steps[1][1].Name, Is.EqualTo("Mending"));
+
+            Assert.That(results.Steps[2].Count, Is.EqualTo(3));
+            Assert.That(results.Steps[2][0].Name, Is.EqualTo("Respiration"));
+            Assert.That(results.Steps[2][1].Name, Is.EqualTo("Aqua Affinity"));
+            Assert.That(results.Steps[2][2].Name, Is.EqualTo("Unbreaking"));
         }
 
         /// <summary>
@@ -207,21 +217,23 @@ namespace EnchantsOrder.Tests
 
             OrderingResults results = enchantmentList.Ordering();
 
-            Assert.AreEqual(3, results.Penalty);
-            Assert.AreEqual(17, results.MaxExperience);
-            Assert.AreEqual(52, results.TotalExperience);
+            Assert.That(results.Penalty, Is.EqualTo(3));
+            Assert.That(results.MaxExperience, Is.EqualTo(17));
+            Assert.That(results.TotalExperience, Is.EqualTo(52));
 
-            Assert.AreEqual(3, results.Steps.Count);
-            Assert.AreEqual(1, results.Steps[0].Count);
-            Assert.AreEqual("Sweeping Edge", results.Steps[0][0].Name);
-            Assert.AreEqual(2, results.Steps[1].Count);
-            Assert.AreEqual("Looting", results.Steps[1][0].Name);
-            Assert.AreEqual("Sharpness", results.Steps[1][1].Name);
-            Assert.AreEqual(4, results.Steps[2].Count);
-            Assert.AreEqual("Fire Aspect", results.Steps[2][0].Name);
-            Assert.AreEqual("Unbreaking", results.Steps[2][1].Name);
-            Assert.AreEqual("Knockback", results.Steps[2][2].Name);
-            Assert.AreEqual("Mending", results.Steps[2][3].Name);
+            Assert.That(results.Steps.Count, Is.EqualTo(3));
+            Assert.That(results.Steps[0].Count, Is.EqualTo(1));
+            Assert.That(results.Steps[0][0].Name, Is.EqualTo("Sweeping Edge"));
+
+            Assert.That(results.Steps[1].Count, Is.EqualTo(2));
+            Assert.That(results.Steps[1][0].Name, Is.EqualTo("Looting"));
+            Assert.That(results.Steps[1][1].Name, Is.EqualTo("Sharpness"));
+
+            Assert.That(results.Steps[2].Count, Is.EqualTo(4));
+            Assert.That(results.Steps[2][0].Name, Is.EqualTo("Fire Aspect"));
+            Assert.That(results.Steps[2][1].Name, Is.EqualTo("Unbreaking"));
+            Assert.That(results.Steps[2][2].Name, Is.EqualTo("Knockback"));
+            Assert.That(results.Steps[2][3].Name, Is.EqualTo("Mending"));
         }
     }
 }

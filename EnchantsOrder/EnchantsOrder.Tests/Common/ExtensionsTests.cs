@@ -17,9 +17,9 @@ namespace EnchantsOrder.Common.Tests
             string[] strings = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
             for (int i = 1; i <= 10; i++)
             {
-                Assert.AreEqual(strings[i - 1], i.GetRomanNumber());
+                Assert.That(i.GetRomanNumber(), Is.EqualTo(strings[i - 1]));
             }
-            Assert.AreEqual("MCCXXXIV", 1234.GetRomanNumber());
+            Assert.That(1234.GetRomanNumber(), Is.EqualTo("MCCXXXIV"));
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace EnchantsOrder.Common.Tests
             long[] expect = [0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023];
             for (int i = 0; i <= 10; i++)
             {
-                Assert.AreEqual(expect[i], Extensions.PenaltyToExperience(i));
+                Assert.That(Extensions.PenaltyToExperience(i), Is.EqualTo(expect[i]));
             }
         }
 
@@ -45,6 +45,6 @@ namespace EnchantsOrder.Common.Tests
         [TestCase(657220, 400)]
         [TestCase(161027220, 6000)]
         [TestCase(448377220, 10000)]
-        public void LevelToExperience(long xp, long level) => Assert.AreEqual(xp, Extensions.LevelToExperience(level));
+        public void LevelToExperience(long xp, long level) => Assert.That(Extensions.LevelToExperience(level), Is.EqualTo(xp));
     }
 }

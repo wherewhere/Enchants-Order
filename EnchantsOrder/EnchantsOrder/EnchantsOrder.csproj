@@ -6,9 +6,9 @@
 
   <PropertyGroup Condition="'$(FullTargets)' == 'True'">
     <NoWarn>NU1603;NU1901;NU1902</NoWarn>
-    <TargetFrameworks>net6.0;netstandard1.1;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True'">$(TargetFrameworks);netcoreapp2.1</TargetFrameworks>
-    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True' and '$(IsWindows)' == 'True'">$(TargetFrameworks);native;net2.0-client;net4.0-client;net4.7;netcore50;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard1.1;netstandard2.0;netstandard2.1;netcoreapp2.1;net2.0-client;net4.0-client;net4.7</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsWindows)' == 'True'">$(TargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True' and '$(IsWindows)' == 'True'">$(TargetFrameworks);native;netcore5.0;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(FullTargets)' != 'True'">
@@ -19,7 +19,7 @@
   <PropertyGroup Condition="'$(FullTargets)' == 'True'
                         and '$(GITHUB_ACTIONS)' != 'True'
                         and '$(IsWindows)' == 'True'">
-    <NuspecFile Condition="'$(GITHUB_ACTIONS)' != 'true'">EnchantsOrder.nuspec</NuspecFile>
+    <NuspecFile>EnchantsOrder.nuspec</NuspecFile>
     <NuspecProperties>id=$(AssemblyName);version=$(VersionPrefix);title=$(Title);authors=$(Authors);requireLicenseAcceptance=$(PackageRequireLicenseAcceptance);license=$(PackageLicenseExpression);icon=$(PackageIcon);projectUrl=$(PackageProjectUrl);iconUrl=$(PackageIconUrl);description=$(Description);releaseNotes=$(PackageReleaseNotes);copyright=$(Copyright);repositoryType=$(RepositoryType);repositoryUrl=$(PackageProjectUrl);repositoryCommit=$(RepositoryCommit);buildOutput=bin\$(Configuration)</NuspecProperties>
   </PropertyGroup>
 
