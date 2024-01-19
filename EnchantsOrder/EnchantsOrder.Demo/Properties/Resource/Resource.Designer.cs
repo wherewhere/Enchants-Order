@@ -88,11 +88,20 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
+        ///   查找类似 Enchantments 的本地化字符串。
+        /// </summary>
+        internal static string EnchantmentOption {
+            get {
+                return ResourceManager.GetString("EnchantmentOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Set the enchantments which you want to enchant 的本地化字符串。
         /// </summary>
-        internal static string EnchantmentArgument {
+        internal static string EnchantmentOptionDescription {
             get {
-                return ResourceManager.GetString("EnchantmentArgument", resourceCulture);
+                return ResourceManager.GetString("EnchantmentOptionDescription", resourceCulture);
             }
         }
         
@@ -178,7 +187,7 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
-        ///   查找类似 Set the item which you want to list enchantments 的本地化字符串。
+        ///   查找类似 Item 的本地化字符串。
         /// </summary>
         internal static string ItemArgument {
             get {
@@ -187,7 +196,16 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
-        ///   查找类似 Set the language code you want to change 的本地化字符串。
+        ///   查找类似 Set the item which you want to list enchantments 的本地化字符串。
+        /// </summary>
+        internal static string ItemArgumentDescription {
+            get {
+                return ResourceManager.GetString("ItemArgumentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Code 的本地化字符串。
         /// </summary>
         internal static string LangArgument {
             get {
@@ -196,20 +214,29 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
+        ///   查找类似 Set the language code you want to change 的本地化字符串。
+        /// </summary>
+        internal static string LangArgumentDescription {
+            get {
+                return ResourceManager.GetString("LangArgumentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Change the language of this program 的本地化字符串。
         /// </summary>
-        internal static string LangCommand {
+        internal static string LangCommandDescription {
             get {
-                return ResourceManager.GetString("LangCommand", resourceCulture);
+                return ResourceManager.GetString("LangCommandDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 List ordered enchantments of item 的本地化字符串。
         /// </summary>
-        internal static string ListCommand {
+        internal static string ListCommandDescription {
             get {
-                return ResourceManager.GetString("ListCommand", resourceCulture);
+                return ResourceManager.GetString("ListCommandDescription", resourceCulture);
             }
         }
         
@@ -234,14 +261,14 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         /// <summary>
         ///   查找类似 Ordering the enchantments 的本地化字符串。
         /// </summary>
-        internal static string OrderCommand {
+        internal static string OrderCommandDescription {
             get {
-                return ResourceManager.GetString("OrderCommand", resourceCulture);
+                return ResourceManager.GetString("OrderCommandDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Set the penalty of your item which you want to enchant 的本地化字符串。
+        ///   查找类似 Penalty 的本地化字符串。
         /// </summary>
         internal static string PenaltyOption {
             get {
@@ -250,11 +277,20 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
+        ///   查找类似 Set the penalty of your item which you want to enchant 的本地化字符串。
+        /// </summary>
+        internal static string PenaltyOptionDescription {
+            get {
+                return ResourceManager.GetString("PenaltyOptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 A demo of EnchantsOrder which can order enchantments 的本地化字符串。
         /// </summary>
-        internal static string RootCommand {
+        internal static string RootCommandDescription {
             get {
-                return ResourceManager.GetString("RootCommand", resourceCulture);
+                return ResourceManager.GetString("RootCommandDescription", resourceCulture);
             }
         }
         

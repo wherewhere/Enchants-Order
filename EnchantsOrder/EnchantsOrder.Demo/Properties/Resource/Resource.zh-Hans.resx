@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EnchantmentArgument" xml:space="preserve">
+  <data name="EnchantmentOptionDescription" xml:space="preserve">
     <value>设置您想要附魔的附魔</value>
   </data>
-  <data name="ItemArgument" xml:space="preserve">
+  <data name="ItemArgumentDescription" xml:space="preserve">
     <value>设置您想要列出的物品</value>
   </data>
-  <data name="LangArgument" xml:space="preserve">
+  <data name="LangArgumentDescription" xml:space="preserve">
     <value>设置您想要设置的语言的语言代码</value>
   </data>
-  <data name="LangCommand" xml:space="preserve">
+  <data name="LangCommandDescription" xml:space="preserve">
     <value>更改本程序的语言</value>
   </data>
-  <data name="ListCommand" xml:space="preserve">
+  <data name="ListCommandDescription" xml:space="preserve">
     <value>列出物品的附魔列表</value>
   </data>
-  <data name="OrderCommand" xml:space="preserve">
+  <data name="OrderCommandDescription" xml:space="preserve">
     <value>对附魔进行排序</value>
   </data>
-  <data name="PenaltyOption" xml:space="preserve">
+  <data name="PenaltyOptionDescription" xml:space="preserve">
     <value>设置您想要附魔的物品的惩罚</value>
   </data>
-  <data name="RootCommand" xml:space="preserve">
+  <data name="RootCommandDescription" xml:space="preserve">
     <value>一个可以排序附魔的 EnchantsOrder 示例</value>
   </data>
   <data name="InputCommand" xml:space="preserve">
@@ -185,5 +185,20 @@
   </data>
   <data name="InputWeight" xml:space="preserve">
     <value>输入权重：</value>
+  </data>
+  <data name="EnchantmentOption" xml:space="preserve">
+    <value>附魔</value>
+  </data>
+  <data name="ItemArgument" xml:space="preserve">
+    <value>物品</value>
+  </data>
+  <data name="LangArgument" xml:space="preserve">
+    <value>代码</value>
+  </data>
+  <data name="PenaltyOption" xml:space="preserve">
+    <value>惩罚</value>
+  </data>
+  <data name="UnknownCommand" xml:space="preserve">
+    <value>未知命令</value>
   </data>
 </root>

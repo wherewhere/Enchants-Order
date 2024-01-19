@@ -126,7 +126,10 @@
   <data name="CurrentLanguageFormat" xml:space="preserve">
     <value>Current language is {0}</value>
   </data>
-  <data name="EnchantmentArgument" xml:space="preserve">
+  <data name="EnchantmentOption" xml:space="preserve">
+    <value>Enchantments</value>
+  </data>
+  <data name="EnchantmentOptionDescription" xml:space="preserve">
     <value>Set the enchantments which you want to enchant</value>
   </data>
   <data name="EnchantsFileName" xml:space="preserve">
@@ -157,15 +160,21 @@
     <value>Input Weight:</value>
   </data>
   <data name="ItemArgument" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="ItemArgumentDescription" xml:space="preserve">
     <value>Set the item which you want to list enchantments</value>
   </data>
   <data name="LangArgument" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="LangArgumentDescription" xml:space="preserve">
     <value>Set the language code you want to change</value>
   </data>
-  <data name="LangCommand" xml:space="preserve">
+  <data name="LangCommandDescription" xml:space="preserve">
     <value>Change the language of this program</value>
   </data>
-  <data name="ListCommand" xml:space="preserve">
+  <data name="ListCommandDescription" xml:space="preserve">
     <value>List ordered enchantments of item</value>
   </data>
   <data name="NotFoundEnchantmentFormat" xml:space="preserve">
@@ -174,13 +183,16 @@
   <data name="NotFoundItemFormat" xml:space="preserve">
     <value>Not found item named {0}</value>
   </data>
-  <data name="OrderCommand" xml:space="preserve">
+  <data name="OrderCommandDescription" xml:space="preserve">
     <value>Ordering the enchantments</value>
   </data>
   <data name="PenaltyOption" xml:space="preserve">
+    <value>Penalty</value>
+  </data>
+  <data name="PenaltyOptionDescription" xml:space="preserve">
     <value>Set the penalty of your item which you want to enchant</value>
   </data>
-  <data name="RootCommand" xml:space="preserve">
+  <data name="RootCommandDescription" xml:space="preserve">
     <value>A demo of EnchantsOrder which can order enchantments</value>
   </data>
   <data name="StartOrdering" xml:space="preserve">

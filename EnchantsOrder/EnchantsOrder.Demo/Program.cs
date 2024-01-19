@@ -5,9 +5,11 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Enchantment = EnchantsOrder.Demo.Models.Enchantment;
@@ -16,7 +18,8 @@ namespace EnchantsOrder.Demo
 {
     internal class Program
     {
-        private static readonly List<Enchantment> Enchantments = new();
+        private static string[] Items = [];
+        private static readonly List<Enchantment> Enchantments = [];
         private static readonly IConfigurationRoot Configuration = new ConfigurationBuilder().AddWritableJsonFile(Path.Combine("Assets", "AppSettings.json"), true, true).Build();
 
         private static async Task<int> Main(string[] args)
@@ -25,51 +28,71 @@ namespace EnchantsOrder.Demo
             InitializeLanguage();
             InitializeEnchantments();
 
-            Option<IEnumerable<string>> enchantmentArgument = new Option<IEnumerable<string>>("--enchantments", Array.Empty<string>, Resource.EnchantmentArgument)
+            CliOption<IEnumerable<string>> enchantmentOption = new("--enchantments", "-e")
             {
-                AllowMultipleArgumentsPerToken = true
-            }.AddCompletions([.. Enchantments.Select((x) => x.Name)]);
+                Arity = ArgumentArity.OneOrMore,
+                AllowMultipleArgumentsPerToken = true,
+                Description = Resource.EnchantmentOptionDescription,
+                HelpName = Resource.EnchantmentOption
+            };
+            enchantmentOption.AcceptOnlyFromAmong(Enchantments.Select(x => x.Name).ToArray());
 
-            enchantmentArgument.AddAlias("-e");
-
-            Option<int> penaltyOption = new("--penalty", () => 0, Resource.PenaltyOption);
-            penaltyOption.AddAlias("-p");
-
-            Command orderCommand = new("order", Resource.OrderCommand)
+            CliOption<int> penaltyOption = new("--penalty", "-p")
             {
-                enchantmentArgument,
+                Arity = ArgumentArity.ZeroOrOne,
+                Description = Resource.PenaltyOptionDescription,
+                DefaultValueFactory = _ => 0,
+                HelpName = Resource.PenaltyOption
+            };
+
+            CliCommand orderCommand = new("order", Resource.OrderCommandDescription)
+            {
+                enchantmentOption,
                 penaltyOption
             };
-            orderCommand.SetHandler(OrderCommandHandler, enchantmentArgument, penaltyOption);
+            orderCommand.SetAction(x => OrderCommandHandler(x.GetValue(enchantmentOption), x.GetValue(penaltyOption)));
 
-            Argument<string> itemArgument = new Argument<string>("item", () => string.Empty, Resource.ItemArgument)
-                .AddCompletions([.. Enchantments.OrderByDescending((x) => x.Items.Count()).FirstOrDefault().Items]);
+            CliArgument<string> itemArgument = new("item")
+            {
+                Arity = ArgumentArity.ExactlyOne,
+                Description = Resource.ItemArgumentDescription,
+                HelpName = Resource.ItemArgument
+            };
+            itemArgument.AcceptOnlyFromAmong(Items);
 
-            Command listCommand = new("list", Resource.ListCommand)
+            CliCommand listCommand = new("list", Resource.ListCommandDescription)
             {
                 itemArgument,
                 penaltyOption
             };
-            listCommand.SetHandler(ListCommandHandler, itemArgument, penaltyOption);
+            listCommand.SetAction(x => ListCommandHandler(x.GetValue(itemArgument), x.GetValue(penaltyOption)));
 
-            Argument<string> langArgument = new Argument<string>("code", () => string.Empty, Resource.LangArgument)
-                .AddCompletions("zh-CN", "en-US");
+            CliArgument<string> langArgument = new("code")
+            {
+                Arity = ArgumentArity.ExactlyOne,
+                Description = Resource.LangArgumentDescription,
+                HelpName = Resource.LangArgument
+            };
+            langArgument.CompletionSources.Add(
+                x => from code in (IEnumerable<string>)["zh-CN", "en-US"]
+                     where string.IsNullOrWhiteSpace(x.WordToComplete) || code.StartsWith(x.WordToComplete, StringComparison.OrdinalIgnoreCase)
+                     select code);
 
-            Command langCommand = new("lang", Resource.LangCommand)
+            CliCommand langCommand = new("lang", Resource.LangCommandDescription)
             {
                 langArgument,
             };
-            langCommand.SetHandler(LangCommandHandler, langArgument);
+            langCommand.SetAction(x => LangCommandHandler(x.GetValue(langArgument)));
 
-            RootCommand rootCommand = new(Resource.RootCommand)
+            CliRootCommand rootCommand = new(Resource.RootCommandDescription)
             {
                 orderCommand,
                 listCommand,
                 langCommand
             };
-            rootCommand.SetHandler(RootCommandHandler);
+            rootCommand.SetAction(_ => RootCommandHandler());
 
-            return await rootCommand.InvokeAsync(args);
+            return await new CliConfiguration(rootCommand).InvokeAsync(args);
         }
 
         private static void RootCommandHandler()
@@ -92,21 +115,26 @@ namespace EnchantsOrder.Demo
                     case "lang":
                         LangCommandHandler();
                         break;
+                    case "?":
+                    case "h":
                     case "helper":
                         Console.WriteLine("Description:");
-                        Console.WriteLine($"  {Resource.RootCommand}");
+                        Console.WriteLine("  {0}", Resource.RootCommandDescription);
                         Console.WriteLine();
                         Console.WriteLine("Usage:");
                         Console.WriteLine("  EnchantsOrder.Demo order [options]");
                         Console.WriteLine();
                         Console.WriteLine("Options:");
-                        Console.WriteLine("  --version       Show version information");
-                        Console.WriteLine("  -?, -h, --help  Show help and usage information");
+                        Console.WriteLine("  ?, h, help\tShow help and usage information");
+                        Console.WriteLine("  version\tShow version information");
                         Console.WriteLine();
                         Console.WriteLine("Commands:");
-                        Console.WriteLine($"  order        {Resource.OrderCommand}");
-                        Console.WriteLine($"  list <item>  {Resource.ListCommand}");
-                        Console.WriteLine($"  lang <code>  {Resource.LangCommand}");
+                        Console.WriteLine("  order\t\t{0}", Resource.OrderCommandDescription);
+                        Console.WriteLine("  list <{0}>\t{1}", Resource.ItemArgument, Resource.ListCommandDescription);
+                        Console.WriteLine("  lang <{0}>\t{1}", Resource.LangArgument, Resource.LangCommandDescription);
+                        break;
+                    case "version":
+                        Console.WriteLine(FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
                         break;
                     case "exit":
                         break;
@@ -155,6 +183,7 @@ namespace EnchantsOrder.Demo
             {
                 Enchantments.Add(new(token));
             }
+            Items = Enchantments.OrderByDescending((x) => x.Items.Count()).FirstOrDefault().Items;
         }
 
         private static void LangCommandHandler(string code = "")
