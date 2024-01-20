@@ -80,7 +80,7 @@ namespace EnchantsOrder.Models
                 {
                     if ((value = MaxExperience.CompareTo(other.MaxExperience)) == 0)
                     {
-                        static int GetStepNum(IList<IEnchantmentStep> steps) => steps.Sum((step) => step.Count);
+                        static int GetStepNum(IList<IEnchantmentStep> steps) => steps.Sum(step => step.Count);
                         value = GetStepNum(Steps).CompareTo(GetStepNum(other.Steps));
                     }
                 }

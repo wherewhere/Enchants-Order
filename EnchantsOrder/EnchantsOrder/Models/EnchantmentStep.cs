@@ -24,6 +24,9 @@ namespace EnchantsOrder.Models
         List<IEnchantment>,
 #endif
         IEnchantmentStep
+#if !SILVERLIGHT && !WINDOWSPHONE && !NETFRAMEWORK || NET45_OR_GREATER
+        , IReadOnlyList<IEnchantment>
+#endif
     {
         /// <summary>
         /// Gets or sets the index of step.
@@ -35,6 +38,9 @@ namespace EnchantsOrder.Models
 
         /// <inheritdoc/>
         public int Count => Enchantments.Count;
+        
+        /// <inheritdoc/>
+        int IReadOnlyCollection<IEnchantment>.Count => ((IReadOnlyCollection<IEnchantment>)Enchantments).Count;
 
         /// <inheritdoc/>
         public bool IsReadOnly => ((ICollection<IEnchantment>)Enchantments).IsReadOnly;
@@ -45,6 +51,9 @@ namespace EnchantsOrder.Models
             get => Enchantments[index];
             set => Enchantments[index] = value;
         }
+
+        /// <inheritdoc/>
+        IEnchantment IReadOnlyList<IEnchantment>.this[int index] => ((IReadOnlyList<IEnchantment>)Enchantments)[index];
 #endif
 
         /// <inheritdoc/>

@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #if NET20 || SILVERLIGHT || WINDOWSPHONE
-using System.Collections.Generic;
 
 namespace System.Linq
 {
@@ -11,47 +10,6 @@ namespace System.Linq
     /// </summary>
     internal static class Utilities
     {
-        /// <summary>
-        /// Decides if two equality comparers are equivalent.
-        /// </summary>
-        /// <typeparam name="TSource">The type of each comparer.</typeparam>
-        /// <param name="left">The first comparer.</param>
-        /// <param name="right">The second comparer.</param>
-        /// <returns><c>true</c> if the equality comparers are equal; otherwise, <c>false</c>.</returns>
-        public static bool AreEqualityComparersEqual<TSource>(IEqualityComparer<TSource> left, IEqualityComparer<TSource> right)
-        {
-            if (left == right)
-            {
-                return true;
-            }
-
-            EqualityComparer<TSource> defaultComparer = EqualityComparer<TSource>.Default;
-
-            if (left == null)
-            {
-                // Micro-opt: Typically it's impossible to get a different instance
-                // of the default comparer without reflection/serialization.
-                // Save a virtual method call to Equals in the common case.
-                return right == defaultComparer || right!.Equals(defaultComparer);
-            }
-
-            return right == null ? left == defaultComparer || left.Equals(defaultComparer) : left.Equals(right);
-        }
-
-        /// <summary>
-        /// Combines two predicates.
-        /// </summary>
-        /// <typeparam name="TSource">The type of the predicate argument.</typeparam>
-        /// <param name="predicate1">The first predicate to run.</param>
-        /// <param name="predicate2">The second predicate to run.</param>
-        /// <returns>
-        /// A new predicate that will evaluate to <c>true</c> only if both the first and
-        /// second predicates return true. If the first predicate returns <c>false</c>,
-        /// the second predicate will not be run.
-        /// </returns>
-        public static Func<TSource, bool> CombinePredicates<TSource>(Func<TSource, bool> predicate1, Func<TSource, bool> predicate2) =>
-            x => predicate1(x) && predicate2(x);
-
         /// <summary>
         /// Combines two selectors.
         /// </summary>

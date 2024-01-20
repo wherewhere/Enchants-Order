@@ -56,27 +56,6 @@ namespace System.Linq
         static partial void CreateSelectIPartitionIterator<TResult, TSource>(
             Func<TSource, TResult> selector, IPartition<TSource> partition, ref IEnumerable<TResult> result);
 
-        public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
-        {
-            return source == null
-                ? throw new ArgumentNullException(nameof(source))
-                : selector == null ? throw new ArgumentNullException(nameof(selector)) : SelectIterator(source, selector);
-        }
-
-        private static IEnumerable<TResult> SelectIterator<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
-        {
-            int index = -1;
-            foreach (TSource element in source)
-            {
-                checked
-                {
-                    index++;
-                }
-
-                yield return selector(element, index);
-            }
-        }
-
         /// <summary>
         /// An iterator that maps each item of an <see cref="IEnumerable{TSource}"/>.
         /// </summary>

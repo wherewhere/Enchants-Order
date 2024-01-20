@@ -14,21 +14,6 @@ namespace System.Linq
             return !found ? throw new Exception("NoElementsException") : last;
         }
 
-        public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source) =>
-            source.TryGetLast(out _);
-
-        /// <summary>Returns the last element of a sequence, or a default value if the sequence contains no elements.</summary>
-        /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
-        /// <param name="source">An <see cref="IEnumerable{T}" /> to return the last element of.</param>
-        /// <param name="defaultValue">The default value to return if the sequence is empty.</param>
-        /// <returns><paramref name="defaultValue" /> if the source sequence is empty; otherwise, the last element in the <see cref="IEnumerable{T}" />.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="source" /> is <see langword="null" />.</exception>
-        public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source, TSource defaultValue)
-        {
-            TSource last = source.TryGetLast(out bool found);
-            return found ? last! : defaultValue;
-        }
-
         private static TSource TryGetLast<TSource>(this IEnumerable<TSource> source, out bool found)
         {
             if (source == null)
