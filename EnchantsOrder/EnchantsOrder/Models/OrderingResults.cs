@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 #if WINRT
@@ -24,33 +25,33 @@ namespace EnchantsOrder.Models
 #endif
     {
         /// <summary>
-        /// Get or set the penalty of item.
+        /// Gets or sets the penalty of item.
         /// </summary>
         public int Penalty { get; set; } = penalty;
 
         /// <summary>
-        /// Get or set the max experience level request during enchant.
+        /// Gets or sets the max experience level request during enchant.
         /// </summary>
         public double MaxExperience { get; set; } = maxExperience;
 
         /// <summary>
-        /// Get or set the total experience level request during enchant.
+        /// Gets or sets the total experience level request during enchant.
         /// </summary>
         public double TotalExperience { get; set; } = totalExperience;
 
         /// <summary>
-        /// Get or set the steps of enchant.
+        /// Gets or sets the steps of enchant.
         /// </summary>
         public IList<IEnchantmentStep> Steps { get; set; } = steps;
 
         /// <summary>
-        /// Get the status whether it is too expensive.
+        /// Gets the status whether it is too expensive.
         /// </summary>
         /// <remarks>Too expensive because max experience level max than 39.</remarks>
         public bool IsTooExpensive => MaxExperience > max_experience;
 
         /// <summary>
-        /// Get the status whether it is too many penalty.
+        /// Gets the status whether it is too many penalty.
         /// </summary>
         /// <remarks>Max penalty max than 6 so that you cannot enchant any more.</remarks>
         public bool IsTooManyPenalty => Penalty > max_penalty;
@@ -64,32 +65,22 @@ namespace EnchantsOrder.Models
                 _ = builder.AppendLine(step.ToString());
             }
             return builder.AppendLine($"Penalty Level: {Penalty}")
-                .AppendLine($"Max Experience Level: {MaxExperience}")
-                .Append($"Total Experience Level: {TotalExperience}")
-                .ToString();
+                          .AppendLine($"Max Experience Level: {MaxExperience}")
+                          .Append($"Total Experience Level: {TotalExperience}")
+                          .ToString();
         }
 
         /// <inheritdoc/>
         public int CompareTo(IOrderingResults other)
         {
-            int value = Penalty.CompareTo(other.Penalty);
-            if (value == 0)
+            int value;
+            if ((value = Penalty.CompareTo(other.Penalty)) == 0)
             {
-                value = TotalExperience.CompareTo(other.TotalExperience);
-                if (value == 0)
+                if ((value = TotalExperience.CompareTo(other.TotalExperience)) == 0)
                 {
-                    value = MaxExperience.CompareTo(other.MaxExperience);
-                    if (value == 0)
+                    if ((value = MaxExperience.CompareTo(other.MaxExperience)) == 0)
                     {
-                        static int GetStepNum(IList<IEnchantmentStep> steps)
-                        {
-                            int num = 0;
-                            foreach (IEnchantmentStep step in steps)
-                            {
-                                num += step.Count;
-                            }
-                            return num;
-                        }
+                        static int GetStepNum(IList<IEnchantmentStep> steps) => steps.Sum((step) => step.Count);
                         value = GetStepNum(Steps).CompareTo(GetStepNum(other.Steps));
                     }
                 }

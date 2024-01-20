@@ -22,22 +22,22 @@ namespace EnchantsOrder.Models
 #endif
     {
         /// <summary>
-        /// Get or set the name of this enchantment.
+        /// Gets or sets the name of this enchantment.
         /// </summary>
         public string Name { get; set; } = name;
 
         /// <summary>
-        /// Get or set the level of this enchantment.
+        /// Gets or sets the level of this enchantment.
         /// </summary>
         public int Level { get; set; } = level;
 
         /// <summary>
-        /// Get or set the weight for enchant of this enchantment.
+        /// Gets or sets the weight for enchant of this enchantment.
         /// </summary>
         public int Weight { get; set; } = weight;
 
         /// <summary>
-        /// Get or set the experience level when enchant request of this enchantment.
+        /// Gets or sets the experience level when enchant request of this enchantment.
         /// </summary>
         public long Experience => (long)Level * Weight;
 

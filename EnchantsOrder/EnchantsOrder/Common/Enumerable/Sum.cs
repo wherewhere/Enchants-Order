@@ -188,6 +188,10 @@ namespace System.Linq
             return sum;
         }
 
+        public static int Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
+        {
+            return source.Select(selector).Sum();
+        }
     }
 }
 #endif

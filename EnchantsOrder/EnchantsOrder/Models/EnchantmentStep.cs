@@ -26,7 +26,7 @@ namespace EnchantsOrder.Models
         IEnchantmentStep
     {
         /// <summary>
-        /// Get or set the index of step.
+        /// Gets or sets the index of step.
         /// </summary>
         public int Step { get; set; } = step;
 

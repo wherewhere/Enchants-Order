@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
+using System.CommandLine.Parsing;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -22,20 +23,116 @@ namespace EnchantsOrder.Demo
         private static readonly List<Enchantment> Enchantments = [];
         private static readonly IConfigurationRoot Configuration = new ConfigurationBuilder().AddWritableJsonFile(Path.Combine("Assets", "AppSettings.json"), true, true).Build();
 
-        private static async Task<int> Main(string[] args)
+        private static Task<int> Main(string[] args)
         {
             InitializeSettings();
             InitializeLanguage();
             InitializeEnchantments();
 
-            CliOption<IEnumerable<string>> enchantmentOption = new("--enchantments", "-e")
+            CliOption<int[]> levelOption = new("--level", "-l")
+            {
+                Arity = ArgumentArity.ZeroOrMore,
+                AllowMultipleArgumentsPerToken = true,
+                Description = Resource.LevelOptionDescription,
+                HelpName = Resource.LevelOption
+            };
+
+            CliOption<int[]> weightOption = new("--weight", "-w")
+            {
+                Arity = ArgumentArity.ZeroOrMore,
+                AllowMultipleArgumentsPerToken = true,
+                Description = Resource.WeightOptionDescription,
+                HelpName = Resource.WeightOption
+            };
+
+            CliArgument<IEnumerable<IEnchantment>> enchantmentArgument = new("enchantments")
             {
                 Arity = ArgumentArity.OneOrMore,
-                AllowMultipleArgumentsPerToken = true,
-                Description = Resource.EnchantmentOptionDescription,
-                HelpName = Resource.EnchantmentOption
+                Description = Resource.EnchantmentArgumentDescription,
+                HelpName = Resource.EnchantmentArgument,
+                CustomParser = x =>
+                {
+                    int[] levels = x.GetValue(levelOption);
+                    int[] weights = x.GetValue(weightOption);
+                    return levels == null
+                        ? x.Tokens.Select(token =>
+                        {
+                            if (Enchantments.FirstOrDefault(item => item.Name == token.Value) is Enchantment enchantment)
+                            {
+                                return enchantment;
+                            }
+                            else
+                            {
+                                x.AddError(string.Format(Resource.NotFoundEnchantmentFormat, token.Value));
+                                return null;
+                            }
+                        })
+                        : weights == null
+                            ? x.Tokens.Select((token, index) =>
+                            {
+                                if (Enchantments.FirstOrDefault(item => item.Name == token.Value) is IEnchantment enchantment)
+                                {
+                                    if (levels.Length > index)
+                                    {
+                                        enchantment = new global::EnchantsOrder.Models.Enchantment(enchantment.Name, levels[index], enchantment.Weight);
+                                    }
+                                    return enchantment;
+                                }
+                                else
+                                {
+                                    x.AddError(string.Format(Resource.NotFoundEnchantmentFormat, token.Value));
+                                    return null;
+                                }
+                            })
+                            : x.Tokens.Select((token, index) =>
+                            {
+                                if (weights.Length > index)
+                                {
+                                    return new global::EnchantsOrder.Models.Enchantment(token.Value, levels.Length > index ? levels[index] : 1, weights[index]);
+                                }
+                                else if (Enchantments.FirstOrDefault(item => item.Name == token.Value) is IEnchantment enchantment)
+                                {
+                                    if (levels.Length > index)
+                                    {
+                                        enchantment = new global::EnchantsOrder.Models.Enchantment(enchantment.Name, levels[index], enchantment.Weight);
+                                    }
+                                    return enchantment;
+                                }
+                                else
+                                {
+                                    x.AddError(string.Format(Resource.NotFoundEnchantmentFormat, token.Value));
+                                    return null;
+                                }
+                            });
+                }
             };
-            enchantmentOption.AcceptOnlyFromAmong(Enchantments.Select(x => x.Name).ToArray());
+            enchantmentArgument.Validators.Add(x =>
+            {
+                int[] levels = x.GetValue(levelOption);
+                int[] weights = x.GetValue(weightOption);
+                if (levels != null && levels.Length > x.Tokens.Count)
+                {
+                    x.AddError(string.Format(Resource.TooManyLevelsFormat, levels.Length, x.Tokens.Count));
+                    return;
+                }
+                if (weights != null && weights.Length > x.Tokens.Count)
+                {
+                    x.AddError(string.Format(Resource.TooManyWeightsFormat, weights.Length, x.Tokens.Count));
+                    return;
+                }
+                IEnumerable<CliToken> tokens = weights == null ? x.Tokens : x.Tokens.Skip(weights.Length);
+                foreach (CliToken token in tokens)
+                {
+                    if (!Enchantments.Select(x => x.Name).Any(x => x.Equals(token.Value, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        x.AddError(string.Format(Resource.NotFoundEnchantmentFormat, token.Value));
+                    }
+                }
+            });
+            enchantmentArgument.CompletionSources.Add(
+                x => from enchantment in Enchantments
+                     where string.IsNullOrWhiteSpace(x.WordToComplete) || enchantment.Name.StartsWith(x.WordToComplete, StringComparison.OrdinalIgnoreCase)
+                     select enchantment.Name.Contains(' ') ? $"'{enchantment.Name}'" : enchantment.Name);
 
             CliOption<int> penaltyOption = new("--penalty", "-p")
             {
@@ -47,10 +144,12 @@ namespace EnchantsOrder.Demo
 
             CliCommand orderCommand = new("order", Resource.OrderCommandDescription)
             {
-                enchantmentOption,
+                enchantmentArgument,
+                levelOption,
+                weightOption,
                 penaltyOption
             };
-            orderCommand.SetAction(x => OrderCommandHandler(x.GetValue(enchantmentOption), x.GetValue(penaltyOption)));
+            orderCommand.SetAction(x => OrderCommandHandler(x.GetValue(enchantmentArgument), x.GetValue(penaltyOption)));
 
             CliArgument<string> itemArgument = new("item")
             {
@@ -58,7 +157,18 @@ namespace EnchantsOrder.Demo
                 Description = Resource.ItemArgumentDescription,
                 HelpName = Resource.ItemArgument
             };
-            itemArgument.AcceptOnlyFromAmong(Items);
+            itemArgument.Validators.Add(x =>
+            {
+                string value = x.GetValue(itemArgument);
+                if (!Array.Exists(Items, item => item.Equals(value, StringComparison.OrdinalIgnoreCase)))
+                {
+                    x.AddError(string.Format(Resource.NotFoundItemFormat, value));
+                }
+            });
+            itemArgument.CompletionSources.Add(
+                x => from item in Items
+                     where string.IsNullOrWhiteSpace(x.WordToComplete) || item.StartsWith(x.WordToComplete, StringComparison.OrdinalIgnoreCase)
+                     select item.Contains(' ') ? $"'{item}'" : item);
 
             CliCommand listCommand = new("list", Resource.ListCommandDescription)
             {
@@ -74,7 +184,7 @@ namespace EnchantsOrder.Demo
                 HelpName = Resource.LangArgument
             };
             langArgument.CompletionSources.Add(
-                x => from code in (IEnumerable<string>)["zh-CN", "en-US"]
+                x => from code in (IEnumerable<string>)["default", "zh-CN", "en-US"]
                      where string.IsNullOrWhiteSpace(x.WordToComplete) || code.StartsWith(x.WordToComplete, StringComparison.OrdinalIgnoreCase)
                      select code);
 
@@ -92,7 +202,7 @@ namespace EnchantsOrder.Demo
             };
             rootCommand.SetAction(_ => RootCommandHandler());
 
-            return await new CliConfiguration(rootCommand).InvokeAsync(args);
+            return new CliConfiguration(rootCommand).InvokeAsync(args);
         }
 
         private static void RootCommandHandler()
@@ -129,7 +239,7 @@ namespace EnchantsOrder.Demo
                         Console.WriteLine("  version\tShow version information");
                         Console.WriteLine();
                         Console.WriteLine("Commands:");
-                        Console.WriteLine("  order\t\t{0}", Resource.OrderCommandDescription);
+                        Console.WriteLine("  order <{0}>\t{1}", Resource.EnchantmentArgument, Resource.OrderCommandDescription);
                         Console.WriteLine("  list <{0}>\t{1}", Resource.ItemArgument, Resource.ListCommandDescription);
                         Console.WriteLine("  lang <{0}>\t{1}", Resource.LangArgument, Resource.LangCommandDescription);
                         break;
@@ -183,7 +293,7 @@ namespace EnchantsOrder.Demo
             {
                 Enchantments.Add(new(token));
             }
-            Items = Enchantments.OrderByDescending((x) => x.Items.Count()).FirstOrDefault().Items;
+            Items = Enchantments.OrderByDescending((x) => x.Items.Length).FirstOrDefault().Items;
         }
 
         private static void LangCommandHandler(string code = "")
@@ -290,12 +400,16 @@ namespace EnchantsOrder.Demo
                 }
             }
 
+            OrderCommandHandler(enchantmentList, initialPenalty);
+        }
+
+        private static void OrderCommandHandler(IEnumerable<IEnchantment> enchantments, int initialPenalty = 0)
+        {
             Console.WriteLine(Resource.StartOrdering);
             Console.WriteLine("*****************");
-
             try
             {
-                OrderingResults results = enchantmentList.Ordering(initialPenalty);
+                OrderingResults results = enchantments.Ordering(initialPenalty);
                 Console.WriteLine(results.ToString());
             }
             catch (Exception ex)

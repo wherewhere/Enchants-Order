@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddedFormat" xml:space="preserve">
-    <value>{0} Added</value>
+    <value>'{0}' Added</value>
   </data>
   <data name="CurrentLanguageChangedFormat" xml:space="preserve">
-    <value>Current language is changed to {0}</value>
+    <value>Current language is changed to '{0}'</value>
   </data>
   <data name="CurrentLanguageFormat" xml:space="preserve">
-    <value>Current language is {0}</value>
+    <value>Current language is '{0}'</value>
   </data>
-  <data name="EnchantmentOption" xml:space="preserve">
+  <data name="EnchantmentArgument" xml:space="preserve">
     <value>Enchantments</value>
   </data>
-  <data name="EnchantmentOptionDescription" xml:space="preserve">
+  <data name="EnchantmentArgumentDescription" xml:space="preserve">
     <value>Set the enchantments which you want to enchant</value>
   </data>
   <data name="EnchantsFileName" xml:space="preserve">
@@ -174,14 +174,20 @@
   <data name="LangCommandDescription" xml:space="preserve">
     <value>Change the language of this program</value>
   </data>
+  <data name="LevelOption" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="LevelOptionDescription" xml:space="preserve">
+    <value>Set the level of each enchantment</value>
+  </data>
   <data name="ListCommandDescription" xml:space="preserve">
     <value>List ordered enchantments of item</value>
   </data>
   <data name="NotFoundEnchantmentFormat" xml:space="preserve">
-    <value>Not found enchantment named {0}</value>
+    <value>Not found enchantment named '{0}'</value>
   </data>
   <data name="NotFoundItemFormat" xml:space="preserve">
-    <value>Not found item named {0}</value>
+    <value>Not found item named '{0}'</value>
   </data>
   <data name="OrderCommandDescription" xml:space="preserve">
     <value>Ordering the enchantments</value>
@@ -198,7 +204,19 @@
   <data name="StartOrdering" xml:space="preserve">
     <value>Start ordering...</value>
   </data>
+  <data name="TooManyLevelsFormat" xml:space="preserve">
+    <value>The count of levels '{0}' is more than enchantment '{1}'</value>
+  </data>
+  <data name="TooManyWeightsFormat" xml:space="preserve">
+    <value>The count of weights '{0}' is more than enchantment '{1}'</value>
+  </data>
   <data name="UnknownCommand" xml:space="preserve">
     <value>Unknown command</value>
+  </data>
+  <data name="WeightOption" xml:space="preserve">
+    <value>Weight</value>
+  </data>
+  <data name="WeightOptionDescription" xml:space="preserve">
+    <value>Set the weight of each enchantment</value>
   </data>
 </root>

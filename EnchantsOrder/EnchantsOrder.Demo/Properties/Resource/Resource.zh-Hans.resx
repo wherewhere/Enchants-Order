@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EnchantmentOptionDescription" xml:space="preserve">
+  <data name="EnchantmentArgumentDescription" xml:space="preserve">
     <value>设置您想要附魔的附魔</value>
   </data>
   <data name="ItemArgumentDescription" xml:space="preserve">
@@ -145,13 +145,13 @@
     <value>输入命令（输入 exit 退出）：</value>
   </data>
   <data name="AddedFormat" xml:space="preserve">
-    <value>已添加 {0}</value>
+    <value>已添加 '{0}'</value>
   </data>
   <data name="CurrentLanguageChangedFormat" xml:space="preserve">
-    <value>当前语言已修改为 {0}</value>
+    <value>当前语言已修改为 '{0}'</value>
   </data>
   <data name="CurrentLanguageFormat" xml:space="preserve">
-    <value>当前语言是 {0}</value>
+    <value>当前语言是 '{0}'</value>
   </data>
   <data name="EnchantsFileName" xml:space="preserve">
     <value>Enchants.zh-CN.json</value>
@@ -169,10 +169,10 @@
     <value>输入语言代码切换语言（输入 exit 退出）：</value>
   </data>
   <data name="NotFoundEnchantmentFormat" xml:space="preserve">
-    <value>无法找到名为 {0} 的附魔</value>
+    <value>无法找到名为 '{0}' 的附魔</value>
   </data>
   <data name="NotFoundItemFormat" xml:space="preserve">
-    <value>无法找到名为 {0} 的物品</value>
+    <value>无法找到名为 '{0}' 的物品</value>
   </data>
   <data name="StartOrdering" xml:space="preserve">
     <value>开始排序……</value>
@@ -186,7 +186,7 @@
   <data name="InputWeight" xml:space="preserve">
     <value>输入权重：</value>
   </data>
-  <data name="EnchantmentOption" xml:space="preserve">
+  <data name="EnchantmentArgument" xml:space="preserve">
     <value>附魔</value>
   </data>
   <data name="ItemArgument" xml:space="preserve">
@@ -200,5 +200,23 @@
   </data>
   <data name="UnknownCommand" xml:space="preserve">
     <value>未知命令</value>
+  </data>
+  <data name="LevelOption" xml:space="preserve">
+    <value>等级</value>
+  </data>
+  <data name="LevelOptionDescription" xml:space="preserve">
+    <value>设置每个附魔的等级</value>
+  </data>
+  <data name="TooManyLevelsFormat" xml:space="preserve">
+    <value>等级的数量 '{0}' 超过了附魔 '{1}'</value>
+  </data>
+  <data name="TooManyWeightsFormat" xml:space="preserve">
+    <value>权重的数量 '{0}' 超过了附魔 '{1}'</value>
+  </data>
+  <data name="WeightOption" xml:space="preserve">
+    <value>权重</value>
+  </data>
+  <data name="WeightOptionDescription" xml:space="preserve">
+    <value>设置每个附魔的权重</value>
   </data>
 </root>

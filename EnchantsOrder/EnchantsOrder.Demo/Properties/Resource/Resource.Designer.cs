@@ -61,7 +61,7 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
-        ///   查找类似 {0} Added 的本地化字符串。
+        ///   查找类似 &apos;{0}&apos; Added 的本地化字符串。
         /// </summary>
         internal static string AddedFormat {
             get {
@@ -70,7 +70,7 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
-        ///   查找类似 Current language is changed to {0} 的本地化字符串。
+        ///   查找类似 Current language is changed to &apos;{0}&apos; 的本地化字符串。
         /// </summary>
         internal static string CurrentLanguageChangedFormat {
             get {
@@ -79,7 +79,7 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
-        ///   查找类似 Current language is {0} 的本地化字符串。
+        ///   查找类似 Current language is &apos;{0}&apos; 的本地化字符串。
         /// </summary>
         internal static string CurrentLanguageFormat {
             get {
@@ -90,18 +90,18 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         /// <summary>
         ///   查找类似 Enchantments 的本地化字符串。
         /// </summary>
-        internal static string EnchantmentOption {
+        internal static string EnchantmentArgument {
             get {
-                return ResourceManager.GetString("EnchantmentOption", resourceCulture);
+                return ResourceManager.GetString("EnchantmentArgument", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Set the enchantments which you want to enchant 的本地化字符串。
         /// </summary>
-        internal static string EnchantmentOptionDescription {
+        internal static string EnchantmentArgumentDescription {
             get {
-                return ResourceManager.GetString("EnchantmentOptionDescription", resourceCulture);
+                return ResourceManager.GetString("EnchantmentArgumentDescription", resourceCulture);
             }
         }
         
@@ -232,6 +232,24 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
+        ///   查找类似 Level 的本地化字符串。
+        /// </summary>
+        internal static string LevelOption {
+            get {
+                return ResourceManager.GetString("LevelOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Set the level of each enchantment 的本地化字符串。
+        /// </summary>
+        internal static string LevelOptionDescription {
+            get {
+                return ResourceManager.GetString("LevelOptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 List ordered enchantments of item 的本地化字符串。
         /// </summary>
         internal static string ListCommandDescription {
@@ -241,7 +259,7 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
-        ///   查找类似 Not found enchantment named {0} 的本地化字符串。
+        ///   查找类似 Not found enchantment named &apos;{0}&apos; 的本地化字符串。
         /// </summary>
         internal static string NotFoundEnchantmentFormat {
             get {
@@ -250,7 +268,7 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
-        ///   查找类似 Not found item named {0} 的本地化字符串。
+        ///   查找类似 Not found item named &apos;{0}&apos; 的本地化字符串。
         /// </summary>
         internal static string NotFoundItemFormat {
             get {
@@ -304,11 +322,47 @@ namespace EnchantsOrder.Demo.Properties.Resource {
         }
         
         /// <summary>
+        ///   查找类似 The count of levels &apos;{0}&apos; is more than enchantment &apos;{1}&apos; 的本地化字符串。
+        /// </summary>
+        internal static string TooManyLevelsFormat {
+            get {
+                return ResourceManager.GetString("TooManyLevelsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The count of weights &apos;{0}&apos; is more than enchantment &apos;{1}&apos; 的本地化字符串。
+        /// </summary>
+        internal static string TooManyWeightsFormat {
+            get {
+                return ResourceManager.GetString("TooManyWeightsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Unknown command 的本地化字符串。
         /// </summary>
         internal static string UnknownCommand {
             get {
                 return ResourceManager.GetString("UnknownCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Weight 的本地化字符串。
+        /// </summary>
+        internal static string WeightOption {
+            get {
+                return ResourceManager.GetString("WeightOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Set the weight of each enchantment 的本地化字符串。
+        /// </summary>
+        internal static string WeightOptionDescription {
+            get {
+                return ResourceManager.GetString("WeightOptionDescription", resourceCulture);
             }
         }
     }
