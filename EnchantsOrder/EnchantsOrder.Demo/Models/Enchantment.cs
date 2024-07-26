@@ -41,12 +41,12 @@ namespace EnchantsOrder.Demo.Models
 
             if (value.TryGetProperty("items", out JsonElement itemsProperty))
             {
-                Items = itemsProperty.EnumerateArray().Select((x) => x.GetString()).ToArray();
+                Items = itemsProperty.EnumerateArray().Select(x => x.GetString()).ToArray();
             }
 
             if (value.TryGetProperty("incompatible", out JsonElement incompatibleProperty))
             {
-                Incompatible = incompatibleProperty.EnumerateArray().Select((x) => x.GetString()).ToArray();
+                Incompatible = incompatibleProperty.EnumerateArray().Select(x => x.GetString()).ToArray();
             }
         }
 

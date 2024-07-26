@@ -19,6 +19,7 @@ Get the best order for enchanting. Base on the [Python Version](https://github.c
 - .NET Core 5.0
 - .NET Core App 2.1
 - .NET 6.0
+- .NET 8.0
 
 ## Example
 

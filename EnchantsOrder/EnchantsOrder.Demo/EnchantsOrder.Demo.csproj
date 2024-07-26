@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.24068.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.24209.3" />
   </ItemGroup>
 
   <ItemGroup>

@@ -131,7 +131,7 @@ namespace EnchantsOrder.Demo
             });
             enchantmentArgument.CompletionSources.Add(
                 x => from enchantment in Enchantments
-                     where string.IsNullOrWhiteSpace(x.WordToComplete) || enchantment.Name.StartsWith(x.WordToComplete, StringComparison.OrdinalIgnoreCase)
+                     where string.IsNullOrWhiteSpace(x.WordToComplete) || enchantment.Name.StartsWith(x.WordToComplete.Trim('\'', '\"', ' '), StringComparison.OrdinalIgnoreCase)
                      select enchantment.Name.Contains(' ') ? $"'{enchantment.Name}'" : enchantment.Name);
 
             CliOption<int> penaltyOption = new("--penalty", "-p")
@@ -167,7 +167,7 @@ namespace EnchantsOrder.Demo
             });
             itemArgument.CompletionSources.Add(
                 x => from item in Items
-                     where string.IsNullOrWhiteSpace(x.WordToComplete) || item.StartsWith(x.WordToComplete, StringComparison.OrdinalIgnoreCase)
+                     where string.IsNullOrWhiteSpace(x.WordToComplete) || item.StartsWith(x.WordToComplete.Trim('\'', '\"', ' '), StringComparison.OrdinalIgnoreCase)
                      select item.Contains(' ') ? $"'{item}'" : item);
 
             CliCommand listCommand = new("list", Resource.ListCommandDescription)
@@ -185,7 +185,7 @@ namespace EnchantsOrder.Demo
             };
             langArgument.CompletionSources.Add(
                 x => from code in (IEnumerable<string>)["default", "zh-CN", "en-US"]
-                     where string.IsNullOrWhiteSpace(x.WordToComplete) || code.StartsWith(x.WordToComplete, StringComparison.OrdinalIgnoreCase)
+                     where string.IsNullOrWhiteSpace(x.WordToComplete) || code.StartsWith(x.WordToComplete.Trim('\'', '\"', ' '), StringComparison.OrdinalIgnoreCase)
                      select code);
 
             CliCommand langCommand = new("lang", Resource.LangCommandDescription)
@@ -293,7 +293,7 @@ namespace EnchantsOrder.Demo
             {
                 Enchantments.Add(new(token));
             }
-            Items = Enchantments.OrderByDescending((x) => x.Items.Length).FirstOrDefault().Items;
+            Items = Enchantments.OrderByDescending(x => x.Items.Length).FirstOrDefault().Items;
         }
 
         private static void LangCommandHandler(string code = "")
@@ -345,9 +345,9 @@ namespace EnchantsOrder.Demo
 
             if (enchantments?.Any() == true)
             {
-                enchantmentList.AddRange(enchantments.Select((item) =>
+                enchantmentList.AddRange(enchantments.Select(item =>
                 {
-                    if (Enchantments.FirstOrDefault((x) => x.Name == item) is Enchantment enchantment)
+                    if (Enchantments.FirstOrDefault(x => x.Name == item) is Enchantment enchantment)
                     {
                         return enchantment;
                     }
@@ -383,7 +383,7 @@ namespace EnchantsOrder.Demo
                             enchantmentList.Add(enchantment);
                             Console.WriteLine(string.Format(Resource.AddedFormat, name));
                         }
-                        else if (Enchantments.FirstOrDefault((x) => x.Name == text) is Enchantment enchantment)
+                        else if (Enchantments.FirstOrDefault(x => x.Name == text) is Enchantment enchantment)
                         {
                             enchantmentList.Add(enchantment);
                             Console.WriteLine(string.Format(Resource.AddedFormat, text));
@@ -434,10 +434,10 @@ namespace EnchantsOrder.Demo
             }
 
             Console.WriteLine(Resource.StartOrdering);
-            IEnumerable<Enchantment> enchantments = Enchantments.Where((x) => !x.Hidden && x.Items.Contains(text));
+            IEnumerable<Enchantment> enchantments = Enchantments.Where(x => !x.Hidden && x.Items.Contains(text));
             if (enchantments.Any())
             {
-                IEnumerable<Enchantment> incompatibles = enchantments.Where((x) =>
+                IEnumerable<Enchantment> incompatibles = enchantments.Where(x =>
                 {
                     foreach (Enchantment enchantment in enchantments)
                     {
@@ -451,7 +451,7 @@ namespace EnchantsOrder.Demo
 
                 if (incompatibles.Any())
                 {
-                    IEnumerable<Enchantment> lists = enchantments.Where((x) =>
+                    IEnumerable<Enchantment> lists = enchantments.Where(x =>
                     {
                         foreach (Enchantment enchantment in incompatibles)
                         {

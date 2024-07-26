@@ -60,7 +60,7 @@ namespace EnchantsOrder.Models
         public override string ToString()
         {
             StringBuilder builder = new();
-            _ = builder.AppendFormat("Step {0}:", Step);
+            _ = builder.Append("Step ").Append(Step).Append(':');
             int half = Count / 2;
             for (int i = half; i > 0; i--)
             {
@@ -70,7 +70,7 @@ namespace EnchantsOrder.Models
             }
             if (Count % 2 == 1)
             {
-                _ = builder.AppendFormat(" {0}", this.Last());
+                _ = builder.Append(' ').Append(this.Last());
             }
             return builder.ToString();
         }

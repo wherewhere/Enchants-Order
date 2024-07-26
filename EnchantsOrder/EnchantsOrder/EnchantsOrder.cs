@@ -51,7 +51,7 @@ namespace EnchantsOrder
             // get the xp required and into be enchanted it
             List<IEnchantment> sortedList = wantedList.ToList();
             sortedList.Sort((x, y) => y.CompareTo(x));
-            IEnumerable<long> numList = wantedList.Select((x) => x.Experience);
+            IEnumerable<long> numList = wantedList.Select(x => x.Experience);
 
             // generate base enchantment level list
             // i.e. add the sum of penalty level by item and merged books
@@ -190,7 +190,7 @@ namespace EnchantsOrder
         private static List<EnchantItem> ComputeExperience(IEnumerable<IEnumerable<long>> orderingSteps)
         {
             List<EnchantItem> xpList = [];
-            IEnumerable<EnchantItem[]> stepList = orderingSteps.Select((x) => x.Select((x) => new EnchantItem(x)).ToArray());
+            IEnumerable<EnchantItem[]> stepList = orderingSteps.Select(x => x.Select(x => new EnchantItem(x)).ToArray());
 
             foreach (EnchantItem[] step in stepList)
             {
