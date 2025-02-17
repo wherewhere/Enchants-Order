@@ -29,7 +29,7 @@ namespace EnchantsOrder.Demo
             InitializeLanguage();
             InitializeEnchantments();
 
-            CliOption<int[]> levelOption = new("--level", "-l")
+            Option<int[]> levelOption = new("--level", "-l")
             {
                 Arity = ArgumentArity.ZeroOrMore,
                 AllowMultipleArgumentsPerToken = true,
@@ -37,7 +37,7 @@ namespace EnchantsOrder.Demo
                 HelpName = Resource.LevelOption
             };
 
-            CliOption<int[]> weightOption = new("--weight", "-w")
+            Option<int[]> weightOption = new("--weight", "-w")
             {
                 Arity = ArgumentArity.ZeroOrMore,
                 AllowMultipleArgumentsPerToken = true,
@@ -45,7 +45,7 @@ namespace EnchantsOrder.Demo
                 HelpName = Resource.WeightOption
             };
 
-            CliArgument<IEnumerable<IEnchantment>> enchantmentArgument = new("enchantments")
+            Argument<IEnumerable<IEnchantment>> enchantmentArgument = new("enchantments")
             {
                 Arity = ArgumentArity.OneOrMore,
                 Description = Resource.EnchantmentArgumentDescription,
@@ -120,8 +120,8 @@ namespace EnchantsOrder.Demo
                     x.AddError(string.Format(Resource.TooManyWeightsFormat, weights.Length, x.Tokens.Count));
                     return;
                 }
-                IEnumerable<CliToken> tokens = weights == null ? x.Tokens : x.Tokens.Skip(weights.Length);
-                foreach (CliToken token in tokens)
+                IEnumerable<Token> tokens = weights == null ? x.Tokens : x.Tokens.Skip(weights.Length);
+                foreach (Token token in tokens)
                 {
                     if (!Enchantments.Select(x => x.Name).Any(x => x.Equals(token.Value, StringComparison.OrdinalIgnoreCase)))
                     {
@@ -134,7 +134,7 @@ namespace EnchantsOrder.Demo
                      where string.IsNullOrWhiteSpace(x.WordToComplete) || enchantment.Name.StartsWith(x.WordToComplete.Trim('\'', '\"', ' '), StringComparison.OrdinalIgnoreCase)
                      select enchantment.Name.Contains(' ') ? $"'{enchantment.Name}'" : enchantment.Name);
 
-            CliOption<int> penaltyOption = new("--penalty", "-p")
+            Option<int> penaltyOption = new("--penalty", "-p")
             {
                 Arity = ArgumentArity.ZeroOrOne,
                 Description = Resource.PenaltyOptionDescription,
@@ -142,7 +142,7 @@ namespace EnchantsOrder.Demo
                 HelpName = Resource.PenaltyOption
             };
 
-            CliCommand orderCommand = new("order", Resource.OrderCommandDescription)
+            Command orderCommand = new("order", Resource.OrderCommandDescription)
             {
                 enchantmentArgument,
                 levelOption,
@@ -151,7 +151,7 @@ namespace EnchantsOrder.Demo
             };
             orderCommand.SetAction(x => OrderCommandHandler(x.GetValue(enchantmentArgument), x.GetValue(penaltyOption)));
 
-            CliArgument<string> itemArgument = new("item")
+            Argument<string> itemArgument = new("item")
             {
                 Arity = ArgumentArity.ExactlyOne,
                 Description = Resource.ItemArgumentDescription,
@@ -170,14 +170,14 @@ namespace EnchantsOrder.Demo
                      where string.IsNullOrWhiteSpace(x.WordToComplete) || item.StartsWith(x.WordToComplete.Trim('\'', '\"', ' '), StringComparison.OrdinalIgnoreCase)
                      select item.Contains(' ') ? $"'{item}'" : item);
 
-            CliCommand listCommand = new("list", Resource.ListCommandDescription)
+            Command listCommand = new("list", Resource.ListCommandDescription)
             {
                 itemArgument,
                 penaltyOption
             };
             listCommand.SetAction(x => ListCommandHandler(x.GetValue(itemArgument), x.GetValue(penaltyOption)));
 
-            CliArgument<string> langArgument = new("code")
+            Argument<string> langArgument = new("code")
             {
                 Arity = ArgumentArity.ExactlyOne,
                 Description = Resource.LangArgumentDescription,
@@ -188,13 +188,13 @@ namespace EnchantsOrder.Demo
                      where string.IsNullOrWhiteSpace(x.WordToComplete) || code.StartsWith(x.WordToComplete.Trim('\'', '\"', ' '), StringComparison.OrdinalIgnoreCase)
                      select code);
 
-            CliCommand langCommand = new("lang", Resource.LangCommandDescription)
+            Command langCommand = new("lang", Resource.LangCommandDescription)
             {
                 langArgument,
             };
             langCommand.SetAction(x => LangCommandHandler(x.GetValue(langArgument)));
 
-            CliRootCommand rootCommand = new(Resource.RootCommandDescription)
+            RootCommand rootCommand = new(Resource.RootCommandDescription)
             {
                 orderCommand,
                 listCommand,
@@ -202,7 +202,7 @@ namespace EnchantsOrder.Demo
             };
             rootCommand.SetAction(_ => RootCommandHandler());
 
-            return new CliConfiguration(rootCommand).InvokeAsync(args);
+            return new CommandLineConfiguration(rootCommand).InvokeAsync(args);
         }
 
         private static void RootCommandHandler()
@@ -244,7 +244,7 @@ namespace EnchantsOrder.Demo
                         Console.WriteLine("  lang <{0}>\t{1}", Resource.LangArgument, Resource.LangCommandDescription);
                         break;
                     case "version":
-                        Console.WriteLine(FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion);
+                        Console.WriteLine(Assembly.GetExecutingAssembly().GetName().Version);
                         break;
                     case "exit":
                         break;
