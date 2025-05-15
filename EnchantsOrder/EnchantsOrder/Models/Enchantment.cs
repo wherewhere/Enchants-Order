@@ -12,11 +12,10 @@ namespace EnchantsOrder.Models
     /// <param name="name">The name of this enchantment.</param>
     /// <param name="level">The level of this enchantment.</param>
     /// <param name="weight">The weight for enchant of this enchantment.</param>
-    public
 #if WINRT
-        sealed
+    sealed
 #endif
-        class Enchantment(string name, int level, int weight) : IEnchantment
+    public class Enchantment(string name, int level, int weight) : IEnchantment
 #if WINRT
         , IStringable
 #endif

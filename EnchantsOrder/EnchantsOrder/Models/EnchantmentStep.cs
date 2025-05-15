@@ -13,11 +13,10 @@ namespace EnchantsOrder.Models
     /// The step of Enchant.
     /// </summary>
     /// <param name="step">The index of step.</param>
-    public
 #if WINRT
-        sealed
+    sealed
 #endif
-        class EnchantmentStep(int step) :
+    public class EnchantmentStep(int step) :
 #if WINRT
         IStringable,
 #else

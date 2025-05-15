@@ -208,7 +208,7 @@ namespace EnchantsOrder.Demo
         private static void RootCommandHandler()
         {
             string text = string.Empty;
-            while (!(text?.Equals("exit", StringComparison.OrdinalIgnoreCase) == true))
+            while (text?.Equals("exit", StringComparison.OrdinalIgnoreCase) != true)
             {
                 Console.WriteLine(Resource.InputCommand);
                 Console.Write("> ");

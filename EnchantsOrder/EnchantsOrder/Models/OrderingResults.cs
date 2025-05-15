@@ -15,11 +15,10 @@ namespace EnchantsOrder.Models
     /// <param name="penalty">The penalty of item.</param>
     /// <param name="maxExperience">The max experience level request during enchant.</param>
     /// <param name="totalExperience">The total experience level request during enchant.</param>
-    public
 #if WINRT
-        sealed
+    sealed
 #endif
-        class OrderingResults(IList<IEnchantmentStep> steps, int penalty, double maxExperience, double totalExperience) : IOrderingResults
+    public class OrderingResults(IList<IEnchantmentStep> steps, int penalty, double maxExperience, double totalExperience) : IOrderingResults
 #if WINRT
         , IStringable
 #endif
