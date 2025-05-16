@@ -16,11 +16,15 @@
         "incompatible": [
             "Cleaving",
             "Smite",
-            "Sharpness"
+            "Sharpness",
+            "Impaling",
+            "Breach",
+            "Density"
         ],
         "items": [
             "sword",
-            "axe"
+            "axe",
+            "mace"
         ]
     },
     "Blast Protection": {
@@ -37,6 +41,20 @@
             "leggings",
             "boots",
             "turtle_shell"
+        ]
+    },
+    "Breach": {
+        "levelMax": 4,
+        "weight": 2,
+        "incompatible": [
+            "Sharpness",
+            "Bane of Arthropods",
+            "Smite",
+            "Impaling",
+            "Density"
+        ],
+        "items": [
+            "mace"
         ]
     },
     "Channeling": {
@@ -112,7 +130,22 @@
             "head",
             "trident",
             "turtle_shell",
-            "crossbow"
+            "crossbow",
+            "mace"
+        ]
+    },
+    "Density": {
+        "levelMax": 5,
+        "weight": 1,
+        "incompatible": [
+            "Sharpness",
+            "Bane of Arthropods",
+            "Smite",
+            "Impaling",
+            "Breach"
+        ],
+        "items": [
+            "mace"
         ]
     },
     "Depth Strider": {
@@ -156,7 +189,8 @@
             ""
         ],
         "items": [
-            "sword"
+            "sword",
+            "mace"
         ]
     },
     "Fire Protection": {
@@ -212,7 +246,11 @@
         "levelMax": 5,
         "weight": 2,
         "incompatible": [
-            ""
+            "Sharpness",
+            "Bane of Arthropods",
+            "Smite",
+            "Breach",
+            "Density"
         ],
         "items": [
             "trident"
@@ -306,7 +344,8 @@
             "elytra",
             "trident",
             "turtle_shell",
-            "crossbow"
+            "crossbow",
+            "mace"
         ]
     },
     "Multishot": {
@@ -345,7 +384,7 @@
         "incompatible": [
             "Protection",
             "Blast Protection",
-            "Fire Protection."
+            "Fire Protection"
         ],
         "items": [
             "helmet",
@@ -410,7 +449,7 @@
             "Loyalty"
         ],
         "items": [
-            "crossbow"
+            "trident"
         ]
     },
     "Sharpness": {
@@ -419,10 +458,14 @@
         "incompatible": [
             "Bane of Arthropods",
             "Cleaving",
-            "Smite"
+            "Smite",
+            "Impaling",
+            "Breach",
+            "Density"
         ],
         "items": [
-            "sword"
+            "sword",
+            "axe"
         ]
     },
     "Silk Touch": {
@@ -445,11 +488,15 @@
         "incompatible": [
             "Bane of Arthropods",
             "Cleaving",
-            "Sharpness"
+            "Sharpness",
+            "Impaling",
+            "Breach",
+            "Density"
         ],
         "items": [
             "sword",
-            "axe"
+            "axe",
+            "mace"
         ]
     },
     "Soul Speed": {
@@ -474,7 +521,7 @@
     },
     "Swift Sneak": {
         "levelMax": 3,
-        "weight": 1,
+        "weight": 4,
         "incompatible": [
             ""
         ],
@@ -524,7 +571,18 @@
             "elytra",
             "trident",
             "turtle_shell",
-            "crossbow"
+            "crossbow",
+            "mace"
+        ]
+    },
+    "Wind Burst": {
+        "levelMax": 3,
+        "weight": 2,
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "mace"
         ]
     }
 }
