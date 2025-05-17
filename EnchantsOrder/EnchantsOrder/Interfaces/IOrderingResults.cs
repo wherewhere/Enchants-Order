@@ -17,22 +17,22 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// The penalty of item.
         /// </summary>
-        int Penalty { get; set; }
+        int Penalty { get; }
 
         /// <summary>
         /// The max experience level request during enchant.
         /// </summary>
-        double MaxExperience { get; set; }
+        double MaxExperience { get; }
 
         /// <summary>
         /// The total experience level request during enchant.
         /// </summary>
-        double TotalExperience { get; set; }
+        double TotalExperience { get; }
 
         /// <summary>
         /// The steps of enchant.
         /// </summary>
-        IList<IEnchantmentStep> Steps { get; set; }
+        IList<IEnchantmentStep> Steps { get; }
 
         /// <summary>
         /// Too expensive because max experience level max than 39.

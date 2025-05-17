@@ -1,4 +1,5 @@
 ﻿using EnchantsOrder.Demo.Common;
+using EnchantsOrder.Demo.Models;
 using EnchantsOrder.Demo.Properties.Resource;
 using EnchantsOrder.Models;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Parsing;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -434,55 +434,83 @@ namespace EnchantsOrder.Demo
             }
 
             Console.WriteLine(Resource.StartOrdering);
-            IEnumerable<Enchantment> enchantments = Enchantments.Where(x => !x.Hidden && x.Items.Contains(text));
-            if (enchantments.Any())
+            List<Enchantment> enchantments = [.. Enchantments.Where(x => !x.Hidden && x.Items.Any(x => x.Equals(text, StringComparison.OrdinalIgnoreCase)))];
+            if (enchantments.Count > 0)
             {
-                IEnumerable<Enchantment> incompatibles = enchantments.Where(x =>
+                List<List<IEnchantment>> group = [];
+                while (enchantments.Count > 0)
                 {
-                    foreach (Enchantment enchantment in enchantments)
+                    Enchantment enchantment = enchantments[0];
+                    List<IEnchantment> list = [enchantment];
+                    enchantments.RemoveAt(0);
+                    if (enchantment.Incompatible.Length > 0)
                     {
-                        if (x.Incompatible.Contains(enchantment.Name))
+                        for (int i = enchantments.Count; --i >= 0;)
                         {
-                            return true;
-                        }
-                    }
-                    return false;
-                });
-
-                if (incompatibles.Any())
-                {
-                    IEnumerable<Enchantment> lists = enchantments.Where(x =>
-                    {
-                        foreach (Enchantment enchantment in incompatibles)
-                        {
-                            if (x.Name == enchantment.Name)
+                            Enchantment temp = enchantments[i];
+                            if (temp.Incompatible.Any(x => x.Equals(enchantment.Name, StringComparison.OrdinalIgnoreCase)))
                             {
-                                return false;
+                                list.Add(temp);
+                                enchantments.RemoveAt(i);
                             }
                         }
-                        return true;
-                    });
-
-                    foreach (Enchantment enchantment in incompatibles)
-                    {
-                        try
+                        if (list.Count > 0)
                         {
-                            Console.WriteLine("*****************");
-                            OrderingResults results = lists.Append(enchantment).Ordering(initialPenalty);
-                            Console.WriteLine(results.ToString());
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
+                            List<IEnchantment> tempList = [];
+                            while (list.Count > 0)
+                            {
+                                IEnchantment temp = list[0];
+                                list.RemoveAt(0);
+                                IEnumerable<IEnchantment> temps = list.Where(x => x.Level == temp.Level && x.Weight == temp.Weight);
+                                if (temps.Any())
+                                {
+                                    IEnchantment[] array = [.. temps.Append(temp).OrderBy(x => x.Name)];
+                                    tempList.Add(new EnchantmentGroup(array));
+                                    foreach (IEnchantment enchantmentTemp in array)
+                                    {
+                                        list.Remove(enchantmentTemp);
+                                    }
+                                }
+                                else
+                                {
+                                    tempList.Add(temp);
+                                }
+                            }
+                            list = tempList;
                         }
                     }
+                    group.Add(list);
                 }
-                else
+
+                static List<List<IEnchantment>> GetAllEnchantmentPaths(List<List<IEnchantment>> group)
+                {
+                    List<List<IEnchantment>> result = [];
+                    void Growing(int depth = 0, params List<IEnchantment> path)
+                    {
+                        if (depth == group.Count)
+                        {
+                            result.Add([.. path]);
+                            return;
+                        }
+                        int next = depth + 1;
+                        foreach (IEnchantment enchantment in group[depth])
+                        {
+                            path.Add(enchantment);
+                            Growing(next, path);
+                            path.RemoveAt(path.Count - 1);
+                        }
+                    }
+                    Growing();
+                    return result;
+                }
+
+                Console.WriteLine(text);
+                foreach (List<IEnchantment> list in GetAllEnchantmentPaths(group))
                 {
                     try
                     {
                         Console.WriteLine("*****************");
-                        OrderingResults results = enchantments.Ordering(initialPenalty);
+                        OrderingResults results = list.Ordering(initialPenalty);
                         Console.WriteLine(results.ToString());
                     }
                     catch (Exception ex)

@@ -15,17 +15,17 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// The name of this enchantment.
         /// </summary>
-        string Name { get; set; }
+        string Name { get; }
 
         /// <summary>
         /// The level of this enchantment.
         /// </summary>
-        int Level { get; set; }
+        int Level { get; }
 
         /// <summary>
         /// The weight for enchant of this enchantment.
         /// </summary>
-        int Weight { get; set; }
+        int Weight { get; }
 
         /// <summary>
         /// The experience level when enchant request of this enchantment.

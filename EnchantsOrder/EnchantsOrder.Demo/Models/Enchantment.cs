@@ -5,18 +5,22 @@ using System.Text.Json;
 
 namespace EnchantsOrder.Demo.Models
 {
-    internal class Enchantment : IEnchantment
+    internal sealed class Enchantment : IEnchantment
     {
+        /// <inheritdoc/>
         public int Level { get; set; }
+        /// <inheritdoc/>
         public int Weight { get; set; }
 
         public bool Hidden { get; set; } = false;
 
+        /// <inheritdoc/>
         public string Name { get; set; }
 
         public string[] Items { get; set; }
         public string[] Incompatible { get; set; }
 
+        /// <inheritdoc/>
         public long Experience => (long)Level * Weight;
 
         public Enchantment(JsonProperty token)

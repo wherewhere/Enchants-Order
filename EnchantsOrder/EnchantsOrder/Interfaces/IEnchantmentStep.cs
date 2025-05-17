@@ -10,6 +10,6 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// The index of step.
         /// </summary>
-        int Step { get; set; }
+        int Step { get; }
     }
 }
