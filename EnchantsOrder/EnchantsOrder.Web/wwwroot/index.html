@@ -8,8 +8,7 @@
     <meta name="theme-color" content="#fbfbfb" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#272727" media="(prefers-color-scheme: dark)">
     <base href="/" />
-    <link rel="icon" type="image/png" sizes="256x256"
-          href="https://cdn.jsdelivr.net/gh/wherewhere/Enchants-Order@main/logo.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="img/logo.png">
     <script src="https://cdn.jsdelivr.net/npm/pace-js" async></script>
     <script type="module">
         import {
@@ -426,7 +425,7 @@
                     try {
                         this.loading = true;
                         const enchantments = [];
-                        const json = await fetch("https://cdn.jsdelivr.net/gh/wherewhere/Enchants-Order@main/EnchantsOrder/EnchantsOrder.Demo/Assets/Enchants/Enchants.en-US.json").then(x => x.json());
+                        const json = await fetch("content/enchants/Enchants.en-US.json").then(x => x.json());
                         for (const name in json) {
                             const enchantment = json[name];
                             enchantments.push({

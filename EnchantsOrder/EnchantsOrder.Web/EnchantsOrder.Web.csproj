@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
 
-	<PropertyGroup>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CompressionEnabled>false</CompressionEnabled>
-		<OutputType>Library</OutputType>
-		<RunAOTCompilation>true</RunAOTCompilation>
-		<TargetFramework>net9.0-browser</TargetFramework>
-	</PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <TargetFramework>net9.0-browser</TargetFramework>
+    <WasmAllowUndefinedSymbols>true</WasmAllowUndefinedSymbols>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EnchantsOrder\EnchantsOrder.csproj" />
@@ -16,6 +17,20 @@
     <Content Update="wwwroot\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\logo.png">
+      <Link>wwwroot\img\%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\EnchantsOrder.Demo\Assets\Enchants\*">
+      <Link>wwwroot\content\enchants\%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+
+  <Target Name="_FixRootAssembly" AfterTargets="PrepareForILLink">
+    <ItemGroup>
+      <TrimmerRootAssembly Update="@(TrimmerRootAssembly)" Condition="'%(RootMode)' == 'EntryPoint'" RootMode="Library" />
+    </ItemGroup>
+  </Target>
 
 </Project>
