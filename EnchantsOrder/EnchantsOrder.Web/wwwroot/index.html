@@ -1,0 +1,848 @@
+﻿<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EnchantsOrder</title>
+    <meta name="description" content="Get the best order for enchanting.">
+    <meta name="theme-color" content="#fbfbfb" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#272727" media="(prefers-color-scheme: dark)">
+    <base href="/" />
+    <link rel="icon" type="image/png" sizes="256x256"
+          href="https://cdn.jsdelivr.net/gh/wherewhere/Enchants-Order@main/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/pace-js" async></script>
+    <script type="module">
+        import {
+            provideFluentDesignSystem,
+            fluentAccordion,
+            fluentAccordionItem,
+            fluentButton,
+            fluentCombobox,
+            fluentNumberField,
+            fluentOption,
+            fluentProgressRing,
+            baseLayerLuminance,
+            StandardLuminance
+        } from "https://cdn.jsdelivr.net/npm/@fluentui/web-components/+esm";
+        provideFluentDesignSystem()
+            .register(
+                fluentAccordion(),
+                fluentAccordionItem(),
+                fluentButton(),
+                fluentCombobox(),
+                fluentNumberField(),
+                fluentOption(),
+                fluentProgressRing()
+            );
+        const scheme = matchMedia("(prefers-color-scheme: dark)");
+        if (typeof scheme !== "undefined") {
+            scheme.addEventListener("change", e => baseLayerLuminance.withDefault(e.matches ? StandardLuminance.DarkMode : StandardLuminance.LightMode));
+            if (scheme.matches) {
+                baseLayerLuminance.withDefault(StandardLuminance.DarkMode);
+            }
+        }
+    </script>
+    <style>
+        #vue-app div.cover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fbfbfb;
+        }
+
+        .pace {
+            -webkit-pointer-events: none;
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        .pace-inactive {
+            display: none;
+        }
+
+        .pace .pace-progress {
+            background: #036ac4;
+            position: fixed;
+            z-index: 1;
+            bottom: 0;
+            right: 100%;
+            width: 100%;
+            height: 3px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            #vue-app div.cover {
+                background: #272727;
+            }
+
+            .pace .pace-progress {
+                background: #60c9fc;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="vue-app">
+        <div class="content">
+            <div class="stack-vertical">
+                <settings-group>
+                    <template #header>
+                        <h2 id="object" class="unset">Target Object</h2>
+                    </template>
+                    <settings-card>
+                        <template #icon>
+                            <svg width="20" viewBox="0 0 20 20">
+                                <title>Penalty</title>
+                                <path d="M9 2.5a.5.5 0 0 0-1 0V3c0 .4.12.77.32 1.08A3 3 0 0 0 6 7h-.5A1.5 1.5 0 0 1 4 5.5v-2a.5.5 0 0 0-1 0v2A2.5 2.5 0 0 0 5.5 8H6v1.5H2.5a.5.5 0 0 0 0 1H6V12h-.5A2.5 2.5 0 0 0 3 14.5v2a.5.5 0 0 0 1 0v-2c0-.83.67-1.5 1.5-1.5H6a4 4 0 0 0 8 0h.5c.83 0 1.5.67 1.5 1.5v2a.5.5 0 0 0 1 0v-2a2.5 2.5 0 0 0-2.5-2.5H14v-1.5h3.5a.5.5 0 0 0 0-1H14V8h.5A2.5 2.5 0 0 0 17 5.5v-2a.5.5 0 0 0-1 0v2c0 .83-.67 1.5-1.5 1.5H14a3 3 0 0 0-2.32-2.92A2 2 0 0 0 12 3v-.5a.5.5 0 0 0-1 0V3a1 1 0 1 1-2 0v-.5ZM13 7v6a3 3 0 1 1-6 0V7c0-1.1.9-2 2-2h2a2 2 0 0 1 2 2Z">
+                                </path>
+                            </svg>
+                        </template>
+                        <template #header>
+                            <h3 id="object-penalty" class="unset">Initial Penalty</h3>
+                        </template>
+                        <template #description>
+                            Set the initial penalty of the object witch you want to enchant.
+                        </template>
+                        <fluent-number-field v-model="initialPenalty" min="0"></fluent-number-field>
+                    </settings-card>
+                </settings-group>
+                <settings-group>
+                    <template #header>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h2 id="enchantment" class="unset">Add Enchantment</h2>
+                            <div class="text-button" title="Add" type="button" style="padding: 2px;"
+                                 @click="addEnchantment" :disabled="!enchantment.name">
+                                <svg width="16" viewBox="0 0 16 16">
+                                    <path d="M8 2c.28 0 .5.22.5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5c0-.28.22-.5.5-.5Z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </template>
+                    <settings-card>
+                        <template #icon>
+                            <svg width="20" viewBox="0 0 20 20">
+                                <title>Name</title>
+                                <path d="M8.5 2a.5.5 0 0 0 0 1h1v14h-1a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-1V3h1a.5.5 0 0 0 0-1h-3Zm-4 2h4v1h-4C3.67 5 3 5.67 3 6.5v7c0 .83.67 1.5 1.5 1.5h4v1h-4A2.5 2.5 0 0 1 2 13.5v-7A2.5 2.5 0 0 1 4.5 4Zm11 11h-4v1h4a2.5 2.5 0 0 0 2.5-2.5v-7A2.5 2.5 0 0 0 15.5 4h-4v1h4c.83 0 1.5.67 1.5 1.5v7c0 .83-.67 1.5-1.5 1.5Z">
+                                </path>
+                            </svg>
+                        </template>
+                        <template #header>
+                            <h3 id="enchantment-name" class="unset">Enchantment</h3>
+                        </template>
+                        <template #description>
+                            Select the target enchantment by name.
+                        </template>
+                        <value-change-host v-model="enchantment.name" value-name="value" event-name="change"
+                                           style="display: inherit;">
+                            <fluent-combobox placeholder="Choose Enchantment" style="min-width: unset;">
+                                <fluent-option v-for="enchantment in enchantments">
+                                    {{ enchantment.name }}
+                                </fluent-option>
+                            </fluent-combobox>
+                        </value-change-host>
+                    </settings-card>
+                    <settings-card>
+                        <template #icon>
+                            <svg width="20" viewBox="0 0 20 20">
+                                <title>Level</title>
+                                <path d="M3 7a3 3 0 0 0 2.6 2.97 4.5 4.5 0 0 0 3.9 3.5v1.5h-2a2 2 0 0 0-2 2v.5c0 .27.23.5.5.5h8a.5.5 0 0 0 .5-.5v-.5a2 2 0 0 0-2-2h-2v-1.5a4.5 4.5 0 0 0 3.9-3.5A3 3 0 0 0 17 7V5.5c0-.83-.68-1.5-1.5-1.5h-1a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2h-1C3.67 4 3 4.67 3 5.5V7Zm1.5-2h1v3.93A2 2 0 0 1 4 7V5.5c0-.28.22-.5.5-.5Zm10 0h1c.27 0 .5.22.5.5V7a2 2 0 0 1-1.5 1.94V5Zm-1-1v5a3.5 3.5 0 0 1-7 .16V4a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1Zm-7 12.97a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1h-7Z">
+                                </path>
+                            </svg>
+                        </template>
+                        <template #header>
+                            <h3 id="enchantment-level" class="unset">Level</h3>
+                        </template>
+                        <template #description>
+                            Set the level of the target enchantment.
+                        </template>
+                        <fluent-number-field v-model="enchantment.level" min="1"></fluent-number-field>
+                    </settings-card>
+                    <settings-card>
+                        <template #icon>
+                            <svg width="20" viewBox="0 0 20 20">
+                                <title>Weight</title>
+                                <path d="M3.5 3a.5.5 0 1 0 0 1h.75L2.08 9.22a.95.95 0 0 0-.08.4 3 3 0 0 0 6 0 .95.95 0 0 0-.08-.4L5.75 4H9.5v10H6a2 2 0 1 0 0 4h8a2 2 0 0 0 0-4h-3.5V4h3.75l-2.17 5.22a.96.96 0 0 0-.08.4 3 3 0 0 0 6 0 .96.96 0 0 0-.08-.4L15.75 4h.75a.5.5 0 0 0 0-1h-13ZM5 11.5A2 2 0 0 1 3.06 10h3.88A2 2 0 0 1 5 11.5Zm0-6.7L6.75 9h-3.5L5 4.8ZM6 15h8a1 1 0 0 1 0 2H6a1 1 0 1 1 0-2Zm10.75-6h-3.5L15 4.8 16.75 9Zm-3.69 1h3.88a2 2 0 0 1-3.88 0Z">
+                                </path>
+                            </svg>
+                        </template>
+                        <template #header>
+                            <h3 id="enchantment-weight" class="unset">Weight</h3>
+                        </template>
+                        <template #description>
+                            Set the weight of the target enchantment. <b>Do not change</b> if you are not sure what it
+                            is.
+                        </template>
+                        <fluent-number-field v-model="enchantment.weight" min="1"></fluent-number-field>
+                    </settings-card>
+                </settings-group>
+                <settings-group v-if="wantedList.length">
+                    <template #header>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h2 id="wanted" class="unset">Enchantment List</h2>
+                            <div class="text-button" title="Order" type="button" style="padding: 4px;"
+                                 @click="orderingWantList" :disabled="loading">
+                                <fluent-progress-ring v-if="loading"
+                                                      style="width: 12px; height: 12px;"></fluent-progress-ring>
+                                <svg v-else width="12" viewBox="0 0 12 12">
+                                    <path d="M10.54 6.79a.9.9 0 0 0 0-1.58L3.37 1.12A.92.92 0 0 0 2 1.91V10.09c0 .7.76 1.14 1.37.79l7.17-4.1Z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </template>
+                    <settings-card v-for="item in wantedList">
+                        <template #icon>
+                            <svg width="20" viewBox="0 0 20 20">
+                                <title>Enchantment</title>
+                                <path d="M6 5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5Zm1 0v1h6V5H7ZM4 4v12c0 1.1.9 2 2 2h9.5a.5.5 0 0 0 0-1H6a1 1 0 0 1-1-1h10a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2Zm10-1a1 1 0 0 1 1 1v11H5V4a1 1 0 0 1 1-1h8Z">
+                                </path>
+                            </svg>
+                        </template>
+                        <template #header>
+                            <h3 class="unset">{{ item.name }}</h3>
+                        </template>
+                        <template #description>
+                            Level: {{ item.level }} | Weight: {{ item.weight }} | Experience: {{ item.level *
+                            item.weight }}
+                        </template>
+                        <div class="text-button" title="Delete" type="button" style="padding: 8px;"
+                             @click="removeEnchantment(item)">
+                            <svg width="16" viewBox="0 0 16 16">
+                                <path d="M7 3h2a1 1 0 0 0-2 0ZM6 3a2 2 0 1 1 4 0h4a.5.5 0 0 1 0 1h-.56l-1.2 8.84A2.5 2.5 0 0 1 9.74 15h-3.5a2.5 2.5 0 0 1-2.48-2.16L2.57 4H2a.5.5 0 0 1 0-1h4Zm1 3.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5ZM9.5 6c.28 0 .5.22.5.5v5a.5.5 0 0 1-1 0v-5c0-.28.22-.5.5-.5Zm-4.74 6.7c.1.75.74 1.3 1.49 1.3h3.5a1.5 1.5 0 0 0 1.5-1.3L12.42 4H3.57l1.19 8.7Z" />
+                            </svg>
+                        </div>
+                    </settings-card>
+                </settings-group>
+                <settings-group v-if="results.length">
+                    <template #header>
+                        <h2 id="result" class="unset">Result</h2>
+                    </template>
+                    <settings-expander v-for="result in results" expanded="true">
+                        <template #icon>
+                            <svg width="20" viewBox="0 0 20 20">
+                                <title>Path</title>
+                                <path d="M16.56 2H6.5A2.5 2.5 0 0 0 4 4.5V13H2a1 1 0 0 0-1 1v1.69A2.32 2.32 0 0 0 3.38 18h9.14A2.5 2.5 0 0 0 15 15.53V7h3a1 1 0 0 0 1-1V4.5A2.5 2.5 0 0 0 16.56 2ZM6.5 3h8c-.3.39-.47.86-.5 1.38V15.5a1.5 1.5 0 0 1-3 0V14a1 1 0 0 0-1-1H5V4.5C5 3.67 5.67 3 6.5 3Zm10 0c.83 0 1.5.67 1.5 1.5V6h-3V4.5c0-.83.67-1.5 1.5-1.5ZM2 14h8v1.5c0 .56.19 1.08.5 1.5H3.37C2.6 17 2 16.42 2 15.69V14Z">
+                                </path>
+                            </svg>
+                        </template>
+                        <template #header>
+                            <h3 class="unset">Total Experience Level: {{ result.TotalExperience }}</h3>
+                        </template>
+                        <template #description>
+                            Penalty Level: {{ result.Penalty }} | Max Experience Level: {{ result.MaxExperience }}
+                        </template>
+                        <div class="setting-expander-content-grid" style="font-family: var(--font-monospace);">
+                            <pre class="unset">{{ readSteps(result.Steps) }}</pre>
+                        </div>
+                    </settings-expander>
+                </settings-group>
+            </div>
+        </div>
+        <div class="cover" v-if="false">
+            <svg width="100" viewBox="0 0 64 64" fill="none">
+                <title>EnchatsOrder</title>
+                <g clip-path="url(#clip)">
+                    <path d="M0 8C0 3.58172 3.58172 0 8 0H56C60.4183 0 64 3.58172 64 8V43H0V8Z" fill="#FBFBFB" />
+                    <path d="M0 43H64V56C64 60.4183 60.4183 64 56 64H8C3.58172 64 0 60.4183 0 56V43Z" fill="#682A7B" />
+                    <rect x="0.5" y="0.5" width="63" height="63" rx="7.5" stroke="url(#linear)" />
+                    <path d="M19.0566 57H18.2412V52.3027C18.2412 51.9316 18.264 51.4775 18.3096 50.9404H18.29C18.2119 51.2562 18.1419 51.4824 18.0801 51.6191L15.6875 57H15.2871L12.8994 51.6582C12.8311 51.502 12.7611 51.2627 12.6895 50.9404H12.6699C12.696 51.2204 12.709 51.6777 12.709 52.3125V57H11.918V49.998H13.002L15.1504 54.8809C15.3164 55.2552 15.4238 55.5352 15.4727 55.7207H15.502C15.6419 55.3366 15.7542 55.0501 15.8389 54.8613L18.0312 49.998H19.0566V57ZM21.2051 50.7305C21.0618 50.7305 20.9398 50.6816 20.8389 50.584C20.738 50.4863 20.6875 50.3626 20.6875 50.2129C20.6875 50.0632 20.738 49.9395 20.8389 49.8418C20.9398 49.7409 21.0618 49.6904 21.2051 49.6904C21.3516 49.6904 21.4753 49.7409 21.5762 49.8418C21.6803 49.9395 21.7324 50.0632 21.7324 50.2129C21.7324 50.3561 21.6803 50.4782 21.5762 50.5791C21.4753 50.68 21.3516 50.7305 21.2051 50.7305ZM21.5957 57H20.7949V52H21.5957V57ZM27.3672 57H26.5664V54.1484C26.5664 53.0872 26.179 52.5566 25.4043 52.5566C25.0039 52.5566 24.6719 52.708 24.4082 53.0107C24.1478 53.3102 24.0176 53.6895 24.0176 54.1484V57H23.2168V52H24.0176V52.8301H24.0371C24.4147 52.1986 24.9616 51.8828 25.6777 51.8828C26.2246 51.8828 26.6429 52.0602 26.9326 52.415C27.2223 52.7666 27.3672 53.276 27.3672 53.9434V57ZM32.8994 54.7002H29.3691C29.3822 55.2568 29.5319 55.6865 29.8184 55.9893C30.1048 56.292 30.4987 56.4434 31 56.4434C31.5632 56.4434 32.0807 56.2578 32.5527 55.8867V56.6387C32.1133 56.9577 31.5322 57.1172 30.8096 57.1172C30.1032 57.1172 29.5482 56.891 29.1445 56.4385C28.7409 55.9827 28.5391 55.3431 28.5391 54.5195C28.5391 53.7415 28.7588 53.1084 29.1982 52.6201C29.641 52.1286 30.1895 51.8828 30.8438 51.8828C31.498 51.8828 32.0042 52.0944 32.3623 52.5176C32.7204 52.9408 32.8994 53.5283 32.8994 54.2803V54.7002ZM32.0791 54.0215C32.0758 53.5592 31.9635 53.1995 31.7422 52.9424C31.5241 52.6852 31.2197 52.5566 30.8291 52.5566C30.4515 52.5566 30.1309 52.6917 29.8672 52.9619C29.6035 53.2321 29.4408 53.5853 29.3789 54.0215H32.0791ZM37.5234 56.7705C37.1393 57.0016 36.6836 57.1172 36.1562 57.1172C35.4434 57.1172 34.8672 56.8861 34.4277 56.4238C33.9915 55.9583 33.7734 55.3561 33.7734 54.6172C33.7734 53.7936 34.0094 53.1328 34.4814 52.6348C34.9535 52.1335 35.5833 51.8828 36.3711 51.8828C36.8105 51.8828 37.1979 51.9642 37.5332 52.127V52.9473C37.1621 52.6868 36.765 52.5566 36.3418 52.5566C35.8307 52.5566 35.4108 52.7406 35.082 53.1084C34.7565 53.473 34.5938 53.9531 34.5938 54.5488C34.5938 55.1348 34.7467 55.597 35.0527 55.9355C35.362 56.2741 35.7754 56.4434 36.293 56.4434C36.7292 56.4434 37.1393 56.2985 37.5234 56.0088V56.7705ZM41.3418 52.8105C41.2018 52.7031 41 52.6494 40.7363 52.6494C40.3945 52.6494 40.1081 52.8105 39.877 53.1328C39.6491 53.4551 39.5352 53.8945 39.5352 54.4512V57H38.7344V52H39.5352V53.0303H39.5547C39.6686 52.6787 39.8428 52.4053 40.0771 52.21C40.3115 52.0114 40.5736 51.9121 40.8633 51.9121C41.0716 51.9121 41.2311 51.9349 41.3418 51.9805V52.8105ZM45.79 57H44.9893V56.2188H44.9697C44.6214 56.8177 44.1087 57.1172 43.4316 57.1172C42.9336 57.1172 42.543 56.9854 42.2598 56.7217C41.9798 56.458 41.8398 56.1081 41.8398 55.6719C41.8398 54.7376 42.39 54.194 43.4902 54.041L44.9893 53.8311C44.9893 52.9814 44.6458 52.5566 43.959 52.5566C43.3568 52.5566 42.8132 52.7617 42.3281 53.1719V52.3516C42.8197 52.0391 43.3861 51.8828 44.0273 51.8828C45.2025 51.8828 45.79 52.5046 45.79 53.748V57ZM44.9893 54.4707L43.7832 54.6367C43.4121 54.6888 43.1322 54.7816 42.9434 54.915C42.7546 55.0452 42.6602 55.278 42.6602 55.6133C42.6602 55.8574 42.7464 56.0576 42.9189 56.2139C43.0947 56.3669 43.3275 56.4434 43.6172 56.4434C44.0143 56.4434 44.3415 56.305 44.5986 56.0283C44.859 55.7484 44.9893 55.3952 44.9893 54.9688V54.4707ZM49.7695 50.3008C49.6133 50.2129 49.4359 50.1689 49.2373 50.1689C48.6774 50.1689 48.3975 50.5221 48.3975 51.2285V52H49.5693V52.6836H48.3975V57H47.6016V52.6836H46.7471V52H47.6016V51.1895C47.6016 50.6654 47.7529 50.252 48.0557 49.9492C48.3584 49.6432 48.736 49.4902 49.1885 49.4902C49.4326 49.4902 49.6263 49.5195 49.7695 49.5781V50.3008ZM52.7529 56.9512C52.5641 57.0553 52.3151 57.1074 52.0059 57.1074C51.1302 57.1074 50.6924 56.6191 50.6924 55.6426V52.6836H49.833V52H50.6924V50.7793L51.4932 50.5205V52H52.7529V52.6836H51.4932V55.501C51.4932 55.8363 51.5501 56.0755 51.6641 56.2188C51.778 56.362 51.9668 56.4336 52.2305 56.4336C52.4323 56.4336 52.6064 56.3783 52.7529 56.2676V56.9512Z"
+                          fill="white" />
+                    <rect x="13" y="2" width="39" height="39" fill="url(#logo)" />
+                </g>
+                <defs>
+                    <pattern id="logo" patternContentUnits="objectBoundingBox" width="1" height="1">
+                        <use xlink:href="#book" transform="scale(0.0625)" />
+                    </pattern>
+                    <linearGradient id="linear" x1="32" y1="0" x2="32" y2="64" gradientUnits="userSpaceOnUse">
+                        <stop offset="0.85243" stop-opacity="0.0578" />
+                        <stop offset="1" stop-opacity="0.4" />
+                    </linearGradient>
+                    <clipPath id="clip">
+                        <rect width="64" height="64" fill="white" />
+                    </clipPath>
+                    <image id="book" width="16" height="16" preserveAspectRatio="none"
+                           style="image-rendering: pixelated"
+                           href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAA8rmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNyAoV2luZG93cyk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMTgtMDctMDNUMTU6Mjg6NTYrMDI6MDA8L3htcDpDcmVhdGVEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAyMC0xMS0wOFQxMDo1NzowNyswMTowMDwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXA6TWV0YWRhdGFEYXRlPjIwMjAtMTEtMDhUMTA6NTc6MDcrMDE6MDA8L3htcDpNZXRhZGF0YURhdGU+CiAgICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2UvcG5nPC9kYzpmb3JtYXQ+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6RG9jdW1lbnRBbmNlc3RvcnM+CiAgICAgICAgICAgIDxyZGY6QmFnPgogICAgICAgICAgICAgICA8cmRmOmxpPnhtcC5kaWQ6MGE4OTdjYTEtNmFkNi0wOTQ3LWExNjItYjg0ZWJkNGNhZWMxPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGk+eG1wLmRpZDoxYmQ2MWU3Yi1mNDgzLTdlNDUtYmQzNS1iYTg0MGRlNTU3YzA8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6QmFnPgogICAgICAgICA8L3Bob3Rvc2hvcDpEb2N1bWVudEFuY2VzdG9ycz4KICAgICAgICAgPHhtcE1NOkluc3RhbmNlSUQ+eG1wLmlpZDoyMTlkM2I1OC1mZjU0LTFjNDctYjUwNC0yMGRjYWRhM2ExM2Y8L3htcE1NOkluc3RhbmNlSUQ+CiAgICAgICAgIDx4bXBNTTpEb2N1bWVudElEPnhtcC5kaWQ6NmNiNjhkYzMtMDc5My0yNDRmLWJkNWYtMmQxNzI4YzQ5MmE2PC94bXBNTTpEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06T3JpZ2luYWxEb2N1bWVudElEPnhtcC5kaWQ6NmNiNjhkYzMtMDc5My0yNDRmLWJkNWYtMmQxNzI4YzQ5MmE2PC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjZjYjY4ZGMzLTA3OTMtMjQ0Zi1iZDVmLTJkMTcyOGM0OTJhNjwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxOC0wNy0wM1QxNToyODo1NiswMjowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDoxZTljNDc3Mi05Y2U1LTViNDUtYWE4OS04OWIzNGM5YjA4MDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTktMDQtMThUMTM6NDc6MjcrMDI6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE3IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6MjE5ZDNiNTgtZmY1NC0xYzQ3LWI1MDQtMjBkY2FkYTNhMTNmPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDIwLTExLTA4VDEwOjU3OjA3KzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICA8L3JkZjpTZXE+CiAgICAgICAgIDwveG1wTU06SGlzdG9yeT4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+NjU1MzU8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjE2PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjE2PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz5WisYlAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAADISURBVHjavJOxDYQwDEVNl4YiHRJCNwB7hDlOWYINMks2YBEXTMEIvibfSgzidLrTFb9IyHt2kEMiQt+E/iIY+06Qsn4viOQVeoaHpuxdCwBE8rIPq0LL7GWZ/aWkaQ8H9mHV1JKrTsi2+KmExr47fbiT1FdqBHeSY5vk2CY9l1KSlJLoP8CmlQCAACAzCzO3AmZWia2UXZDsgoL2CieJrQRBDSIQNBJbCYIKVA4D1EhspeyClMkkm3oKVVLPPcY6km/An73G1wD5Gg1KKvLetwAAAABJRU5ErkJggg==" />
+                </defs>
+            </svg>
+        </div>
+        <div class="pace"></div>
+    </div>
+
+    <template id="empty-slot-template">
+        <div>
+            <slot></slot>
+        </div>
+    </template>
+
+    <template id="settings-presenter-template">
+        <div class="settings-presenter">
+            <div class="header-root">
+                <div class="icon-holder" v-check-solt="$slots.icon">
+                    <slot name="icon"></slot>
+                </div>
+                <div class="header-panel">
+                    <span v-check-solt="$slots.header">
+                        <slot name="header"></slot>
+                    </span>
+                    <span class="description" v-check-solt="$slots.description">
+                        <slot name="description"></slot>
+                    </span>
+                </div>
+            </div>
+            <div class="content-presenter" v-check-solt="$slots.default">
+                <slot></slot>
+            </div>
+        </div>
+    </template>
+
+    <template id="settings-card-template">
+        <div class="settings-card">
+            <div class="content-grid" v-fill-color="fillColor">
+                <settings-presenter class="presenter">
+                    <template #icon>
+                        <slot name="icon"></slot>
+                    </template>
+                    <template #header>
+                        <slot name="header"></slot>
+                    </template>
+                    <template #description>
+                        <slot name="description"></slot>
+                    </template>
+                    <slot></slot>
+                </settings-presenter>
+            </div>
+        </div>
+    </template>
+
+    <template id="settings-expander-template">
+        <fluent-accordion class="settings-expander">
+            <fluent-accordion-item class="expander" :expanded="expanded">
+                <div slot="heading">
+                    <settings-presenter class="presenter">
+                        <template #icon>
+                            <slot name="icon"></slot>
+                        </template>
+                        <template #header>
+                            <slot name="header"></slot>
+                        </template>
+                        <template #description>
+                            <slot name="description"></slot>
+                        </template>
+                        <slot name="action-content"></slot>
+                    </settings-presenter>
+                </div>
+                <div v-fill-color="fillColor">
+                    <slot></slot>
+                </div>
+            </fluent-accordion-item>
+        </fluent-accordion>
+    </template>
+
+    <template id="settings-group-template">
+        <div class="settings-group">
+            <div class="header-presenter" v-check-solt="$slots.header">
+                <slot name="header"></slot>
+            </div>
+            <div class="items-presenter" v-check-solt="$slots.default">
+                <slot></slot>
+            </div>
+        </div>
+    </template>
+
+    <script type="module">
+        import { dotnet } from "./_framework/dotnet.js";
+        import { createApp, toRaw } from "https://cdn.jsdelivr.net/npm/vue/dist/vue.esm-browser.prod.js";
+        import { fillColor, neutralFillInputRest, neutralFillLayerAltRest } from "https://cdn.jsdelivr.net/npm/@fluentui/web-components/+esm";
+        createApp({
+            data() {
+                return {
+                    locker: {
+                        resolves: [],
+                        reference: 0,
+                        async await() {
+                            return new Promise(resolve => {
+                                if (this.reference++ <= 0) {
+                                    resolve();
+                                }
+                                else {
+                                    this.resolves.push(resolve);
+                                }
+                            });
+                        },
+                        release() {
+                            if (--this.reference > 0) {
+                                this.resolves.pop()();
+                            }
+                        }
+                    },
+                    exports: null,
+                    isInitDotnet: false,
+                    enchantments: [],
+                    initialPenalty: 0,
+                    enchantment: {
+                        name: null,
+                        level: 1,
+                        weight: 1
+                    },
+                    loading: false,
+                    wantedList: [],
+                    results: []
+                }
+            },
+            watch: {
+                "enchantment.name"(newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        const enchantment = this.enchantments.find(x => x.name === newValue);
+                        if (enchantment) {
+                            this.enchantment = { ...enchantment };
+                        }
+                    }
+                }
+            },
+            methods: {
+                async initDotNetAsync() {
+                    if (!this.isInitDotnet) {
+                        await this.locker.await();
+                        if (!this.isInitDotnet) {
+                            const { getAssemblyExports, getConfig } = await dotnet.create();
+                            const config = getConfig();
+                            const exports = await getAssemblyExports(config.mainAssemblyName);
+                            this.exports = exports.Exports;
+                        }
+                        this.locker.release();
+                        this.isInitDotnet = true;
+                    }
+                },
+                async initializeEnchantmentsAsync() {
+                    try {
+                        this.loading = true;
+                        const enchantments = [];
+                        const json = await fetch("https://cdn.jsdelivr.net/gh/wherewhere/Enchants-Order@main/EnchantsOrder/EnchantsOrder.Demo/Assets/Enchants/Enchants.en-US.json").then(x => x.json());
+                        for (const name in json) {
+                            const enchantment = json[name];
+                            enchantments.push({
+                                name,
+                                level: enchantment.levelMax,
+                                weight: enchantment.weight,
+                                hidden: enchantment.hidden,
+                                items: enchantment.items,
+                                incompatible: enchantment.incompatible,
+                                get experience() {
+                                    return this.level * this.weight;
+                                }
+                            });
+                        }
+                        this.enchantments = enchantments;
+                    }
+                    finally {
+                        this.loading = false;
+                    }
+                },
+                addEnchantment() {
+                    const enchantment = this.enchantment;
+                    if (enchantment.name) {
+                        const temp = { ...enchantment };
+                        temp.level = +temp.level;
+                        temp.weight = +temp.weight;
+                        this.wantedList.push(temp);
+                    }
+                },
+                removeEnchantment(item) {
+                    if (item) {
+                        const wantedList = this.wantedList;
+                        const index = wantedList.indexOf(item);
+                        if (index > -1) {
+                            wantedList.splice(index, 1);
+                        }
+                    }
+                },
+                readSteps(steps) {
+                    function getRomanNumber(num, maxValue = 2000) {
+                        if (num > maxValue) { return num.toString(); }
+                        const arabic = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+                        const roman = ['M', "CM", 'D', "CD", 'C', "XC", 'L', "XL", 'X', "IX", 'V', "IV", 'I'];
+                        let i = 0;
+                        let result = '';
+                        while (num > 0) {
+                            while (num >= arabic[i]) {
+                                num -= arabic[i];
+                                result += roman[i];
+                            }
+                            i++;
+                        }
+                        return result;
+                    }
+                    function readEnchantment(enchantment) {
+                        return `${enchantment.Name} ${getRomanNumber(enchantment.Level)}`;
+                    }
+                    function readStep(step, index) {
+                        const builder = [];
+                        builder.push(`Step ${index}:`);
+                        const count = step.length;
+                        const half = Math.floor(count / 2);
+                        for (let i = half; i > 0; i--) {
+                            const flag = count === 2;
+                            const idx = (half * 2) - (i * 2);
+                            builder.push(
+                                ` ${flag ? '' : '('}${readEnchantment(step[idx])} + ${readEnchantment(step[idx + 1])}${flag ? '' : ')'}${idx + 2 === count ? '' : " +"}`
+                            );
+                        }
+                        if (count % 2 === 1) {
+                            builder.push(` ${readEnchantment(step[step.length - 1])}`);
+                        }
+                        return builder.join('');
+                    }
+                    return steps.map((x, i) => readStep(x, i + 1)).join('\n');
+                },
+                async orderingWantList() {
+                    try {
+                        this.loading = true;
+                        const wantedList = this.wantedList;
+                        if (wantedList.length) {
+                            this.results = [await this.orderingAsync(wantedList, this.initialPenalty)];
+                        }
+                    }
+                    finally {
+                        this.loading = false;
+                    }
+                },
+                async orderingAsync(wantedList, initialPenalty) {
+                    await this.initDotNetAsync();
+                    return JSON.parse(this.exports.Ordering(wantedList, +initialPenalty));
+                }
+            },
+            mounted() {
+                this.initializeEnchantmentsAsync();
+            }
+        }).directive("fill-color",
+            (element, binding) => {
+                if (element instanceof HTMLElement) {
+                    const color = toRaw(binding.value);
+                    if (color !== binding.oldValue) {
+                        fillColor.setValueFor(element, color.getValueFor(element.parentElement));
+                    }
+                }
+            }
+        ).component("value-change-host", {
+            template: "#empty-slot-template",
+            props: {
+                valueName: String,
+                eventName: String,
+                modelValue: undefined
+            },
+            emits: ['update:modelValue'],
+            watch: {
+                eventName(newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        const $el = this.$el;
+                        if ($el instanceof HTMLElement) {
+                            const element = $el.children[0];
+                            if (element instanceof HTMLElement) {
+                                if (oldValue) {
+                                    element.removeEventListener(oldValue, this.onValueChanged);
+                                }
+                                if (newValue) {
+                                    element.addEventListener(newValue, this.onValueChanged);
+                                }
+                            }
+                        }
+                    }
+                },
+                modelValue(newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        const valueName = this.valueName;
+                        if (valueName) {
+                            const $el = this.$el;
+                            if ($el instanceof HTMLElement) {
+                                const element = $el.children[0];
+                                if (element instanceof HTMLElement) {
+                                    element[valueName] = newValue;
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            methods: {
+                registerEvent(valueName) {
+                    const $el = this.$el;
+                    if ($el instanceof HTMLElement) {
+                        const element = $el.children[0];
+                        if (element instanceof HTMLElement) {
+                            const modelValue = this.modelValue;
+                            if (modelValue === undefined) {
+                                this.$emit('update:modelValue', element[valueName]);
+                            }
+                            else {
+                                element[valueName] = modelValue;
+                            }
+                            element.addEventListener(this.eventName, this.onValueChanged);
+                        }
+                    }
+                },
+                onValueChanged(event) {
+                    const target = event.target;
+                    if (target instanceof HTMLElement) {
+                        this.$emit('update:modelValue', target[this.valueName]);
+                    }
+                }
+            },
+            mounted() {
+                const valueName = this.valueName;
+                if (valueName && this.eventName) {
+                    this.registerEvent(valueName);
+                }
+            }
+        }).component("settings-presenter", {
+            template: "#settings-presenter-template"
+        }).component("settings-card", {
+            template: "#settings-card-template",
+            data() {
+                return {
+                    fillColor: neutralFillInputRest
+                }
+            }
+        }).component("settings-expander", {
+            template: "#settings-expander-template",
+            props: {
+                expanded: String
+            },
+            data() {
+                return {
+                    fillColor: neutralFillLayerAltRest
+                }
+            }
+        }).component("settings-group", {
+            template: "#settings-group-template"
+        }).mount("#vue-app");
+    </script>
+
+    <style>
+        @import 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-blazor@dev/src/Core/wwwroot/css/reboot.css';
+
+        :root {
+            --font-monospace: "Cascadia Code NF", "Cascadia Code PL", "Cascadia Code", Consolas, "Courier New", "Liberation Mono", SFMono-Regular, Menlo, Monaco, monospace;
+            --settings-card-padding: calc(var(--design-unit) * 4px);
+            --content-padding: 1rem;
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                color-scheme: dark;
+            }
+        }
+
+        @media (min-width: 767px) {
+            :root {
+                --content-padding: 1.5rem;
+            }
+        }
+
+        body,
+        .body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--neutral-fill-stealth-rest);
+        }
+
+        .content {
+            height: 100%;
+            overflow-y: auto;
+            padding: 0.5rem var(--content-padding);
+        }
+
+        #vue-app .stack-vertical {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #vue-app h6.unset,
+        #vue-app h5.unset,
+        #vue-app h4.unset,
+        #vue-app h3.unset,
+        #vue-app h2.unset,
+        #vue-app h1.unset {
+            margin-top: unset;
+            margin-bottom: unset;
+            font-weight: unset;
+            font-family: unset;
+            font-size: unset;
+            line-height: unset;
+        }
+
+        #vue-app fluent-combobox::part(listbox),
+        #vue-app fluent-combobox .listbox {
+            max-height: calc(var(--base-height-multiplier) * 30px);
+        }
+
+        pre.unset {
+            margin-top: unset;
+            margin-bottom: unset;
+            font-size: inherit;
+            font-family: inherit;
+            white-space: pre-wrap;
+        }
+
+        .text-button {
+            fill: currentColor;
+            border-radius: calc(var(--control-corner-radius) * 1px);
+        }
+
+            .text-button:hover {
+                background: var(--neutral-fill-input-hover);
+            }
+
+            .text-button:active {
+                background: var(--neutral-fill-input-active);
+            }
+
+            .text-button[disabled="true"] {
+                cursor: not-allowed;
+                opacity: var(--disabled-opacity);
+            }
+
+                .text-button[disabled="true"]:active {
+                    background: none;
+                }
+
+        .settings-presenter {
+            --settings-card-description-font-size: var(--type-ramp-minus-1-font-size);
+            --settings-card-header-icon-max-size: var(--type-ramp-base-line-height);
+            --settings-card-header-icon-margin: 0 calc((var(--base-horizontal-spacing-multiplier) * 6 + var(--design-unit) * 0.5) * 1px) 0 calc((var(--base-horizontal-spacing-multiplier) * 6 - var(--design-unit) * 4) * 1px);
+            --settings-card-vertical-header-content-spacing: calc(var(--design-unit) * 2px) 0 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .settings-presenter div.header-root {
+                display: flex;
+                align-items: center;
+                flex: 1;
+            }
+
+            .settings-presenter div.icon-holder {
+                max-width: var(--settings-card-header-icon-max-size);
+                max-height: var(--settings-card-header-icon-max-size);
+                margin: var(--settings-card-header-icon-margin);
+                fill: currentColor;
+            }
+
+            .settings-presenter div.header-panel {
+                display: flex;
+                flex-direction: column;
+                margin: 0 calc(var(--design-unit) * 6px) 0 0;
+            }
+
+            .settings-presenter span.description {
+                font-size: var(--settings-card-description-font-size);
+                color: var(--neutral-fill-strong-hover);
+            }
+
+            .settings-presenter div.content-presenter {
+                display: grid;
+            }
+
+            .settings-presenter a.text-button {
+                font-weight: bold;
+                text-decoration: unset;
+            }
+
+        @media (max-width: 600px) {
+            .settings-presenter {
+                flex-flow: column;
+                justify-content: unset;
+                align-items: unset;
+            }
+
+                .settings-presenter div.header-panel {
+                    margin: unset;
+                }
+
+                .settings-presenter div.content-presenter {
+                    margin: var(--settings-card-vertical-header-content-spacing);
+                }
+        }
+
+        .settings-card {
+            display: block;
+            box-sizing: border-box;
+            background: var(--neutral-fill-input-rest);
+            color: var(--neutral-foreground-rest);
+            border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-rest);
+            border-radius: calc(var(--control-corner-radius) * 1px);
+            box-shadow: var(--elevation-shadow-card-rest);
+        }
+
+            .settings-card .presenter {
+                padding: var(--settings-card-padding);
+            }
+
+        .settings-expander {
+            --settings-expander-header-padding: calc(var(--design-unit) * 1px) 0 calc(var(--design-unit) * 1px) calc(var(--design-unit) * 2px);
+            --settings-expander-item-padding: 0 calc((var(--base-height-multiplier) + 1 + var(--density)) * var(--design-unit) * 1px) 0 calc((var(--base-horizontal-spacing-multiplier) * 12 - var(--design-unit) * 1.5) * 1px + var(--type-ramp-base-line-height));
+        }
+
+            .settings-expander fluent-accordion-item.expander {
+                box-sizing: border-box;
+                box-shadow: var(--elevation-shadow-card-rest);
+                border-radius: calc(var(--control-corner-radius) * 1px);
+            }
+
+                .settings-expander fluent-accordion-item.expander:hover {
+                    background: var(--neutral-fill-input-hover);
+                    border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-hover);
+                    box-shadow: var(--elevation-shadow-card-hover);
+                }
+
+                .settings-expander fluent-accordion-item.expander:active {
+                    background: var(--neutral-fill-input-active);
+                    border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-active);
+                    box-shadow: var(--elevation-shadow-card-pressed);
+                }
+
+                .settings-expander fluent-accordion-item.expander::part(region),
+                .settings-expander fluent-accordion-item.expander .region {
+                    border-bottom-left-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
+                    border-bottom-right-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
+                }
+
+            .settings-expander .presenter {
+                padding: var(--settings-expander-header-padding);
+            }
+
+            .settings-expander div.setting-expander-content-grid {
+                padding: var(--settings-expander-item-padding);
+            }
+
+        .settings-group {
+            --body-strong-text-block-font-size: var(--type-ramp-base-font-size);
+        }
+
+            .settings-group div.header-presenter {
+                margin: 1rem 0 calc(var(--base-horizontal-spacing-multiplier) * 2px) calc(var(--stroke-width) * 1px);
+                font-size: var(--body-strong-text-block-font-size);
+                font-weight: bold;
+                color: var(--neutral-foreground-rest);
+            }
+
+            .settings-group div.items-presenter {
+                display: flex;
+                flex-direction: column;
+                row-gap: 0.3rem;
+            }
+    </style>
+</body>
+
+</html>

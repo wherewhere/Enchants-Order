@@ -2,11 +2,13 @@ name: build and test
 
 on:
   push:
+    branches: [main]
   pull_request:
     branches: [main]
     paths:
-    - '**.cs'
-    - '**.csproj'
+      - '.github/workflows/build-and-test.yml'
+      - 'EnchantsOrder**'
+  workflow_dispatch:
 
 env:
   DOTNET_VERSION: '9.0.x' # The .NET SDK version to use
@@ -21,21 +23,84 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Setup .NET Core App
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{env.DOTNET_VERSION}}
-        
-    - name: Install dependencies
-      run: dotnet restore -p:FullTargets=false
+      - name: Setup .NET Core App
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{env.DOTNET_VERSION}}
+
+      - name: Install WASM Tools Workload
+        run: dotnet workload install wasm-tools
+
+      - name: Install dependencies
+        run: dotnet restore -p:FullTargets=false
       
-    - name: Build
-      run: dotnet build --no-restore -p:FullTargets=false
+      - name: Build
+        run: dotnet build --no-restore -p:FullTargets=false
     
-    - name: Test
-      run: dotnet test --no-restore --blame-hang-timeout 1m -p:FullTargets=false
+      - name: Test
+        run: dotnet test --no-restore --blame-hang-timeout 1m -p:FullTargets=false
+
+  build-and-publish:
+    if: github.event_name == 'push'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    env:
+      Solution_Name: EnchantsOrder/EnchantsOrder.Web/EnchantsOrder.Web.csproj
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Install the .NET Core App workload
+      - name: Install .NET Core App
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Install WASM Tools Workload
+        run: dotnet workload install wasm-tools
+
+      # Restore the application to populate the obj folder with RuntimeIdentifiers
+      - name: Install Dependencies
+        run: dotnet restore $Solution_Name
+
+      - name: Publish
+        run: dotnet publish $Solution_Name -c:Release -o:public
+
+      # Changes the base-tag in index.html to match GitHub Pages repository subdirectory
+      - name: Change index.html base-tag
+        run: sed -i 's/<base href="\/" \/>/<base href="\/Enchants-Order\/" \/>/g' public/wwwroot/index.html
+
+      # Add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
+      - name: Add .nojekyll file
+        run: touch public/wwwroot/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public/wwwroot
+
+  deploy:
+    needs: build-and-publish
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
