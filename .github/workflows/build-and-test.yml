@@ -36,13 +36,13 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Install dependencies
-        run: dotnet restore $Solution_Name -p:FullTargets=false
+        run: dotnet restore ${{ env.Solution_Name }} -p:FullTargets=false
       
       - name: Build
-        run: dotnet build $Solution_Name --no-restore -p:FullTargets=false
+        run: dotnet build ${{ env.Solution_Name }} --no-restore -p:FullTargets=false
     
       - name: Test
-        run: dotnet test $Solution_Name --no-restore --blame-hang-timeout 1m -p:FullTargets=false
+        run: dotnet test ${{ env.Solution_Name }} --no-restore --blame-hang-timeout 1m -p:FullTargets=false
 
   build-and-publish:
     if: github.event_name == 'push'
