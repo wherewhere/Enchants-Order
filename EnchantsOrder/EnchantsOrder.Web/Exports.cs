@@ -1,5 +1,6 @@
 ﻿using EnchantsOrder;
 using EnchantsOrder.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
@@ -10,10 +11,18 @@ using System.Text.Json.Serialization;
 /// </summary>
 public static partial class Exports
 {
-    /// <inheritdoc cref="EnchantsOrder.EnchantsOrder.Ordering(System.Collections.Generic.IEnumerable{IEnchantment}, int)" />
+    /// <inheritdoc cref="EnchantsOrder.EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)" />
     [JSExport]
-    public static string Ordering(JSObject[] wantedList, int initialPenalty) =>
-        JsonSerializer.Serialize(wantedList.Select(AsJSEnchantment).Ordering(initialPenalty), SourceGenerationContext.Default.OrderingResults);
+    public static JSObject Ordering(JSObject[] wantedList, int initialPenalty) =>
+        JSONParse(JsonSerializer.Serialize(wantedList.Select(AsJSEnchantment).Ordering(initialPenalty), SourceGenerationContext.Default.OrderingResults));
+
+    /// <summary>
+    /// The JSON.parse() static method parses a JSON string, constructing the JavaScript value or object described by the string. An optional reviver function can be provided to perform a transformation on the resulting object before it is returned.
+    /// </summary>
+    /// <param name="text">The string to parse as JSON. See the JSON object for a description of JSON syntax.</param>
+    /// <returns>The Object, Array, string, number, boolean, or null value corresponding to the given JSON <paramref name="text"/>.</returns>
+    [JSImport("globalThis.JSON.parse")]
+    public static partial JSObject JSONParse(string text);
 
     private readonly struct JSEnchantment(JSObject @object) : IEnchantment
     {
@@ -61,7 +70,7 @@ public static partial class Exports
         public bool Equals(IEnchantment other) => CompareTo(other) == 0;
     }
 
-    private static IEnchantment AsJSEnchantment(this JSObject @object) => new JSEnchantment(@object);
+    private static JSEnchantment AsJSEnchantment(this JSObject @object) => new(@object);
 
     [JsonSerializable(typeof(OrderingResults))]
     private partial class SourceGenerationContext : JsonSerializerContext;

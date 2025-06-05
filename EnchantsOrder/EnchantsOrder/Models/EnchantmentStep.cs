@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,10 @@ namespace EnchantsOrder.Models
     /// <summary>
     /// The step of Enchant.
     /// </summary>
-    /// <param name="step">The index of step.</param>
 #if WINRT
     sealed
 #endif
-    public class EnchantmentStep(int step) :
+    public class EnchantmentStep :
 #if WINRT
         IStringable,
 #else
@@ -28,32 +28,81 @@ namespace EnchantsOrder.Models
 #endif
     {
         /// <summary>
-        /// Gets or sets the index of step.
+        /// The index of step.
         /// </summary>
-        public int Step { get; set; } = step;
+        private readonly int step;
 
 #if WINRT
-        internal List<IEnchantment> Enchantments { get; set; }
+        /// <summary>
+        /// The list of enchantments in this step.
+        /// </summary>
+        private readonly List<IEnchantment> enchantments;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
+        /// </summary>
+        /// <param name="step">The index of step.</param>
+        public EnchantmentStep(int step) : base()
+        {
+            this.step = step;
+            enchantments = [];
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
+        /// </summary>
+        /// <param name="step">The index of step.</param>
+        /// <param name="capacity">The initial capacity of the list.</param>
+        public EnchantmentStep(int step, int capacity)
+        {
+            this.step = step;
+            enchantments = new(capacity);
+        }
 
         /// <inheritdoc/>
-        public int Count => Enchantments.Count;
+        public int Count => enchantments.Count;
         
         /// <inheritdoc/>
-        int IReadOnlyCollection<IEnchantment>.Count => ((IReadOnlyCollection<IEnchantment>)Enchantments).Count;
+        int IReadOnlyCollection<IEnchantment>.Count => ((IReadOnlyCollection<IEnchantment>)enchantments).Count;
 
         /// <inheritdoc/>
-        public bool IsReadOnly => ((ICollection<IEnchantment>)Enchantments).IsReadOnly;
+        public bool IsReadOnly => ((ICollection<IEnchantment>)enchantments).IsReadOnly;
 
         /// <inheritdoc/>
         public IEnchantment this[int index]
         {
-            get => Enchantments[index];
-            set => Enchantments[index] = value;
+            get => enchantments[index];
+            set => enchantments[index] = value;
         }
 
         /// <inheritdoc/>
-        IEnchantment IReadOnlyList<IEnchantment>.this[int index] => ((IReadOnlyList<IEnchantment>)Enchantments)[index];
+        IEnchantment IReadOnlyList<IEnchantment>.this[int index] => ((IReadOnlyList<IEnchantment>)enchantments)[index];
+#else
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
+        /// </summary>
+        /// <param name="step">The index of step.</param>
+        public EnchantmentStep(int step) : base() => this.step = step;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
+        /// </summary>
+        /// <param name="step">The index of step.</param>
+        /// <param name="enchantments">The list of enchantments in this step.</param>
+        public EnchantmentStep(int step, IEnumerable<IEnchantment> enchantments) : base(enchantments) => this.step = step;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
+        /// </summary>
+        /// <param name="step">The index of step.</param>
+        /// <param name="capacity">The initial capacity of the list.</param>
+        public EnchantmentStep(int step, int capacity) : base(capacity) => this.step = step;
 #endif
+
+        /// <summary>
+        /// Gets or sets the index of step.
+        /// </summary>
+        public int Step => step;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -76,33 +125,34 @@ namespace EnchantsOrder.Models
 
 #if WINRT
         /// <inheritdoc/>
-        public int IndexOf(IEnchantment item) => Enchantments.IndexOf(item);
+        public int IndexOf(IEnchantment item) => enchantments.IndexOf(item);
 
         /// <inheritdoc/>
-        public void Insert(int index, IEnchantment item) => Enchantments.Insert(index, item);
+        public void Insert(int index, IEnchantment item) => enchantments.Insert(index, item);
 
         /// <inheritdoc/>
-        public void RemoveAt(int index) => Enchantments.RemoveAt(index);
+        public void RemoveAt(int index) => enchantments.RemoveAt(index);
 
         /// <inheritdoc/>
-        public void Add(IEnchantment item) => Enchantments.Add(item);
+        public void Add(IEnchantment item) => enchantments.Add(item);
 
         /// <inheritdoc/>
-        public void Clear() => Enchantments.Clear();
+        public void Clear() => enchantments.Clear();
 
         /// <inheritdoc/>
-        public bool Contains(IEnchantment item) => Enchantments.Contains(item);
+        public bool Contains(IEnchantment item) => enchantments.Contains(item);
 
         /// <inheritdoc/>
-        public void CopyTo(IEnchantment[] array, int arrayIndex) => Enchantments.CopyTo(array, arrayIndex);
+        public void CopyTo(IEnchantment[] array, int arrayIndex) => enchantments.CopyTo(array, arrayIndex);
 
         /// <inheritdoc/>
-        public bool Remove(IEnchantment item) => Enchantments.Remove(item);
+        public bool Remove(IEnchantment item) => enchantments.Remove(item);
 
         /// <inheritdoc/>
-        public IEnumerator<IEnchantment> GetEnumerator() => Enchantments.GetEnumerator();
+        public IEnumerator<IEnchantment> GetEnumerator() => enchantments.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)Enchantments).GetEnumerator();
+        /// <inheritdoc/>
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)enchantments).GetEnumerator();
 #endif
     }
 }

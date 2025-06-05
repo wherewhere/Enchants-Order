@@ -26,22 +26,22 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// Gets or sets the penalty of item.
         /// </summary>
-        public int Penalty { get; set; } = penalty;
+        public int Penalty => penalty;
 
         /// <summary>
         /// Gets or sets the max experience level request during enchant.
         /// </summary>
-        public double MaxExperience { get; set; } = maxExperience;
+        public double MaxExperience => maxExperience;
 
         /// <summary>
         /// Gets or sets the total experience level request during enchant.
         /// </summary>
-        public double TotalExperience { get; set; } = totalExperience;
+        public double TotalExperience => totalExperience;
 
         /// <summary>
         /// Gets or sets the steps of enchant.
         /// </summary>
-        public IList<IEnchantmentStep> Steps { get; set; } = steps;
+        public IList<IEnchantmentStep> Steps => steps;
 
         /// <summary>
         /// Gets the status whether it is too expensive.
@@ -70,8 +70,9 @@ namespace EnchantsOrder.Models
         }
 
         /// <inheritdoc/>
-        public int CompareTo(IOrderingResults other)
+        public int CompareTo(IOrderingResults? other)
         {
+            if (other == null) { return -1; }
             int value;
             if ((value = Penalty.CompareTo(other.Penalty)) == 0)
             {
@@ -101,7 +102,14 @@ namespace EnchantsOrder.Models
         public static bool operator <=(OrderingResults left, OrderingResults right) => left.CompareTo(right) != 1;
 #endif
 
-        internal const short max_penalty = 6;
-        internal const short max_experience = 39;
+        /// <summary>
+        /// The max penalty of item.
+        /// </summary>
+        private const short max_penalty = 6;
+
+        /// <summary>
+        /// The max experience level during enchant.
+        /// </summary>
+        private const short max_experience = 39;
     }
 }

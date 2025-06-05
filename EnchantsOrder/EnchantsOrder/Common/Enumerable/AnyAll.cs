@@ -9,6 +9,13 @@ namespace System.Linq
 {
     internal static partial class Enumerable
     {
+        /// <summary>
+        /// Determines whether a sequence contains any elements.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
+        /// <param name="source">The <see cref="IEnumerable{T}"/> to check for emptiness.</param>
+        /// <returns><see langword="true"/> if the source sequence contains any elements; otherwise, <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
         public static bool Any<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null)

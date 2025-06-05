@@ -3,19 +3,44 @@ using System;
 
 namespace EnchantsOrder.Models
 {
-    internal class EnchantItem(long num = 0, long penalty = 0, long historyExperience = 0) : IComparable<EnchantItem>, IEquatable<EnchantItem>
+    /// <summary>
+    /// Represents an item of enchantment with level, penalty, and history experience.
+    /// </summary>
+    /// <param name="level">The level of enchantment.</param>
+    /// <param name="penalty">The penalty of enchantment.</param>
+    /// <param name="historyExperience">The history experience of enchantment.</param>
+    internal class EnchantItem(long level = 0, long penalty = 0, long historyExperience = 0) : IComparable<EnchantItem>, IEquatable<EnchantItem>
     {
-        public long Level { get; set; } = num;
-        public long Penalty { get; set; } = penalty;
-        public long StepLevel { get; private set; }
-        public long HistoryLevel { get; set; } = historyExperience;
-        public long HistoryExperience { get; set; }
+        /// <summary>
+        /// Gets or sets the level of enchantment.
+        /// </summary>
+        public long Level { get; init; } = level;
+
+        /// <summary>
+        /// Gets or sets the penalty of enchantment.
+        /// </summary>
+        public long Penalty { get; init; } = penalty;
+
+        /// <summary>
+        /// Gets or sets the step level of enchantment.
+        /// </summary>
+        public long StepLevel { get; private init; }
+
+        /// <summary>
+        /// Gets or sets the history level of enchantment.
+        /// </summary>
+        public long HistoryLevel { get; private set; } = historyExperience;
+
+        /// <summary>
+        /// Gets or sets the history experience of enchantment.
+        /// </summary>
+        public long HistoryExperience { get; private set; }
 
         /// <inheritdoc/>
         public override string ToString() => $"Level:{Level} Penalty:{Penalty}";
 
         /// <inheritdoc/>
-        public int CompareTo(EnchantItem other)
+        public int CompareTo(EnchantItem? other)
         {
             if (other is null) { return -1; }
             long leftValue = Level + Extensions.PenaltyToExperience(Penalty);
@@ -24,10 +49,10 @@ namespace EnchantsOrder.Models
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => Equals(obj as EnchantItem);
+        public override bool Equals(object? obj) => Equals(obj as EnchantItem);
 
         /// <inheritdoc/>
-        public bool Equals(EnchantItem other) =>
+        public bool Equals(EnchantItem? other) =>
             other is not null &&
             Level == other.Level &&
             Penalty == other.Penalty &&

@@ -5,6 +5,16 @@
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">True</IsAotCompatible>
     <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'netcoreapp3.0'))">True</IsTrimmable>
     <NoWarn>$(NoWarn);NU1902;NU1903</NoWarn>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PolySharpIncludeGeneratedTypes>
+      System.Diagnostics.CodeAnalysis.NotNullAttribute;
+      System.Diagnostics.CodeAnalysis.NotNullWhenAttribute;
+      System.Runtime.CompilerServices.IsExternalInit;
+      System.Runtime.CompilerServices.OverloadResolutionPriorityAttribute
+    </PolySharpIncludeGeneratedTypes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(FullTargets)' == 'True'">
@@ -19,12 +29,17 @@
     <TargetFrameworks Condition="'$(IsWindows)' == 'True'">$(TargetFrameworks);net2.0;net4.7</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(FullTargets)' == 'True'
-                        and '$(GITHUB_ACTIONS)' != 'True'
-                        and '$(IsWindows)' == 'True'">
+  <PropertyGroup Condition="'$(FullTargets)' == 'True'&#xD;&#xA;                        and '$(GITHUB_ACTIONS)' != 'True'&#xD;&#xA;                        and '$(IsWindows)' == 'True'">
     <NuspecFile>EnchantsOrder.nuspec</NuspecFile>
     <NuspecProperties>id=$(AssemblyName);version=$(VersionPrefix);title=$(Title);authors=$(Authors);requireLicenseAcceptance=$(PackageRequireLicenseAcceptance);license=$(PackageLicenseExpression);icon=$(PackageIcon);projectUrl=$(PackageProjectUrl);iconUrl=$(PackageIconUrl);description=$(Description);releaseNotes=$(PackageReleaseNotes);copyright=$(Copyright);repositoryType=$(RepositoryType);repositoryUrl=$(PackageProjectUrl);repositoryCommit=$(RepositoryCommit);buildOutput=bin\$(Configuration)</NuspecProperties>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PolySharp" Version="1.15.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="EnchantsOrder.Demo" />

@@ -19,15 +19,13 @@ namespace EnchantsOrder.Models.Tests
             Enchantment enchantment2 = new("Y", 3, 4);
             Assert.That(enchantment1.CompareTo(enchantment2), Is.EqualTo(-1));
 
-            enchantment1.Level = 6;
-            enchantment1.Weight = 2;
+            enchantment1 = new("X", 6, 2);
             Assert.That(enchantment1.CompareTo(enchantment2), Is.EqualTo(1));
 
-            enchantment1.Level = 3;
-            enchantment1.Weight = 4;
+            enchantment1 = new("X", 3, 4);
             Assert.That(enchantment1.CompareTo(enchantment2), Is.EqualTo(-1));
 
-            enchantment1.Name = "Y";
+            enchantment1 = new("Y", 3, 4);
             Assert.That(enchantment1.CompareTo(enchantment2), Is.EqualTo(0));
         }
 

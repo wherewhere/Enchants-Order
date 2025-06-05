@@ -1,4 +1,5 @@
 ﻿using EnchantsOrder.Common;
+using System.Diagnostics.CodeAnalysis;
 
 #if WINRT
 using Windows.Foundation;
@@ -23,17 +24,17 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// Gets or sets the name of this enchantment.
         /// </summary>
-        public string Name { get; set; } = name;
+        public string Name => name;
 
         /// <summary>
         /// Gets or sets the level of this enchantment.
         /// </summary>
-        public int Level { get; set; } = level;
+        public int Level => level;
 
         /// <summary>
         /// Gets or sets the weight for enchant of this enchantment.
         /// </summary>
-        public int Weight { get; set; } = weight;
+        public int Weight => weight;
 
         /// <summary>
         /// Gets or sets the experience level when enchant request of this enchantment.
@@ -44,9 +45,9 @@ namespace EnchantsOrder.Models
         public override string ToString() => $"{Name} {Level.GetRomanNumber()}";
 
         /// <inheritdoc/>
-        public int CompareTo(IEnchantment other)
+        public int CompareTo(IEnchantment? other)
         {
-            if (other is null) { return -1; }
+            if (other == null) { return -1; }
             int value = Experience.CompareTo(other.Experience);
             if (value == 0)
             {
@@ -60,7 +61,20 @@ namespace EnchantsOrder.Models
         }
 
         /// <inheritdoc/>
-        public bool Equals(IEnchantment other) => CompareTo(other) == 0;
+        public bool Equals([NotNullWhen(true)] IEnchantment? other) => CompareTo(other) == 0;
+
+        /// <summary>
+        /// Deconstructs the object into its component properties.
+        /// </summary>
+        /// <param name="name">The name associated with the object.</param>
+        /// <param name="level">The level value of the object.</param>
+        /// <param name="weight">The weight value of the object.</param>
+        public void Deconstruct(out string name, out int level, out int weight)
+        {
+            name = Name;
+            level = Level;
+            weight = Weight;
+        }
 
 #if !WINRT
         /// <inheritdoc/>

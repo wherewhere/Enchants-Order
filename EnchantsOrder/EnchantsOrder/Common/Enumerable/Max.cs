@@ -8,6 +8,11 @@ namespace System.Linq
 {
     internal static partial class Enumerable
     {
+        /// <summary>
+        /// Returns the maximum value in a sequence of <see cref="long"/> values.
+        /// </summary>
+        /// <param name="source">A sequence of <see cref="long"/> values to determine the maximum value of.</param>
+        /// <returns>The maximum value in the sequence.</returns>
         public static long Max(this IEnumerable<long> source) => MaxLong(source);
 
         private static long MaxLong(this IEnumerable<long> source)
@@ -35,9 +40,17 @@ namespace System.Linq
             return value;
         }
 
-        public static TSource Max<TSource>(this IEnumerable<TSource> source) => source.Max(comparer: null);
+        /// <summary>
+        /// Returns the maximum value in a generic sequence.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>
+        /// <param name="source">A sequence of values to determine the maximum value of.</param>
+        /// <returns>The maximum value in the sequence.</returns>
+        public static TSource? Max<TSource>(this IEnumerable<TSource> source) => source.Max(comparer: null);
 
-        /// <summary>Returns the maximum value in a generic sequence.</summary>
+        /// <summary>
+        /// Returns the maximum value in a generic sequence.
+        /// </summary>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="comparer">The <see cref="IComparer{T}" /> to compare values.</param>
@@ -49,7 +62,7 @@ namespace System.Linq
         /// <para>If <typeparamref name="TSource" /> is a reference type and the source sequence is empty or contains only values that are <see langword="null" />, this method returns <see langword="null" />.</para>
         /// <para>In Visual Basic query expression syntax, an `Aggregate Into Max()` clause translates to an invocation of <see cref="O:Enumerable.Max" />.</para>
         /// </remarks>
-        public static TSource Max<TSource>(this IEnumerable<TSource> source, IComparer<TSource> comparer)
+        public static TSource? Max<TSource>(this IEnumerable<TSource> source, IComparer<TSource>? comparer)
         {
             if (source == null)
             {
@@ -58,7 +71,7 @@ namespace System.Linq
 
             comparer ??= Comparer<TSource>.Default;
 
-            TSource value = default;
+            TSource? value = default;
             using (IEnumerator<TSource> e = source.GetEnumerator())
             {
                 if (value == null)

@@ -692,7 +692,6 @@
                                     console.warn(ex);
                                 }
                             }
-                            console.log(results);
                             this.results = results;
                         }
                     }
@@ -714,7 +713,7 @@
                 },
                 async orderingAsync(wantedList, initialPenalty) {
                     await this.initDotNetAsync();
-                    return JSON.parse(this.exports.Ordering(wantedList, +initialPenalty));
+                    return this.exports.Ordering(wantedList, +initialPenalty);
                 }
             },
             mounted() {

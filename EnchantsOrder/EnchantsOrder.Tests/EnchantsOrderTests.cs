@@ -12,7 +12,7 @@ namespace EnchantsOrder.Tests
     public class EnchantsOrderTests
     {
         /// <summary>
-        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// Tests the <see cref="EnchantsOrder.Ordering{T}(IEnumerable{T}, int)"/> method.
         /// </summary>
         [Test]
         public void NoneBookOrderTest()
@@ -24,7 +24,7 @@ namespace EnchantsOrder.Tests
         }
 
         /// <summary>
-        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// Tests the <see cref="EnchantsOrder.Ordering{T}(IEnumerable{T}, int)"/> method.
         /// </summary>
         [Test]
         public void OneBookOrderTest()
@@ -43,7 +43,7 @@ namespace EnchantsOrder.Tests
         }
 
         /// <summary>
-        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// Tests the <see cref="EnchantsOrder.Ordering{T}(IEnumerable{T}, int)"/> method.
         /// </summary>
         [Test]
         public void TwoBookOrderTest()
@@ -69,7 +69,7 @@ namespace EnchantsOrder.Tests
         }
 
         /// <summary>
-        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// Tests the <see cref="EnchantsOrder.Ordering{T}(IEnumerable{T}, int)"/> method.
         /// </summary>
         [Test]
         public void ThreeBookOrderTest()
@@ -97,7 +97,7 @@ namespace EnchantsOrder.Tests
         }
 
         /// <summary>
-        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// Tests the <see cref="EnchantsOrder.Ordering{T}(IEnumerable{T}, int)"/> method.
         /// </summary>
         [Test]
         public void FourBookOrderTest()
@@ -129,7 +129,7 @@ namespace EnchantsOrder.Tests
         }
 
         /// <summary>
-        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// Tests the <see cref="EnchantsOrder.Ordering{T}(IEnumerable{T}, int)"/> method.
         /// </summary>
         [Test]
         public void FiveBookOrderTest()
@@ -163,7 +163,7 @@ namespace EnchantsOrder.Tests
         }
 
         /// <summary>
-        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// Tests the <see cref="EnchantsOrder.Ordering{T}(IEnumerable{T}, int)"/> method.
         /// </summary>
         [Test]
         public void SixBookOrderTest()
@@ -199,7 +199,7 @@ namespace EnchantsOrder.Tests
         }
 
         /// <summary>
-        /// Tests the <see cref="EnchantsOrder.Ordering(IEnumerable{IEnchantment}, int)"/> method.
+        /// Tests the <see cref="EnchantsOrder.Ordering{T}(IEnumerable{T}, int)"/> method.
         /// </summary>
         [Test]
         public void SevenBookOrderTest()
