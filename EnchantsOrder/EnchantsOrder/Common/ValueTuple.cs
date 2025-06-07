@@ -14,4 +14,6 @@ namespace System
     [StructLayout(LayoutKind.Auto)]
     internal struct ValueTuple<T1, T2>;
 }
+#else
+[assembly: System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.ValueTuple<,>))]
 #endif

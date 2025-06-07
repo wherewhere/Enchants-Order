@@ -1,80 +1,77 @@
 ﻿using EnchantsOrder.Common;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace EnchantsOrder.Models
 {
     /// <summary>
     /// Represents an item of enchantment with level, penalty, and history experience.
     /// </summary>
-    /// <param name="level">The level of enchantment.</param>
-    /// <param name="penalty">The penalty of enchantment.</param>
-    /// <param name="historyExperience">The history experience of enchantment.</param>
-    internal class EnchantItem(long level = 0, long penalty = 0, long historyExperience = 0) : IComparable<EnchantItem>, IEquatable<EnchantItem>
+    /// <param name="level">The current level of this enchantment item.</param>
+    /// <param name="penalty">The current penalty of this enchantment item.</param>
+    /// <param name="stepLevel">The level cost for this step.</param>
+    /// <param name="historyLevel">The history level cost of this enchantment item.</param>
+    /// <param name="historyExperience">The history experience cost of this enchantment item.</param>
+    internal readonly struct EnchantItem(long level, long penalty, long stepLevel, long historyLevel, long historyExperience) : IComparable<EnchantItem>, IEquatable<EnchantItem>
     {
         /// <summary>
-        /// Gets or sets the level of enchantment.
+        /// Initializes a new instance of the <see cref="EnchantItem"/> class with specified level and penalty.
         /// </summary>
-        public long Level { get; init; } = level;
-
-        /// <summary>
-        /// Gets or sets the penalty of enchantment.
-        /// </summary>
-        public long Penalty { get; init; } = penalty;
-
-        /// <summary>
-        /// Gets or sets the step level of enchantment.
-        /// </summary>
-        public long StepLevel { get; private init; }
-
-        /// <summary>
-        /// Gets or sets the history level of enchantment.
-        /// </summary>
-        public long HistoryLevel { get; private set; } = historyExperience;
-
-        /// <summary>
-        /// Gets or sets the history experience of enchantment.
-        /// </summary>
-        public long HistoryExperience { get; private set; }
-
-        /// <inheritdoc/>
-        public override string ToString() => $"Level:{Level} Penalty:{Penalty}";
-
-        /// <inheritdoc/>
-        public int CompareTo(EnchantItem? other)
+        /// <param name="level">The current level of this enchantment item.</param>
+        /// <param name="penalty">The current penalty of this enchantment item.</param>
+        public EnchantItem(long level = 0, long penalty = 0) : this(level, penalty, 0, 0, 0)
         {
-            if (other is null) { return -1; }
-            long leftValue = Level + Extensions.PenaltyToExperience(Penalty);
+        }
+
+        /// <summary>
+        /// Gets or sets the current level of this enchantment item.
+        /// </summary>
+        public long Level => level;
+
+        /// <summary>
+        /// Gets or sets the current penalty of this enchantment item.
+        /// </summary>
+        public long Penalty => penalty;
+
+        /// <summary>
+        /// Gets or sets the level cost for this step.
+        /// </summary>
+        public long StepLevel => stepLevel;
+
+        /// <summary>
+        /// Gets or sets the history level cost of this enchantment item.
+        /// </summary>
+        public long HistoryLevel => historyLevel;
+
+        /// <summary>
+        /// Gets or sets the history experience cost of this enchantment item.
+        /// </summary>
+        public long HistoryExperience => historyExperience;
+
+        /// <inheritdoc/>
+        public override string ToString() => $"Level:{level} Penalty:{penalty}";
+
+        /// <inheritdoc/>
+        public int CompareTo(EnchantItem other)
+        {
+            long leftValue = level + Extensions.PenaltyToExperience(penalty);
             long rightValue = other.Level + Extensions.PenaltyToExperience(other.Penalty);
             return leftValue.CompareTo(rightValue);
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj) => Equals(obj as EnchantItem);
+        public override bool Equals([NotNullWhen(true)] object? obj) => obj is EnchantItem item && Equals(item);
 
         /// <inheritdoc/>
-        public bool Equals(EnchantItem? other) =>
-            other is not null &&
-            Level == other.Level &&
-            Penalty == other.Penalty &&
-            StepLevel == other.StepLevel &&
-            HistoryLevel == other.HistoryLevel &&
-            HistoryExperience == other.HistoryExperience;
+        public bool Equals(EnchantItem other) =>
+            level == other.Level &&
+            penalty == other.Penalty &&
+            stepLevel == other.StepLevel &&
+            historyLevel == other.HistoryLevel &&
+            historyExperience == other.HistoryExperience;
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
-            return HashCode.Combine(Level, Penalty, StepLevel, HistoryLevel, HistoryExperience);
-#else
-            int hashCode = 450102560;
-            hashCode = (hashCode * -1521134295) + Level.GetHashCode();
-            hashCode = (hashCode * -1521134295) + Penalty.GetHashCode();
-            hashCode = (hashCode * -1521134295) + StepLevel.GetHashCode();
-            hashCode = (hashCode * -1521134295) + HistoryLevel.GetHashCode();
-            hashCode = (hashCode * -1521134295) + HistoryExperience.GetHashCode();
-            return hashCode;
-#endif
-        }
+        public override int GetHashCode() => HashCode.Combine(level, penalty, stepLevel, historyLevel, historyExperience);
 
         /// <inheritdoc/>
         public static bool operator >(EnchantItem left, EnchantItem right)
@@ -127,15 +124,12 @@ namespace EnchantsOrder.Models
         /// <inheritdoc/>
         public static EnchantItem operator +(EnchantItem left, EnchantItem right)
         {
-            EnchantItem level = new()
-            {
-                Level = left.Level + right.Level,
-                Penalty = Math.Max(left.Penalty, right.Penalty) + 1,
-                StepLevel = right.Level + Extensions.PenaltyToExperience(left.Penalty) + Extensions.PenaltyToExperience(right.Penalty)
-            };
-            level.HistoryLevel = level.StepLevel + left.HistoryLevel + right.HistoryLevel;
-            level.HistoryExperience = Convert.ToInt64(Extensions.LevelToExperience(level.StepLevel)) + left.HistoryExperience + right.HistoryExperience;
-            return level;
+            long level = left.Level + right.Level;
+            long penalty = Math.Max(left.Penalty, right.Penalty) + 1;
+            long stepLevel = right.Level + Extensions.PenaltyToExperience(left.Penalty) + Extensions.PenaltyToExperience(right.Penalty);
+            long historyLevel = stepLevel + left.HistoryLevel + right.HistoryLevel;
+            long historyExperience = Convert.ToInt64(Extensions.LevelToExperience(stepLevel)) + left.HistoryExperience + right.HistoryExperience;
+            return new EnchantItem(level, penalty, stepLevel, historyLevel, historyExperience);
         }
 
         /// <inheritdoc/>
@@ -146,15 +140,12 @@ namespace EnchantsOrder.Models
             {
                 PenaltyLevel += Extensions.PenaltyToExperience(left.Penalty + i - 2) + Extensions.PenaltyToExperience(left.Penalty);
             }
-            EnchantItem level = new()
-            {
-                Level = left.Level * right,
-                Penalty = Math.Max(left.Penalty + right - 1, 0),
-                StepLevel = (left.Level * Math.Max(right - 1, 0)) + PenaltyLevel
-            };
-            level.HistoryLevel = level.StepLevel + (left.HistoryLevel * right);
-            level.HistoryExperience = Convert.ToInt64(Extensions.LevelToExperience(level.StepLevel)) + (left.HistoryExperience * right);
-            return level;
+            long level = left.Level * right;
+            long penalty = Math.Max(left.Penalty + right - 1, 0);
+            long stepLevel = (left.Level * Math.Max(right - 1, 0)) + PenaltyLevel;
+            long historyLevel = stepLevel + (left.HistoryLevel * right);
+            long historyExperience = Convert.ToInt64(Extensions.LevelToExperience(stepLevel)) + (left.HistoryExperience * right);
+            return new EnchantItem(level, penalty, stepLevel, historyLevel, historyExperience);
         }
 
         /// <inheritdoc/>

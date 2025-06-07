@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 #if WINRT
@@ -9,39 +11,38 @@ using Windows.Foundation;
 namespace EnchantsOrder.Models
 {
     /// <summary>
-    /// The result of ordering.
+    /// The results of ordering enchantments, which contains the penalty, max experience, total experience and steps.
     /// </summary>
-    /// <param name="steps">The steps of enchant.</param>
     /// <param name="penalty">The penalty of item.</param>
     /// <param name="maxExperience">The max experience level request during enchant.</param>
     /// <param name="totalExperience">The total experience level request during enchant.</param>
+    /// <param name="steps">The steps of enchant.</param>
+    public sealed class OrderingResults(int penalty, double maxExperience, double totalExperience, params IList<EnchantmentStep> steps) :
 #if WINRT
-    sealed
-#endif
-    public class OrderingResults(IList<IEnchantmentStep> steps, int penalty, double maxExperience, double totalExperience) : IOrderingResults
-#if WINRT
-        , IStringable
+        IStringable
+#else
+        IComparable<OrderingResults>
 #endif
     {
         /// <summary>
-        /// Gets or sets the penalty of item.
+        /// Gets the penalty of item.
         /// </summary>
         public int Penalty => penalty;
 
         /// <summary>
-        /// Gets or sets the max experience level request during enchant.
+        /// Gets the max experience level request during enchant.
         /// </summary>
         public double MaxExperience => maxExperience;
 
         /// <summary>
-        /// Gets or sets the total experience level request during enchant.
+        /// Gets the total experience level request during enchant.
         /// </summary>
         public double TotalExperience => totalExperience;
 
         /// <summary>
-        /// Gets or sets the steps of enchant.
+        /// Gets the steps of enchant.
         /// </summary>
-        public IList<IEnchantmentStep> Steps => steps;
+        public IList<EnchantmentStep> Steps => steps;
 
         /// <summary>
         /// Gets the status whether it is too expensive.
@@ -59,29 +60,30 @@ namespace EnchantsOrder.Models
         public override string ToString()
         {
             StringBuilder builder = new();
-            foreach (IEnchantmentStep step in Steps)
+            foreach (EnchantmentStep step in steps)
             {
                 _ = builder.AppendLine(step.ToString());
             }
-            return builder.AppendLine($"Penalty Level: {Penalty}")
-                          .AppendLine($"Max Experience Level: {MaxExperience}")
-                          .Append($"Total Experience Level: {TotalExperience}")
+            return builder.AppendLine($"Penalty Level: {penalty}")
+                          .AppendLine($"Max Experience Level: {maxExperience}")
+                          .Append($"Total Experience Level: {totalExperience}")
                           .ToString();
         }
 
         /// <inheritdoc/>
-        public int CompareTo(IOrderingResults? other)
+        public int CompareTo(OrderingResults? other)
         {
             if (other == null) { return -1; }
             int value;
-            if ((value = Penalty.CompareTo(other.Penalty)) == 0)
+            if ((value = penalty.CompareTo(other.Penalty)) == 0)
             {
-                if ((value = TotalExperience.CompareTo(other.TotalExperience)) == 0)
+                if ((value = totalExperience.CompareTo(other.TotalExperience)) == 0)
                 {
-                    if ((value = MaxExperience.CompareTo(other.MaxExperience)) == 0)
+                    if ((value = maxExperience.CompareTo(other.MaxExperience)) == 0)
                     {
-                        static int GetStepNum(IList<IEnchantmentStep> steps) => steps.Sum(step => step.Count);
-                        value = GetStepNum(Steps).CompareTo(GetStepNum(other.Steps));
+                        [MethodImpl((MethodImplOptions)0x100)]
+                        static int GetStepNum(params IList<EnchantmentStep> steps) => steps.Sum(step => step.Count);
+                        value = GetStepNum(steps).CompareTo(GetStepNum(other.Steps));
                     }
                 }
             }

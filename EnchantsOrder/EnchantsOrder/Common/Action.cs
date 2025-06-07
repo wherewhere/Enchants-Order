@@ -23,4 +23,7 @@ namespace System
     /// <returns>The return value of the method that this delegate encapsulates.</returns>
     internal delegate TResult Func<in T1, in T2, out TResult>(T1 arg1, T2 arg2);
 }
+#else
+[assembly: System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Func<,>))]
+[assembly: System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Func<,,>))]
 #endif

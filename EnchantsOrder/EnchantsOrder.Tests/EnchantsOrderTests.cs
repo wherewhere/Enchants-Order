@@ -29,7 +29,9 @@ namespace EnchantsOrder.Tests
         [Test]
         public void OneBookOrderTest()
         {
-            Enchantment[] enchantmentList = [new Enchantment("Efficiency", 5, 1)];
+            Enchantment[] enchantmentList = [
+                new Enchantment("Efficiency", 5, 1)
+            ];
 
             OrderingResults results = enchantmentList.Ordering();
 

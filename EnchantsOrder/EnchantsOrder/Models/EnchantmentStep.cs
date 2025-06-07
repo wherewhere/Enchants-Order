@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 #if WINRT
@@ -11,96 +11,42 @@ using Windows.Foundation;
 namespace EnchantsOrder.Models
 {
     /// <summary>
-    /// The step of Enchant.
+    /// The information of an enchant step, which contains a list of enchantments in this step.
     /// </summary>
-#if WINRT
-    sealed
-#endif
-    public class EnchantmentStep :
-#if WINRT
-        IStringable,
+    /// <param name="step">The index of this step.</param>
+    /// <param name="enchantments">The <see cref="IReadOnlyList{T}"/> of enchantments in this step.</param>
+    public sealed class EnchantmentStep
+#if SILVERLIGHT || WINDOWSPHONE7_0 || (NETFRAMEWORK && !NET45_OR_GREATER)
+        (int step, params IList<IEnchantment> enchantments)
 #else
-        List<IEnchantment>,
+        (int step, params IReadOnlyList<IEnchantment> enchantments)
 #endif
-        IEnchantmentStep
-#if !SILVERLIGHT && !WINDOWSPHONE && !NETFRAMEWORK || NET45_OR_GREATER
-        , IReadOnlyList<IEnchantment>
+        : IReadOnlyList<IEnchantment>
+#if WINRT
+        , IStringable
 #endif
     {
-        /// <summary>
-        /// The index of step.
-        /// </summary>
-        private readonly int step;
-
-#if WINRT
-        /// <summary>
-        /// The list of enchantments in this step.
-        /// </summary>
-        private readonly List<IEnchantment> enchantments;
-
+#if !WINRT && !SILVERLIGHT && !WINDOWSPHONE7_0 && (!NETFRAMEWORK || NET45_OR_GREATER)
         /// <summary>
         /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
         /// </summary>
         /// <param name="step">The index of step.</param>
-        public EnchantmentStep(int step) : base()
+        /// <param name="enchantments">The <see cref="IReadOnlyList{T}"/> of enchantments in this step.</param>
+        [OverloadResolutionPriority(-1)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public EnchantmentStep(int step, params IList<IEnchantment> enchantments) : this(step, (IReadOnlyList<IEnchantment>)enchantments)
         {
-            this.step = step;
-            enchantments = [];
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
-        /// </summary>
-        /// <param name="step">The index of step.</param>
-        /// <param name="capacity">The initial capacity of the list.</param>
-        public EnchantmentStep(int step, int capacity)
-        {
-            this.step = step;
-            enchantments = new(capacity);
-        }
+#endif
 
         /// <inheritdoc/>
         public int Count => enchantments.Count;
         
         /// <inheritdoc/>
-        int IReadOnlyCollection<IEnchantment>.Count => ((IReadOnlyCollection<IEnchantment>)enchantments).Count;
-
-        /// <inheritdoc/>
-        public bool IsReadOnly => ((ICollection<IEnchantment>)enchantments).IsReadOnly;
-
-        /// <inheritdoc/>
-        public IEnchantment this[int index]
-        {
-            get => enchantments[index];
-            set => enchantments[index] = value;
-        }
-
-        /// <inheritdoc/>
-        IEnchantment IReadOnlyList<IEnchantment>.this[int index] => ((IReadOnlyList<IEnchantment>)enchantments)[index];
-#else
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
-        /// </summary>
-        /// <param name="step">The index of step.</param>
-        public EnchantmentStep(int step) : base() => this.step = step;
+        public IEnchantment this[int index] => enchantments[index];
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
-        /// </summary>
-        /// <param name="step">The index of step.</param>
-        /// <param name="enchantments">The list of enchantments in this step.</param>
-        public EnchantmentStep(int step, IEnumerable<IEnchantment> enchantments) : base(enchantments) => this.step = step;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnchantmentStep"/> class.
-        /// </summary>
-        /// <param name="step">The index of step.</param>
-        /// <param name="capacity">The initial capacity of the list.</param>
-        public EnchantmentStep(int step, int capacity) : base(capacity) => this.step = step;
-#endif
-
-        /// <summary>
-        /// Gets or sets the index of step.
+        /// Gets the index of this step.
         /// </summary>
         public int Step => step;
 
@@ -114,45 +60,34 @@ namespace EnchantsOrder.Models
             {
                 bool flag = Count == 2;
                 int index = (half * 2) - (i * 2);
-                _ = builder.AppendFormat(" {0}{1} + {2}{3}{4}", flag ? "" : "(", this[index], this[index + 1], flag ? "" : ")", index + 2 == Count ? "" : " +");
+                _ = builder.Append(' ');
+                if (!flag)
+                {
+                    _ = builder.Append('(');
+                }
+                _ = builder.Append(enchantments[index])
+                           .Append(" + ")
+                           .Append(enchantments[index + 1]);
+                if (!flag)
+                {
+                    _ = builder.Append(')');
+                }
+                if (index + 2 != Count)
+                {
+                    _ = builder.Append(" +");
+                }
             }
             if (Count % 2 == 1)
             {
-                _ = builder.Append(' ').Append(this.Last());
+                _ = builder.Append(' ').Append(enchantments[enchantments.Count - 1]);
             }
             return builder.ToString();
         }
-
-#if WINRT
-        /// <inheritdoc/>
-        public int IndexOf(IEnchantment item) => enchantments.IndexOf(item);
-
-        /// <inheritdoc/>
-        public void Insert(int index, IEnchantment item) => enchantments.Insert(index, item);
-
-        /// <inheritdoc/>
-        public void RemoveAt(int index) => enchantments.RemoveAt(index);
-
-        /// <inheritdoc/>
-        public void Add(IEnchantment item) => enchantments.Add(item);
-
-        /// <inheritdoc/>
-        public void Clear() => enchantments.Clear();
-
-        /// <inheritdoc/>
-        public bool Contains(IEnchantment item) => enchantments.Contains(item);
-
-        /// <inheritdoc/>
-        public void CopyTo(IEnchantment[] array, int arrayIndex) => enchantments.CopyTo(array, arrayIndex);
-
-        /// <inheritdoc/>
-        public bool Remove(IEnchantment item) => enchantments.Remove(item);
 
         /// <inheritdoc/>
         public IEnumerator<IEnchantment> GetEnumerator() => enchantments.GetEnumerator();
 
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)enchantments).GetEnumerator();
-#endif
     }
 }

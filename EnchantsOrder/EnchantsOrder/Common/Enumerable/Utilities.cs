@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #if NET20 || SILVERLIGHT || WINDOWSPHONE
-
 namespace System.Linq
 {
     /// <summary>
@@ -25,4 +24,6 @@ namespace System.Linq
             x => selector2(selector1(x));
     }
 }
+#else
+[assembly: System.Runtime.CompilerServices.TypeForwardedTo(typeof(System.Linq.Enumerable))]
 #endif

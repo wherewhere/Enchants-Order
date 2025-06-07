@@ -5,7 +5,7 @@ using System;
 namespace EnchantsOrder.Models
 {
     /// <summary>
-    /// A value of enchantment.
+    /// The information of enchantment, which is used to enchant item.
     /// </summary>
     public interface IEnchantment
 #if !WINRT
@@ -13,22 +13,22 @@ namespace EnchantsOrder.Models
 #endif
     {
         /// <summary>
-        /// The name of this enchantment.
+        /// Gets the name of this enchantment.
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// The level of this enchantment.
+        /// Gets the level of this enchantment.
         /// </summary>
         int Level { get; }
 
         /// <summary>
-        /// The weight for enchant of this enchantment.
+        /// Gets the weight for enchant of this enchantment.
         /// </summary>
         int Weight { get; }
 
         /// <summary>
-        /// The experience level when enchant request of this enchantment.
+        /// Gets the experience level when enchant request of this enchantment. Should be <see cref="Level"/> <see langword="*"/> <see cref="Weight"/>.
         /// </summary>
         long Experience { get; }
 

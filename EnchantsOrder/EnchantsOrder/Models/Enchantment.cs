@@ -8,7 +8,7 @@ using Windows.Foundation;
 namespace EnchantsOrder.Models
 {
     /// <summary>
-    /// A value of enchantment.
+    /// The information of enchantment, which is used to enchant item.
     /// </summary>
     /// <param name="name">The name of this enchantment.</param>
     /// <param name="level">The level of this enchantment.</param>
@@ -21,28 +21,20 @@ namespace EnchantsOrder.Models
         , IStringable
 #endif
     {
-        /// <summary>
-        /// Gets or sets the name of this enchantment.
-        /// </summary>
+        /// <inheritdoc/>
         public string Name => name;
 
-        /// <summary>
-        /// Gets or sets the level of this enchantment.
-        /// </summary>
+        /// <inheritdoc/>
         public int Level => level;
 
-        /// <summary>
-        /// Gets or sets the weight for enchant of this enchantment.
-        /// </summary>
+        /// <inheritdoc/>
         public int Weight => weight;
 
-        /// <summary>
-        /// Gets or sets the experience level when enchant request of this enchantment.
-        /// </summary>
-        public long Experience => (long)Level * Weight;
+        /// <inheritdoc/>
+        public long Experience => (long)level * weight;
 
         /// <inheritdoc/>
-        public override string ToString() => $"{Name} {Level.GetRomanNumber()}";
+        public override string ToString() => $"{name} {level.GetRomanNumber()}";
 
         /// <inheritdoc/>
         public int CompareTo(IEnchantment? other)
@@ -51,10 +43,10 @@ namespace EnchantsOrder.Models
             int value = Experience.CompareTo(other.Experience);
             if (value == 0)
             {
-                value = Level.CompareTo(other.Level);
+                value = level.CompareTo(other.Level);
                 if (value == 0)
                 {
-                    value = Name.CompareTo(other.Name);
+                    value = name.CompareTo(other.Name);
                 }
             }
             return value;

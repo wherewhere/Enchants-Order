@@ -1,6 +1,7 @@
 ﻿using EnchantsOrder.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -23,6 +24,8 @@ namespace EnchantsOrder
         /// <exception cref="ArgumentNullException">The list of enchantments you want to enchant is empty or null.</exception>
 #if WINRT
         [Overload("Ordering")]
+#else
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #endif
         [MethodImpl((MethodImplOptions)0x100)]
         public static OrderingResults Ordering(this IEnumerable<IEnchantment> wantedList) => wantedList.Ordering(0);
@@ -37,7 +40,10 @@ namespace EnchantsOrder
 #if WINRT
         [DefaultOverload]
         [Overload("OrderingWithPenalty")]
+#else
+        [EditorBrowsable(EditorBrowsableState.Never)]
 #endif
+        [MethodImpl((MethodImplOptions)0x100)]
         public static OrderingResults Ordering(this IEnumerable<IEnchantment> wantedList, int initialPenalty) => wantedList.Ordering(initialPenalty);
 
         /// <summary>
@@ -80,15 +86,15 @@ namespace EnchantsOrder
             long xpSum = GetExperience(levelList, initialPenalty);
 
             double xpMax = xpList.Max();
-            List<IEnchantmentStep> ordering = new(orderingSteps.Length);
+            List<EnchantmentStep> ordering = new(orderingSteps.Length);
 
             // penalty of merged books
             int index = 0;
             foreach (List<long> step in orderingSteps)
             {
                 if (step == null) { continue; }
-                EnchantmentStep enchantments = new(++index, step.Count);
-                ordering.Add(enchantments);
+                List<IEnchantment> enchantments = new(step.Count);
+                ordering.Add(new EnchantmentStep(++index, enchantments));
                 // penalty for merge book
 
                 // list steps with name
@@ -107,7 +113,7 @@ namespace EnchantsOrder
             }
             ordering.TrimExcess();
 
-            return new OrderingResults(ordering, penalty, xpMax, xpSum);
+            return new OrderingResults(penalty, xpMax, xpSum, ordering);
         }
 
         /// <summary>
