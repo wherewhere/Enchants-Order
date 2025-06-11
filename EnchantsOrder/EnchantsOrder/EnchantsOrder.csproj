@@ -6,6 +6,8 @@
     <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'netcoreapp3.0'))">True</IsTrimmable>
     <NoWarn>$(NoWarn);NU1902;NU1903</NoWarn>
     <Nullable>enable</Nullable>
+    <PackageIcon>Icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -19,19 +21,19 @@
 
   <PropertyGroup Condition="'$(FullTargets)' == 'True'">
     <NoWarn>$(NoWarn);NU1603;NU1901</NoWarn>
-    <TargetFrameworks>net6.0;net8.0;netstandard1.1;netstandard2.0;netstandard2.1;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0;netstandard1.0;netstandard2.0;netstandard2.1;netcoreapp2.1</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsWindows)' == 'True'">$(TargetFrameworks);net2.0;net4.0-client;net4.7</TargetFrameworks>
-    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != 'True' and '$(IsWindows)' == 'True'">$(TargetFrameworks);native;netcore5.0;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsWindows)' == 'True' and '$(GITHUB_ACTIONS)' != 'True'">$(TargetFrameworks);native;netcore5.0;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(FullTargets)' != 'True'">
-    <TargetFrameworks>net8.0;netcoreapp2.1;netstandard1.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;netcoreapp2.1;netstandard1.0;netstandard2.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsWindows)' == 'True'">$(TargetFrameworks);net2.0;net4.7</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(FullTargets)' == 'True'&#xD;&#xA;                        and '$(GITHUB_ACTIONS)' != 'True'&#xD;&#xA;                        and '$(IsWindows)' == 'True'">
+  <PropertyGroup Condition="'$(FullTargets)' == 'True' and '$(IsWindows)' == 'True' and '$(GITHUB_ACTIONS)' != 'True'">
     <NuspecFile>EnchantsOrder.nuspec</NuspecFile>
-    <NuspecProperties>id=$(AssemblyName);version=$(VersionPrefix);title=$(Title);authors=$(Authors);requireLicenseAcceptance=$(PackageRequireLicenseAcceptance);license=$(PackageLicenseExpression);icon=$(PackageIcon);projectUrl=$(PackageProjectUrl);iconUrl=$(PackageIconUrl);description=$(Description);releaseNotes=$(PackageReleaseNotes);copyright=$(Copyright);repositoryType=$(RepositoryType);repositoryUrl=$(PackageProjectUrl);repositoryCommit=$(RepositoryCommit);buildOutput=bin\$(Configuration)</NuspecProperties>
+    <NuspecProperties>id=$(AssemblyName);version=$(VersionPrefix);title=$(Title);authors=$(Authors);requireLicenseAcceptance=$(PackageRequireLicenseAcceptance);license=$(PackageLicenseExpression);icon=$(PackageIcon);readme=$(PackageReadmeFile);projectUrl=$(PackageProjectUrl);iconUrl=$(PackageIconUrl);description=$(Description);releaseNotes=$(PackageReleaseNotes);copyright=$(Copyright);repositoryType=$(RepositoryType);repositoryUrl=$(PackageProjectUrl);repositoryCommit=$(RepositoryCommit);buildOutput=bin\$(Configuration)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +41,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'sl3'))
+                     or $([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'wp7.0'))">
+    <Reference Include="System" Pack="false" />
+    <Reference Include="System.Core" Pack="false" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +58,7 @@
     <None Remove="EnchantsOrder.nuspec" />
     <None Remove="EnchantsOrder.targets" />
     <None Include="..\..\logo.png" Pack="true" PackagePath="\Icon.png" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\README.md"/>
   </ItemGroup>
 
 </Project>

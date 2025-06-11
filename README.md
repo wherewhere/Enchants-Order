@@ -13,7 +13,7 @@ Get the best order for enchanting. Base on the [Python Version](https://github.c
 - .NET Framework 2.0
 - .NET Framework 4.0
 - .NET Framework 4.7
-- .NET Standard 1.1
+- .NET Standard 1.0
 - .NET Standard 2.0
 - .NET Standard 2.1
 - .NET Core 5.0
