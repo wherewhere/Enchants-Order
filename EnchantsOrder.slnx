@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="EnchantsOrder/EnchantsOrder.Demo/EnchantsOrder.Demo.csproj" />
+  <Project Path="EnchantsOrder/EnchantsOrder.Tests/EnchantsOrder.Tests.csproj" />
+  <Project Path="EnchantsOrder/EnchantsOrder.Web/EnchantsOrder.Web.csproj" />
+  <Project Path="EnchantsOrder/EnchantsOrder/EnchantsOrder.csproj" />
+</Solution>

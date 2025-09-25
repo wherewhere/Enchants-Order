@@ -202,7 +202,7 @@ namespace EnchantsOrder.Demo
             };
             rootCommand.SetAction(_ => RootCommandHandler());
 
-            return new CommandLineConfiguration(rootCommand).InvokeAsync(args);
+            return rootCommand.Parse(args).InvokeAsync();
         }
 
         private static void RootCommandHandler()
