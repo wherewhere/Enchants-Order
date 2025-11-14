@@ -5,7 +5,7 @@
     <CompressionEnabled>false</CompressionEnabled>
     <OutputType>Library</OutputType>
     <RunAOTCompilation>true</RunAOTCompilation>
-    <TargetFramework>net9.0-browser</TargetFramework>
+    <TargetFramework>net10.0-browser</TargetFramework>
     <WasmAllowUndefinedSymbols>true</WasmAllowUndefinedSymbols>
   </PropertyGroup>
 
@@ -21,11 +21,5 @@
       <Link>wwwroot\content\enchants\%(FileName)%(Extension)</Link>
     </Content>
   </ItemGroup>
-
-  <Target Name="_FixRootAssembly" AfterTargets="PrepareForILLink">
-    <ItemGroup>
-      <TrimmerRootAssembly Update="@(TrimmerRootAssembly)" Condition="'%(RootMode)' == 'EntryPoint'" RootMode="Library" />
-    </ItemGroup>
-  </Target>
 
 </Project>
