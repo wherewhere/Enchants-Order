@@ -2,21 +2,13 @@
     <slot></slot>
 </template>
 
-<script lang="ts">
-    import { computed, type PropType } from "vue";
-    export default {
-        name: "ProvideValue",
-        props: {
-            name: {
-                type: String,
-                required: true
-            },
-            value: undefined! as PropType<any>,
-        },
-        provide() {
-            return {
-                [this.name!]: computed(() => this.value)
-            }
-        }
-    }
+<script generic="T" lang="ts" setup>
+    import { computed, provide } from "vue";
+
+    const { name, value } = defineProps<{
+      name: string;
+      value: T;
+    }>();
+
+    provide(name, computed(() => value));
 </script>

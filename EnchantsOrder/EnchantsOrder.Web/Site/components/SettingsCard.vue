@@ -17,29 +17,14 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+    import { inject, shallowRef } from "vue";
     import { neutralFillInputRest, type Swatch } from "@fluentui/web-components";
     import type { DesignToken } from "@microsoft/fast-foundation";
     import ProvideValue from "./ProvideValue.vue";
     import SettingsPresenter from "./SettingsPresenter.vue";
-    export default {
-        name: "SettingsCard",
-        components: {
-            ProvideValue,
-            SettingsPresenter
-        },
-        data() {
-            return {
-                fillColor: this.injectFillColor as any as DesignToken<Swatch>
-            }
-        },
-        inject: {
-            injectFillColor: {
-                from: "fillColor",
-                default: neutralFillInputRest
-            }
-        }
-    };
+
+    const fillColor = shallowRef(inject<DesignToken<Swatch>>("fillColor", neutralFillInputRest));
 </script>
 
 <style lang="scss" scoped>

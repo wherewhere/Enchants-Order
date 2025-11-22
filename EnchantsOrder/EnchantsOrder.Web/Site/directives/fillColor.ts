@@ -23,7 +23,7 @@ function removeListener(element: HTMLElement) {
     }
 }
 
-const register: DirectiveHook<HTMLElement, any, DesignToken<Swatch>, string, any> = async (element, binding) => {
+const register: DirectiveHook<HTMLElement, any, DesignToken<Swatch> | undefined, string, any> = async (element, binding) => {
     if (element instanceof HTMLElement) {
         if (binding.value !== binding.oldValue) {
             const color = toRaw(binding.value);
@@ -39,13 +39,13 @@ const register: DirectiveHook<HTMLElement, any, DesignToken<Swatch>, string, any
     }
 };
 
-const unregister: DirectiveHook<HTMLElement, any, DesignToken<Swatch>, string, any> = element => {
+const unregister: DirectiveHook<HTMLElement, any, DesignToken<Swatch> | undefined, string, any> = element => {
     if (element instanceof HTMLElement) {
         removeListener(element);
     }
 };
 
-const directive: Directive<HTMLElement, DesignToken<Swatch>> = {
+const directive: Directive<HTMLElement, DesignToken<Swatch> | undefined> = {
     mounted: register,
     updated: register,
     // unmounted: unregister

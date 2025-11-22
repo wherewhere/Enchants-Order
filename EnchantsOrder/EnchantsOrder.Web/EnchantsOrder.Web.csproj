@@ -13,23 +13,6 @@
     <ProjectReference Include="..\EnchantsOrder\EnchantsOrder.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Site\dist\**" />
-    <Content Remove="wwwroot\.gitkeep" />
-    <Content Include="..\..\logo.png">
-      <Link>wwwroot\img\%(FileName)%(Extension)</Link>
-    </Content>
-    <Content Include="Site\dist\index.html">
-      <Link>wwwroot\%(FileName)%(Extension)</Link>
-    </Content>
-    <Content Include="Site\dist\assets\index.css">
-      <Link>wwwroot\assets\%(FileName)%(Extension)</Link>
-    </Content>
-    <Content Include="Site\dist\assets\index.js">
-      <Link>wwwroot\assets\%(FileName)%(Extension)</Link>
-    </Content>
-  </ItemGroup>
-
   <Target Name="NPMRestore" AfterTargets="Restore">
     <Exec Command="npm install" WorkingDirectory="Site" />
   </Target>

@@ -1,6 +1,7 @@
 import { createI18n } from "vue-i18n";
 
 export default createI18n({
+    legacy: false,
     locale: (() => {
         const supportLanguages = ["en-US", "zh-CN"];
         const supportLanguageCodes =
@@ -124,7 +125,7 @@ export default createI18n({
                 lang: {
                     header: "语言",
                     description: "选择您想使用的语言。",
-                    combobox: {
+                    select: {
                         placeholder: "选择语言"
                     }
                 }

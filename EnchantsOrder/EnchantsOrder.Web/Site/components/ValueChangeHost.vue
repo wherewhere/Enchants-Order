@@ -1,87 +1,75 @@
 <template>
-    <div>
+    <div ref="root">
         <slot></slot>
     </div>
 </template>
 
-<script lang="ts">
-    import type { PropType } from "vue";
-    import type { FoundationElement } from "@microsoft/fast-foundation"
-    export default {
-        name: "ValueChangeHost",
-        props: {
-            eventName: {
-                type: String as PropType<keyof HTMLElementEventMap>,
-                required: true
-            },
-            valueName: {
-                type: String as PropType<keyof HTMLElementEventMap | string>,
-                required: true
-            },
-            modelValue: String as PropType<string | number | boolean>
-        },
-        emits: ["update:modelValue"],
-        watch: {
-            eventName(newValue: keyof HTMLElementEventMap, oldValue: keyof HTMLElementEventMap) {
-                if (newValue !== oldValue) {
-                    const $el = this.$el;
-                    if ($el instanceof HTMLElement) {
-                        const element = $el.children[0];
-                        if (element instanceof HTMLElement) {
-                            if (oldValue) {
-                                element.removeEventListener(oldValue, this.onValueChanged);
-                            }
-                            if (newValue) {
-                                element.addEventListener(newValue, this.onValueChanged);
-                            }
-                        }
-                    }
-                }
-            },
-            modelValue(newValue: String, oldValue: String) {
-                if (newValue !== oldValue) {
-                    const valueName = this.valueName;
-                    if (valueName) {
-                        const $el = this.$el;
-                        if ($el instanceof HTMLElement) {
-                            const element = $el.children[0];
-                            if (element instanceof HTMLElement) {
-                                (element as any)[valueName] = newValue;
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        methods: {
-            registerEvent(eventName: keyof HTMLElementEventMap, valueName: keyof HTMLElement) {
-                const $el = this.$el;
-                if ($el instanceof HTMLElement) {
-                    const element = $el.children[0] as FoundationElement;
+<script generic="TElement extends HTMLElement, TKey extends keyof TElement" lang="ts" setup>
+    import { onMounted, useTemplateRef, watch } from "vue";
+
+    const { eventName, valueName } = defineProps<{
+        eventName: keyof HTMLElementEventMap;
+        valueName: TKey;
+    }>();
+    const root = useTemplateRef("root");
+    watch(
+        () => eventName,
+        (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                if (root instanceof HTMLElement) {
+                    const element = root.children[0];
                     if (element instanceof HTMLElement) {
-                        const modelValue = this.modelValue;
-                        if (modelValue === undefined) {
-                            this.$emit("update:modelValue", element[valueName]);
+                        if (oldValue) {
+                            element.removeEventListener(oldValue, onValueChanged);
                         }
-                        else {
-                            (element as any)[valueName] = modelValue;
+                        if (newValue) {
+                            element.addEventListener(newValue, onValueChanged);
                         }
-                        element.addEventListener(eventName, this.onValueChanged);
                     }
                 }
-            },
-            onValueChanged<K extends keyof HTMLElementEventMap>(event: HTMLElementEventMap[K]) {
-                const target = event.target as FoundationElement;
-                if (target instanceof HTMLElement) {
-                    this.$emit("update:modelValue", target[this.valueName as keyof HTMLElement]);
+            }
+        });
+
+    const modelValue = defineModel<TElement[TKey]>();
+    watch(
+        modelValue,
+        (newValue, oldValue) => {
+            console.log("modelValue changed", { newValue, oldValue });
+            if (newValue !== oldValue) {
+                if (newValue !== oldValue) {
+                    if (valueName) {
+                        if (root instanceof HTMLElement) {
+                            const element = root.children[0] as TElement;
+                            if (element instanceof HTMLElement) {
+                                element[valueName] = newValue!;
+                            }
+                        }
+                    }
                 }
             }
-        },
-        mounted() {
-            const { eventName, valueName } = this;
-            if (eventName && valueName) {
-                this.registerEvent(eventName, valueName as keyof HTMLElement);
+        });
+
+    function onValueChanged<K extends keyof HTMLElementEventMap>(event: HTMLElementEventMap[K]) {
+        const target = event.target as TElement;
+        if (target instanceof HTMLElement) {
+            modelValue.value = target[valueName];
+        }
+    }
+
+    onMounted(() => {
+        if (eventName && valueName) {
+            if (root.value instanceof HTMLElement) {
+                const element = root.value.children[0] as TElement;
+                if (element instanceof HTMLElement) {
+                    if (modelValue.value === undefined) {
+                        modelValue.value = element[valueName];
+                    }
+                    else {
+                        element[valueName] = modelValue.value;
+                    }
+                    element.addEventListener(eventName, onValueChanged);
+                }
             }
         }
-    };
+    });
 </script>

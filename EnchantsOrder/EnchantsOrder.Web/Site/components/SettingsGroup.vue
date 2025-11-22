@@ -9,14 +9,8 @@
     </div>
 </template>
 
-<script lang="ts">
-    import checkSolt from "../directives/checkSolt";
-    export default {
-        name: "SettingsGroup",
-        directives: {
-            checkSolt
-        }
-    };
+<script lang="ts" setup>
+    import vCheckSolt from "../directives/checkSolt";
 </script>
 
 <style lang="scss" scoped>

@@ -26,32 +26,15 @@
     </fluent-accordion>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
     import { neutralFillInputRest, neutralFillLayerAltRest } from "@fluentui/web-components";
-    import type { PropType } from "vue";
     import ProvideValue from "./ProvideValue.vue";
     import SettingsPresenter from "./SettingsPresenter.vue";
-    import fillColor from "../directives/fillColor";
+    import vFillColor from "../directives/fillColor";
 
-    export default {
-        name: "SettingsExpander",
-        components: {
-            ProvideValue,
-            SettingsPresenter
-        },
-        directives: {
-            fillColor
-        },
-        props: {
-            expanded: String as PropType<"true" | "false">,
-        },
-        data() {
-            return {
-                neutralFillInputRest,
-                neutralFillLayerAltRest
-            }
-        }
-    }
+    defineProps<{
+        expanded?: "true" | "false";
+    }>();
 </script>
 
 <style lang="scss" scoped>

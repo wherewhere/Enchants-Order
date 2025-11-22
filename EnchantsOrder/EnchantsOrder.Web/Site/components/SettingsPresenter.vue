@@ -19,29 +19,14 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+    import { inject } from "vue";
     import type { Swatch } from "@fluentui/web-components";
     import type { DesignToken } from "@microsoft/fast-foundation";
-    import checkSolt from "../directives/checkSolt";
-    import fillColor from "../directives/fillColor";
-    export default {
-        name: "SettingsPresenter",
-        directives: {
-            checkSolt,
-            fillColor
-        },
-        data() {
-            return {
-                fillColor: this.injectFillColor as any as DesignToken<Swatch>
-            }
-        },
-        inject: {
-            injectFillColor: {
-                from: "fillColor",
-                default: undefined as DesignToken<Swatch> | undefined
-            }
-        }
-    };
+    import vCheckSolt from "../directives/checkSolt";
+    import vFillColor from "../directives/fillColor";
+
+    const fillColor = inject<DesignToken<Swatch>>("fillColor");
 </script>
 
 <style lang="scss" scoped>
