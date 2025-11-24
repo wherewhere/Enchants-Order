@@ -1,5 +1,4 @@
 /// <reference types="vite/client" />
-/// <reference types="vite-svg-loader" />
 /// <reference types="vue-i18n" />
 
 declare module "async-lock" {
@@ -39,9 +38,20 @@ declare module "async-lock" {
     export = AsyncLock;
 }
 
+declare module "*.svg?component" {
+    import type { defineComponent, SVGAttributes, VNode } from "vue";
+    export const render: (_ctx: { title?: string }, _cache: any[]) => VNode;
+    interface SVGComponentProps extends SVGAttributes {
+        title?: string;
+    }
+    const component: ReturnType<typeof defineComponent<SVGComponentProps>>;
+    export default component;
+}
+
 declare module "bilibili-card:*" {
-    import { ComponentOptions } from "vue";
-    const component: ComponentOptions;
+    import type { defineComponent, HTMLAttributes, VNode } from "vue";
+    export const render: (_ctx: object, _cache: any[]) => VNode;
+    const component: ReturnType<typeof defineComponent<HTMLAttributes>>;
     export default component;
 }
 

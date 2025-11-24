@@ -34,7 +34,6 @@
     watch(
         modelValue,
         (newValue, oldValue) => {
-            console.log("modelValue changed", { newValue, oldValue });
             if (newValue !== oldValue) {
                 if (newValue !== oldValue) {
                     if (valueName) {
