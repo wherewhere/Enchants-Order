@@ -24,7 +24,8 @@
         "items": [
             "sword",
             "axe",
-            "mace"
+            "mace",
+            "spear"
         ]
     },
     "Blast Protection": {
@@ -131,7 +132,8 @@
             "trident",
             "turtle_shell",
             "crossbow",
-            "mace"
+            "mace",
+            "spear"
         ]
     },
     "Density": {
@@ -190,7 +192,8 @@
         ],
         "items": [
             "sword",
-            "mace"
+            "mace",
+            "spear"
         ]
     },
     "Fire Protection": {
@@ -273,7 +276,8 @@
             ""
         ],
         "items": [
-            "sword"
+            "sword",
+            "spear"
         ]
     },
     "Looting": {
@@ -283,7 +287,8 @@
             ""
         ],
         "items": [
-            "sword"
+            "sword",
+            "spear"
         ]
     },
     "Loyalty": {
@@ -304,6 +309,16 @@
         ],
         "items": [
             "fishing_rod"
+        ]
+    },
+    "Lunge": {
+        "levelMax": 3,
+        "weight": 1,
+        "incompatible": [
+            ""
+        ],
+        "items": [
+            "spear"
         ]
     },
     "Lure": {
@@ -345,7 +360,8 @@
             "trident",
             "turtle_shell",
             "crossbow",
-            "mace"
+            "mace",
+            "spear"
         ]
     },
     "Multishot": {
@@ -465,7 +481,8 @@
         ],
         "items": [
             "sword",
-            "axe"
+            "axe",
+            "spear"
         ]
     },
     "Silk Touch": {
@@ -496,7 +513,8 @@
         "items": [
             "sword",
             "axe",
-            "mace"
+            "mace",
+            "spear"
         ]
     },
     "Soul Speed": {
@@ -572,7 +590,8 @@
             "trident",
             "turtle_shell",
             "crossbow",
-            "mace"
+            "mace",
+            "spear"
         ]
     },
     "Wind Burst": {
