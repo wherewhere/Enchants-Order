@@ -58,11 +58,10 @@
             &:active {
                 background: var(--neutral-fill-input-active);
                 border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-active);
-                box-shadow: var(--elevation-shadow-card-pressed);
+                box-shadow: var(--elevation-shadow-card-active);
             }
 
-            &::part(region),
-            .region {
+            &::part(region) {
                 border-bottom-left-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
                 border-bottom-right-radius: calc((var(--control-corner-radius) - var(--stroke-width)) * 1px);
             }

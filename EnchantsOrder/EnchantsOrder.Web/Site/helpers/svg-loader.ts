@@ -1,15 +1,15 @@
+import type { Plugin } from "vite";
 import { compileTemplate } from "@vue/compiler-sfc";
 import { optimize } from "svgo";
 import fs from "fs/promises";
 
-/** @type {import("vite").Plugin} */
 export default {
     name: "svg-loader",
     enforce: "pre",
     async load(id) {
         if (id.endsWith(".svg?component")) {
             /** @type {string} */
-            let svg;
+            let svg: string;
             try {
                 const [path] = id.split('?', 2);
                 svg = await fs.readFile(path, "utf-8");
@@ -43,4 +43,4 @@ export default {
             }
         }
     }
-}
+} as Plugin;

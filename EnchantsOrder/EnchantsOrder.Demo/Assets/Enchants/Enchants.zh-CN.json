@@ -14,7 +14,7 @@
         "levelMax": 5,
         "weight": 1,
         "incompatible": [
-            "Cleaving",
+            "劈裂",
             "亡灵杀手",
             "锋利",
             "穿刺",
@@ -68,7 +68,7 @@
             "三叉戟"
         ]
     },
-    "Cleaving": {
+    "劈裂": {
         "hidden": true,
         "levelMax": 3,
         "weight": 2,
@@ -473,7 +473,7 @@
         "weight": 1,
         "incompatible": [
             "节肢杀手",
-            "Cleaving",
+            "劈裂",
             "亡灵杀手",
             "穿刺",
             "破甲",
@@ -504,7 +504,7 @@
         "weight": 1,
         "incompatible": [
             "节肢杀手",
-            "Cleaving",
+            "劈裂",
             "锋利",
             "穿刺",
             "破甲",

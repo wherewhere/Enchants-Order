@@ -59,7 +59,7 @@
     <None Remove="EnchantsOrder.nuspec" />
     <None Remove="EnchantsOrder.targets" />
     <None Include="..\..\logo.png" Pack="true" PackagePath="\Icon.png" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="\README.md"/>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\README.md" />
   </ItemGroup>
 
 </Project>

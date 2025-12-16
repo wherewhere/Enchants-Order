@@ -1,11 +1,10 @@
 <template>
-    <MetaSetter :lang="$i18n.locale" :title="t('title')" :description="t('description')" />
     <div class="content">
         <div class="stack-horizontal" style="justify-content: space-between;">
             <h1 id="title">{{ t("title") }}</h1>
             <div class="stack-horizontal" style="padding: 0 4px; align-items: center;">
                 <fluent-tooltip class="title-tooltip" anchor="title-info">
-                    <BiliBiliCard style="min-width: 300px;" />
+                    <BiliBiliCard :theme="theme" style="min-width: 300px;" />
                 </fluent-tooltip>
                 <Info20Regular id="title-info" class="text-info" />
             </div>
@@ -199,10 +198,13 @@
     import type { DotnetHostBuilder } from "../_framework/dotnet.js";
     import type { Exports, IEnchantment, OrderingResults } from "./types";
     import type { Combobox, Switch } from "@fluentui/web-components";
-    import { ref, shallowRef, watch, watchEffect } from "vue";
+    import { computed, onMounted, ref, shallowRef, watch, watchEffect, watchPostEffect } from "vue";
     import { useI18n } from "vue-i18n";
+    import { useSeoMeta } from "@unhead/vue";
+    import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string";
     import { getEnchantments, type Enchantment, type IEnchant } from "./helpers/enchantment";
-    import MetaSetter from "./components/MetaSetter.vue";
+    import { keywords } from "./package.json";
+    import theme from "bilibili-card/src/styles/bilibili-card.fluent.css?url";
     import SettingsCard from "./components/SettingsCard.vue";
     import SettingsExpander from "./components/SettingsExpander.vue";
     import SettingsGroup from "./components/SettingsGroup.vue";
@@ -223,10 +225,38 @@
     import BiliBiliCard from "bilibili-card:BV1xkTLzsEM5";
 
     const { locale, t } = useI18n();
+    watchPostEffect(() => document.documentElement.lang = locale.value);
+
+    const title = computed(() => t("title"));
+    const description = computed(() => t("description"));
+    const author = "wherewhere";
+    useSeoMeta({
+        // Basic SEO
+        title,
+        description,
+        author: author,
+        keywords: keywords.join(", "),
+
+        // Open Graph
+        ogTitle: title,
+        ogDescription: description,
+        ogType: "website",
+        ogLocale: () => locale.value.replace('-', '_'),
+        ogSiteName: title,
+
+        // Twitter
+        twitterCard: "summary",
+        twitterSite: "@wherewhere7",
+
+        // Product specific (structured data will be generated)
+        articleAuthor: [author],
+        articleTag: keywords
+    });
+
     const locker = new AsyncLock();
     const enchantments = ref<Enchantment[]>([]);
     const initialPenalty = shallowRef(0);
-    const enchantment = ref<Enchantment>({
+    const enchantment = ref({
         name: '',
         level: 1,
         weight: 1
@@ -432,6 +462,7 @@
             loading.value = true;
             if (wantedList.value.length) {
                 results.value = [await orderingAsync(wantedList.value, initialPenalty.value)];
+                setSettings();
             }
         }
         finally {
@@ -443,11 +474,54 @@
         await initDotNetAsync();
         return exports!.Ordering(wantedList, +initialPenalty);
     }
+
+    let hashChanged = false;
+    function loadSettings() {
+        if (hashChanged) {
+            hashChanged = false;
+            return;
+        }
+        const hash = location.hash.substring(1);
+        if (hash) {
+            const params = new URLSearchParams(hash);
+            if (params.has("wanted")) {
+                const value = params.get("wanted");
+                if (value) {
+                    const wanted = decompressFromEncodedURIComponent(value);
+                    if (wanted) {
+                        const list = JSON.parse(wanted)
+                        if (Array.isArray(list)) {
+                            wantedList.value = list;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function setSettings() {
+        const settings: { [key: string]: string } = {};
+        if (wantedList.value.length) {
+            settings.wanted = compressToEncodedURIComponent(
+                JSON.stringify(
+                    wantedList.value.map(x => ({
+                        name: x.name,
+                        level: x.level,
+                        weight: x.weight
+                    }))));
+        }
+        location.hash = new URLSearchParams(settings).toString();
+        hashChanged = true;
+    }
+
+    onMounted(() => {
+        loadSettings();
+        addEventListener("hashchange", loadSettings);
+    });
 </script>
 
 <style lang="scss">
     @use "github:microsoft/fluentui-blazor?branch=dev&path=/src/Core/wwwroot/css/reboot.css";
-    @use "hexo-tag-bilibili-card/components/bilibili-card/bilibili-card.fluent.css";
 
     :root {
         --font-monospace: "Cascadia Code NF", "Cascadia Code PL", "Cascadia Code", "Cascadia Next SC", "Cascadia Next TC", "Cascadia Next JP", Consolas, "Courier New", "Liberation Mono", SFMono-Regular, Menlo, Monaco, monospace;
@@ -524,23 +598,19 @@
     }
 
     :deep(fluent-select)::part(listbox),
-    :deep(fluent-select) .listbox,
-    :deep(fluent-combobox)::part(listbox),
-    :deep(fluent-combobox) .listbox {
+    :deep(fluent-combobox)::part(listbox) {
         max-height: calc(var(--base-height-multiplier) * 30px);
     }
 
-    :deep(fluent-tooltip.title-tooltip)::part(tooltip),
-    :deep(fluent-tooltip.title-tooltip) .tooltip {
-        padding: 0;
-    }
-
-    :deep(fluent-tooltip.title-tooltip)::part(tooltip)::after,
-    :deep(fluent-tooltip.title-tooltip) .tooltip::after {
-        display: none;
-    }
-
     :deep(fluent-tooltip.title-tooltip) {
+        &::part(tooltip) {
+            padding: 0;
+
+            &::after {
+                display: none;
+            }
+        }
+
         .video-holder {
             border-radius: calc(var(--control-corner-radius) * 1px);
 
