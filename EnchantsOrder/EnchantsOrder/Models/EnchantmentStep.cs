@@ -77,7 +77,7 @@ namespace EnchantsOrder.Models
                     _ = builder.Append(" +");
                 }
             }
-            if (Count % 2 == 1)
+            if ((Count & 1) == 1)
             {
                 _ = builder.Append(' ').Append(enchantments[enchantments.Count - 1]);
             }

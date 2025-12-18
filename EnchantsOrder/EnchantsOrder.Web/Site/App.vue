@@ -461,8 +461,8 @@
         try {
             loading.value = true;
             if (wantedList.value.length) {
+                setSettings(wantedList.value);
                 results.value = [await orderingAsync(wantedList.value, initialPenalty.value)];
-                setSettings();
             }
         }
         finally {
@@ -499,12 +499,12 @@
         }
     }
 
-    function setSettings() {
+    function setSettings(wantedList: IEnchant[]) {
         const settings: { [key: string]: string } = {};
-        if (wantedList.value.length) {
+        if (wantedList.length) {
             settings.wanted = compressToEncodedURIComponent(
                 JSON.stringify(
-                    wantedList.value.map(x => ({
+                    wantedList.map(x => ({
                         name: x.name,
                         level: x.level,
                         weight: x.weight
