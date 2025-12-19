@@ -1,12 +1,13 @@
 ﻿using EnchantsOrder.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
 #if WINRT
 using Windows.Foundation.Metadata;
+#else
+using System.ComponentModel;
 #endif
 
 namespace EnchantsOrder
@@ -23,7 +24,7 @@ namespace EnchantsOrder
         /// <returns>The step list and some eigenvalue of this result.</returns>
         /// <exception cref="ArgumentNullException">The list of enchantments you want to enchant is empty or null.</exception>
 #if WINRT
-        [Overload("Ordering")]
+        [Overload(nameof(Ordering))]
 #else
         [EditorBrowsable(EditorBrowsableState.Never)]
 #endif
@@ -62,7 +63,7 @@ namespace EnchantsOrder
 #endif
             static OrderingResults Ordering<T>(this IEnumerable<T> wantedList, int initialPenalty = 0) where T : IEnchantment
         {
-            if (wantedList == null || !wantedList.Any())
+            if (wantedList?.Any() != true)
             {
                 throw new ArgumentNullException(nameof(wantedList), "Cannot enchant: No enchantment given.");
             }
@@ -82,9 +83,9 @@ namespace EnchantsOrder
             int penalty = initialPenalty + maxSteps.Count;
 
             List<long>[] orderingSteps = OrderEnchants(numList, maxSteps, initialPenalty);
-            List<EnchantItem> levelList = ComputeExperience(orderingSteps);
-            List<long> xpList = GetExperienceList(levelList, initialPenalty);
-            long xpSum = GetExperience(levelList, initialPenalty);
+            EnchantUnit[] levelList = orderingSteps.ComputeExperience();
+            long[] xpList = levelList.GetLevelList(initialPenalty);
+            long xpSum = levelList.GetHistoryLevel(initialPenalty);
 
             double xpMax = xpList.Max();
             List<EnchantmentStep> ordering = new(orderingSteps.Length);
@@ -127,9 +128,12 @@ namespace EnchantsOrder
         private static List<int> EnchantLayer(int totalEnchantment, int initialPenalty)
         {
             List<int> maxSteps = [];
-            int step = 0 + initialPenalty;
+            int step = initialPenalty;
+            // Distribute the remaining enchantments into layers whose capacities double each step.
+            // Each layer can hold up to 2^step enchantments; stop when all enchantments are allocated.
             while (totalEnchantment > 0)
             {
+                // Determine how many enchantments this layer will take (capped by remaining total)
                 int enchantmentCount = Math.Min(totalEnchantment, Convert.ToInt32(Math.Pow(2, step++)));
                 maxSteps.Add(enchantmentCount);
                 totalEnchantment -= enchantmentCount;
@@ -144,9 +148,11 @@ namespace EnchantsOrder
         /// <param name="numList">The sequence of numbers to be distributed into groups.</param>
         /// <param name="maxSteps">A list specifying the maximum number of elements that each group can contain. Each value represents the
         /// capacity for the corresponding group and must be non-negative.</param>
+        /// <param name="initialPenalty">The initial penalty value used in the sum calculation for ordering the steps. This value is added to the
+        /// step index during computation.</param>
         /// <returns>An array of lists, where each list contains the numbers assigned to a group. The order of the array
-        /// corresponds to the order of the step limits provided in maxSteps.</returns>
-        private static List<long>[] OrderWithGreedy(IEnumerable<long> numList, List<int> maxSteps)
+        /// corresponds to the order of the step limits provided in <paramref name="maxSteps"/>.</returns>
+        private static List<long>[] OrderWithGreedy(List<long> numList, List<int> maxSteps, int initialPenalty)
         {
             // Create temporary copies to avoid modifying the input collections
             List<int> tempSteps = [.. maxSteps];
@@ -178,6 +184,45 @@ namespace EnchantsOrder
             }
 
             // Optimize the final ordering by sorting adjacent steps with equal counts
+            return orderingSteps.OrderBySum(initialPenalty);
+        }
+
+        /// <summary>
+        /// Reorders the specified array of steps based on a custom sum calculation that incorporates an initial penalty
+        /// value.
+        /// </summary>
+        /// <param name="orderingSteps">An array of lists, where each list represents a step containing long values to be ordered.</param>
+        /// <param name="initialPenalty">The initial penalty value used in the sum calculation for ordering the steps. This value is added to the
+        /// step index during computation.</param>
+        /// <returns>The reordered array of steps, sorted according to the custom sum logic. The returned array is the same
+        /// instance as the input array, with elements potentially rearranged.</returns>
+        private static List<long>[] OrderBySum(this List<long>[] orderingSteps, int initialPenalty)
+        {
+            // Iterate backward through the ordered steps to compare each step with its predecessor.
+            // The goal is to swap adjacent steps when the later step has fewer elements but incurs
+            // a higher marginal experience cost, improving overall efficiency.
+            for (int i = orderingSteps.Length - 1; i > 0; i--)
+            {
+                List<long> currentStep = orderingSteps[i];
+                List<long> previousStep = orderingSteps[i - 1];
+
+                // Only evaluate swaps when the later step has fewer enchantments than the previous one.
+                if (currentStep.Count < previousStep.Count)
+                {
+                    int index = initialPenalty + i;
+
+                    // Compute the experience level if current/previous steps are applied at their positions.
+                    long currentSum = currentStep.ComputeExperience().EnchantItem(index).StepLevel;
+                    long previousSum = previousStep.ComputeExperience().EnchantItem(index - 1).StepLevel;
+
+                    // Swap when moving the larger-cost group later would reduce the total cost more than its size.
+                    if (currentSum - previousSum > previousStep.Count)
+                    {
+                        orderingSteps[i] = previousStep;
+                        orderingSteps[i - 1] = currentStep;
+                    }
+                }
+            }
             return orderingSteps;
         }
 
@@ -190,8 +235,8 @@ namespace EnchantsOrder
         /// <param name="maxSteps">A list of integers specifying the number of elements to assign to each step. Each value determines how many
         /// items are selected for the corresponding step.</param>
         /// <returns>An array of lists, where each list contains the long values assigned to a step. The array length matches the
-        /// number of steps specified in maxSteps.</returns>
-        private static List<long>[] OrderWithAlternating(IEnumerable<long> numList, List<int> maxSteps)
+        /// number of steps specified in <paramref name="maxSteps"/>.</returns>
+        private static List<long>[] OrderWithAlternating(List<long> numList, List<int> maxSteps)
         {
             // Create a sorted copy of the input list and initialize the output array
             // Each element in orderingSteps will contain enchantments for that step
@@ -233,7 +278,7 @@ namespace EnchantsOrder
         /// determines the capacity for the corresponding list.</param>
         /// <returns>An array of lists of long integers, where each list contains up to the specified number of elements from the
         /// sorted input sequence. The resulting array is ordered by the sum of elements in each list.</returns>
-        private static List<long>[] OrderWithSequential(IEnumerable<long> numList, List<int> maxSteps)
+        private static List<long>[] OrderWithSequential(List<long> numList, List<int> maxSteps)
         {
             List<int> tempSteps = [.. maxSteps];
             List<long> tempList = [.. numList];
@@ -254,7 +299,7 @@ namespace EnchantsOrder
                 }
             }
 
-            return orderingSteps.OrderBySum();
+            return orderingSteps;
         }
 
         /// <summary>
@@ -268,10 +313,10 @@ namespace EnchantsOrder
         {
             // Optimize by swapping adjacent steps if they have equal counts
             // and the later step has a higher sum (to minimize experience cost)
-            for (int j = orderingSteps.Length - 1; j > 0; j--)
+            for (int i = orderingSteps.Length - 1; i > 0; i--)
             {
-                List<long> currentStep = orderingSteps[j];
-                List<long> previousStep = orderingSteps[j - 1];
+                List<long> currentStep = orderingSteps[i];
+                List<long> previousStep = orderingSteps[i - 1];
 
                 // Only consider swapping steps with identical element counts
                 // Different counts indicate different layers in the enchantment tree
@@ -281,18 +326,18 @@ namespace EnchantsOrder
                     long previousSum = 0;
 
                     // Calculate the total experience value for each step
-                    for (int k = 0; k < currentStep.Count; k++)
+                    for (int j = 0; j < currentStep.Count; j++)
                     {
-                        currentSum += currentStep[k];
-                        previousSum += previousStep[k];
+                        currentSum += currentStep[j];
+                        previousSum += previousStep[j];
                     }
 
                     // Swap if the later step has a higher sum
                     // This places the cheaper operation earlier in the sequence
                     if (currentSum > previousSum)
                     {
-                        orderingSteps[j] = previousStep;
-                        orderingSteps[j - 1] = currentStep;
+                        orderingSteps[i] = previousStep;
+                        orderingSteps[i - 1] = currentStep;
                     }
                 }
             }
@@ -307,9 +352,9 @@ namespace EnchantsOrder
         /// <param name="initialPenalty">The initial penalty value used to calculate the total experience cost.</param>
         /// <returns>An array of lists, where each list represents the items enchanted at a specific step.  The returned ordering
         /// minimizes the total experience cost based on the given parameters.</returns>
-        private static List<long>[] OrderEnchants(IEnumerable<long> numList, List<int> maxSteps, int initialPenalty)
+        private static List<long>[] OrderEnchants(List<long> numList, List<int> maxSteps, int initialPenalty)
         {
-            List<long>[] list1 = OrderWithGreedy(numList, maxSteps);
+            List<long>[] list1 = OrderWithGreedy(numList, maxSteps, initialPenalty);
             List<long>[] list2 = OrderWithSequential(numList, maxSteps);
             List<long>[] list3 = OrderWithAlternating(numList, maxSteps);
 
@@ -330,9 +375,9 @@ namespace EnchantsOrder
         /// <returns>The total calculated experience as a long integer.</returns>
         private static long GetExperience(List<long>[] orderingNum, int initialPenalty)
         {
-            List<EnchantItem> xpList = ComputeExperience(orderingNum);
-            EnchantItem item = new(0, initialPenalty);
-            foreach (EnchantItem level in xpList)
+            EnchantUnit[] xpList = orderingNum.ComputeExperience();
+            EnchantUnit item = new(0, initialPenalty);
+            foreach (EnchantUnit level in xpList)
             {
                 item += level;
             }
@@ -344,62 +389,68 @@ namespace EnchantsOrder
         /// </summary>
         /// <param name="orderingSteps">A collection of collections, where each inner collection represents a sequence of numeric values to be
         /// processed into experience items.</param>
-        /// <returns>A list of <see cref="EnchantItem"/> objects, where each object represents the final computed experience
+        /// <returns>A list of <see cref="EnchantUnit"/> objects, where each object represents the final computed experience
         /// value for a corresponding sequence of steps.</returns>
-        private static List<EnchantItem> ComputeExperience(List<long>[] orderingSteps)
+        private static EnchantUnit[] ComputeExperience(this List<long>[] orderingSteps)
         {
-            List<EnchantItem> xpList = [];
-            IEnumerable<List<EnchantItem>> stepList = orderingSteps.Select<IEnumerable<long>, List<EnchantItem>>(x => [.. x.Select(x => new EnchantItem(x))]);
-
-            foreach (List<EnchantItem> step in stepList)
+            EnchantUnit[] xpList = new EnchantUnit[orderingSteps.Length];
+            for (int i = 0; i < orderingSteps.Length; i++)
             {
-                List<EnchantItem> temp = step;
-                while (temp.Count > 1)
-                {
-                    List<EnchantItem> result = [];
-                    EnchantItem item = new();
-                    for (int i = 0; i < temp.Count; i++)
-                    {
-                        EnchantItem num = temp[i];
-                        int index = i + 1;
-                        if ((index & 1) == 1)
-                        {
-                            item = num;
-                            if (index == temp.Count)
-                            {
-                                result.Add(item);
-                            }
-                        }
-                        else
-                        {
-                            item += num;
-                            result.Add(item);
-                        }
-                    }
-                    temp = result;
-                }
-                xpList.Add(temp[0]);
+                xpList[i] = orderingSteps[i].ComputeExperience();
+            }
+            return xpList;
+        }
+
+        /// <summary>
+        /// Aggregates a single enchantment step into one <see cref="EnchantUnit"/> by iteratively
+        /// pairing and merging adjacent units until a single result remains (balanced reduction).
+        /// </summary>
+        /// <param name="orderingStep">
+        /// The experience values that compose a single step. Must contain at least one element.
+        /// </param>
+        /// <returns>
+        /// The combined <see cref="EnchantUnit"/> representing the merged result for this step.
+        /// </returns>
+        private static EnchantUnit ComputeExperience(this List<long> orderingStep)
+        {
+            // Initialize leaf nodes from raw experience values
+            EnchantUnit[] temp = new EnchantUnit[orderingStep.Count];
+            for (int j = 0; j < orderingStep.Count; j++)
+            {
+                temp[j] = new EnchantUnit(orderingStep[j]);
             }
 
-            return xpList;
+            // Iteratively reduce by pairwise merging (a + b), carrying the last forward if count is odd
+            while (temp.Length > 1)
+            {
+                EnchantUnit[] result = new EnchantUnit[(temp.Length + 1) >> 1];
+                for (int j = 0, k = 0; j < temp.Length; j++, k++)
+                {
+                    EnchantUnit first = temp[j];
+                    result[k] = ++j < temp.Length ? first + temp[j] : first;
+                }
+                temp = result;
+            }
+
+            // Return the final aggregate unit
+            return temp[0];
         }
 
         /// <summary>
         /// Calculates a list of experience levels based on the provided enchantment items and an initial penalty.
         /// </summary>
-        /// <param name="xpList">A list of <see cref="EnchantItem"/> objects representing the base experience levels.</param>
+        /// <param name="xpList">A list of <see cref="EnchantUnit"/> objects representing the base experience levels.</param>
         /// <param name="initialPenalty">An integer value representing the initial penalty to apply to the calculation.</param>
         /// <returns>A list of long integers where each value represents the calculated experience level for the corresponding
         /// enchantment item.</returns>
-        private static List<long> GetExperienceList(List<EnchantItem> xpList, int initialPenalty)
+        private static long[] GetLevelList(this EnchantUnit[] xpList, int initialPenalty)
         {
-            List<long> results = new(xpList.Count);
-            for (int index = 0; index < xpList.Count; index++)
+            long[] results = new long[xpList.Length];
+            for (int index = 0; index < xpList.Length; index++)
             {
-                EnchantItem level = xpList[index];
-                EnchantItem item = new(0, index + initialPenalty);
-                item += level;
-                results.Add(item.StepLevel);
+                EnchantUnit item = new(0, index + initialPenalty);
+                item += xpList[index];
+                results[index] = item.StepLevel;
             }
             return results;
         }
@@ -407,13 +458,13 @@ namespace EnchantsOrder
         /// <summary>
         /// Calculates the total experience level after applying a series of enchantment levels and an initial penalty.
         /// </summary>
-        /// <param name="xpList">A collection of <see cref="EnchantItem"/> objects representing the enchantment levels to be applied.</param>
+        /// <param name="xpList">A collection of <see cref="EnchantUnit"/> objects representing the enchantment levels to be applied.</param>
         /// <param name="initialPenalty">The initial penalty to be applied to the experience level.</param>
         /// <returns>The total experience level after applying all enchantment levels and the initial penalty.</returns>
-        private static long GetExperience(List<EnchantItem> xpList, int initialPenalty)
+        private static long GetHistoryLevel(this EnchantUnit[] xpList, int initialPenalty)
         {
-            EnchantItem item = new(0, initialPenalty);
-            foreach (EnchantItem level in xpList)
+            EnchantUnit item = new(0, initialPenalty);
+            foreach (EnchantUnit level in xpList)
             {
                 item += level;
             }

@@ -33,30 +33,6 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Computes the sum of a sequence of <see cref="long"/> values.
-        /// </summary>
-        /// <param name="source">A sequence of <see cref="long"/> values to calculate the sum of.</param>
-        /// <returns>The sum of the values in the sequence.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/>.</exception>
-        public static long Sum(this IEnumerable<long> source)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            long sum = 0;
-            checked
-            {
-                foreach (long v in source)
-                {
-                    sum += v;
-                }
-            }
-            return sum;
-        }
-
-        /// <summary>
         /// Computes the sum of the sequence of <see cref="int"/> values that are obtained by invoking a transform function on each element of the input sequence.
         /// </summary>
         /// <typeparam name="TSource">The type of the elements of <paramref name="source"/>.</typeparam>

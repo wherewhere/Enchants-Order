@@ -19,7 +19,7 @@
     <RepositoryUrl>https://github.com/wherewhere/Enchants-Order</RepositoryUrl>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Title>Enchants Order - Get the best order for enchanting</Title>
-    <VersionPrefix>0.1.6</VersionPrefix>
+    <VersionPrefix>0.2.7</VersionPrefix>
     <Description>Get the best order for enchanting. Base on the Python Version by @hqqaazz (https://github.com/hqqaazz/ordered-Enchanting-Demo).</Description>
   </PropertyGroup>
 

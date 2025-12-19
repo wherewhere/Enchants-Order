@@ -9,7 +9,7 @@ namespace EnchantsOrder.Models
     /// </summary>
     public interface IEnchantment
 #if !WINRT
-        : IComparable<IEnchantment>, IEquatable<IEnchantment>
+        : IComparable<IEnchantment?>
 #endif
     {
         /// <summary>
@@ -30,7 +30,27 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// Gets the experience level when enchant request of this enchantment. Should be <see cref="Level"/> <see langword="*"/> <see cref="Weight"/>.
         /// </summary>
+#if !NETCOREAPP3_0_OR_GREATER && !NETSTANDARD2_1_OR_GREATER
         long Experience { get; }
+#else
+        long Experience => (long)Level * Weight;
+
+        /// <inheritdoc/>
+        int IComparable<IEnchantment?>.CompareTo(IEnchantment? other)
+        {
+            if (other is null) { return -1; }
+            int value = Experience.CompareTo(other.Experience);
+            if (value == 0)
+            {
+                value = Level.CompareTo(other.Level);
+                if (value == 0)
+                {
+                    value = Name.CompareTo(other.Name);
+                }
+            }
+            return value;
+        }
+#endif
 
 #if WINRT
         /// <summary>
@@ -59,13 +79,6 @@ namespace EnchantsOrder.Models
         ///   </list>
         /// </returns>
         int CompareTo(IEnchantment other);
-
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns><c>true</c> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <c>false</c>.</returns>
-        bool Equals(IEnchantment other);
 #endif
     }
 }

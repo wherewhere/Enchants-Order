@@ -61,8 +61,36 @@ namespace System
         private const uint Prime2 = 2246822519U;
         private const uint Prime3 = 3266489917U;
         private const uint Prime4 = 668265263U;
+        private const uint Prime5 = 374761393U;
 
         private static uint GenerateGlobalSeed() => (uint)new Random().Next(int.MinValue, int.MaxValue);
+
+        /// <summary>
+        /// Combines three values into a hash code.
+        /// </summary>
+        /// <typeparam name="T1">The type of the first value to combine into the hash code.</typeparam>
+        /// <typeparam name="T2">The type of the second value to combine into the hash code.</typeparam>
+        /// <typeparam name="T3">The type of the third value to combine into the hash code.</typeparam>
+        /// <param name="value1">The first value to combine into the hash code.</param>
+        /// <param name="value2">The second value to combine into the hash code.</param>
+        /// <param name="value3">The third value to combine into the hash code.</param>
+        /// <returns>The hash code that represents the three values.</returns>
+        public static int Combine<T1, T2, T3>(T1 value1, T2 value2, T3 value3)
+        {
+            uint hc1 = (uint)(value1?.GetHashCode() ?? 0);
+            uint hc2 = (uint)(value2?.GetHashCode() ?? 0);
+            uint hc3 = (uint)(value3?.GetHashCode() ?? 0);
+
+            uint hash = MixEmptyState();
+            hash += 12;
+
+            hash = QueueRound(hash, hc1);
+            hash = QueueRound(hash, hc2);
+            hash = QueueRound(hash, hc3);
+
+            hash = MixFinal(hash);
+            return (int)hash;
+        }
 
         /// <summary>
         /// Combines five values into a hash code.
@@ -127,6 +155,11 @@ namespace System
         private static uint MixState(uint v1, uint v2, uint v3, uint v4)
         {
             return RotateLeft(v1, 1) + RotateLeft(v2, 7) + RotateLeft(v3, 12) + RotateLeft(v4, 18);
+        }
+
+        private static uint MixEmptyState()
+        {
+            return s_seed + Prime5;
         }
 
         [MethodImpl((MethodImplOptions)0x100)]

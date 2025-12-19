@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 #if WINRT
@@ -15,13 +13,14 @@ namespace EnchantsOrder.Models
     /// </summary>
     /// <param name="step">The index of this step.</param>
     /// <param name="enchantments">The <see cref="IReadOnlyList{T}"/> of enchantments in this step.</param>
-    public sealed class EnchantmentStep
+    public sealed class EnchantmentStep(
+        int step,
 #if SILVERLIGHT || WINDOWSPHONE7_0 || (NETFRAMEWORK && !NET45_OR_GREATER)
-        (int step, params IList<IEnchantment> enchantments)
+        params IList<IEnchantment> enchantments
 #else
-        (int step, params IReadOnlyList<IEnchantment> enchantments)
+        params IReadOnlyList<IEnchantment> enchantments
 #endif
-        : IReadOnlyList<IEnchantment>
+        ) : IReadOnlyList<IEnchantment>
 #if WINRT
         , IStringable
 #endif
@@ -32,8 +31,8 @@ namespace EnchantsOrder.Models
         /// </summary>
         /// <param name="step">The index of step.</param>
         /// <param name="enchantments">The <see cref="IReadOnlyList{T}"/> of enchantments in this step.</param>
-        [OverloadResolutionPriority(-1)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [System.Runtime.CompilerServices.OverloadResolutionPriority(-1)]
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public EnchantmentStep(int step, params IList<IEnchantment> enchantments) : this(step, (IReadOnlyList<IEnchantment>)enchantments)
         {
         }
@@ -41,7 +40,7 @@ namespace EnchantsOrder.Models
 
         /// <inheritdoc/>
         public int Count => enchantments.Count;
-        
+
         /// <inheritdoc/>
         public IEnchantment this[int index] => enchantments[index];
 

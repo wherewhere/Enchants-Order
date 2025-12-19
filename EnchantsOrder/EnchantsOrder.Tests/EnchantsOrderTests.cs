@@ -230,8 +230,8 @@ namespace EnchantsOrder.Tests
                 yield return new TestCaseData(new Enchantment[][]
                 {
                     [new Enchantment("Thorns", 3, 4)],
-                    [new Enchantment("Unbreaking", 3, 1), new Enchantment("Mending", 1, 2)],
-                    [new Enchantment("Blast Protection", 4, 2)]
+                    [new Enchantment("Blast Protection", 4, 2)],
+                    [new Enchantment("Unbreaking", 3, 1), new Enchantment("Mending", 1, 2)]
                 }, new OrderingResult(3, 12, 32))
                 {
                     TestName = $"{nameof(OrderingTest)} (Chestplate - Blast Protection)"

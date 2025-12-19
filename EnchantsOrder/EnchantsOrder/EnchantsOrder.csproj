@@ -27,7 +27,7 @@
 
   <PropertyGroup Condition="'$(FullTargets)' == 'True'">
     <NoWarn>$(NoWarn);NU1603;NU1901</NoWarn>
-    <TargetFrameworks>$(TargetFrameworks);net6.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>$(TargetFrameworks);netcoreapp3.1;net6.0;netstandard2.1</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsWindows)' == 'True'">$(TargetFrameworks);net4.0-client</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsWindows)' == 'True' and '$(GITHUB_ACTIONS)' != 'True'">$(TargetFrameworks);native;netcore5.0;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
   </PropertyGroup>

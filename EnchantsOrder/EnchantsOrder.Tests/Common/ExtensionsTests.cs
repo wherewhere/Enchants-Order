@@ -23,15 +23,15 @@ namespace EnchantsOrder.Common.Tests
         }
 
         /// <summary>
-        /// Tests the <see cref="Extensions.PenaltyToExperience(long)"/> method.
+        /// Tests the <see cref="Extensions.PenaltyToLevel(int)"/> method.
         /// </summary>
         [Test]
-        public void PenaltyToExperience()
+        public void PenaltyToLevelTest()
         {
-            long[] expect = [0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023];
+            int[] expect = [0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023];
             for (int i = 0; i <= 10; i++)
             {
-                Assert.That(Extensions.PenaltyToExperience(i), Is.EqualTo(expect[i]));
+                Assert.That(Extensions.PenaltyToLevel(i), Is.EqualTo(expect[i]));
             }
         }
 
@@ -45,6 +45,6 @@ namespace EnchantsOrder.Common.Tests
         [TestCase(657220, 400)]
         [TestCase(161027220, 6000)]
         [TestCase(448377220, 10000)]
-        public void LevelToExperience(long xp, long level) => Assert.That(Extensions.LevelToExperience(level), Is.EqualTo(xp));
+        public void LevelToExperienceTest(long xp, long level) => Assert.That(Extensions.LevelToExperience(level), Is.EqualTo(xp));
     }
 }

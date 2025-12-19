@@ -41,16 +41,23 @@ namespace EnchantsOrder.Common
         /// </summary>
         /// <param name="penalty">The penalty value to convert. Must be a non-negative integer.</param>
         /// <returns>The experience value corresponding to the penalty.</returns>
-        public static long PenaltyToExperience(long penalty) => Math.Max(0, Convert.ToInt64(Math.Pow(2, penalty)) - 1);
+        public static long PenaltyToLevel(int penalty) => penalty switch
+        {
+            <= 0 => 0,
+            >= 63 => long.MaxValue,
+            _ => (1 << penalty) - 1
+        };
 
         /// <summary>
         /// Converts a level to its corresponding experience value.
         /// </summary>
         /// <param name="level">The level to convert. Must be a non-negative integer.</param>
         /// <returns>The experience value corresponding to the level.</returns>
-        public static double LevelToExperience(long level) =>
-            level <= 16
-                ? Math.Pow(level, 2) + (6 * level) : level <= 31
-                    ? (2.5 * Math.Pow(level, 2)) - (40.5 * level) + 360 : (4.5 * Math.Pow(level, 2)) - (162.5 * level) + 2220;
+        public static long LevelToExperience(long level) => level switch
+        {
+            <= 16 => (level * level) + (6 * level),
+            <= 31 => ((5L * level * level) - (81L * level) + 720L) / 2L,
+            _ => ((9L * level * level) - (325L * level) + 4440L) / 2L
+        };
     }
 }

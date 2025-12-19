@@ -29,6 +29,7 @@
       <group targetFramework="WindowsPhone7.0" />
       <group targetFramework="WindowsPhone8.0" />
       <group targetFramework=".NETCoreApp2.1" />
+      <group targetFramework=".NETCoreApp3.1" />
       <group targetFramework="net6.0" />
       <group targetFramework="net8.0" />
       <group targetFramework=".NETStandard2.0" />
@@ -49,6 +50,7 @@
     <file src="$buildOutput$\net8.0\EnchantsOrder.*" target="lib\net8.0\" />
     <file src="$buildOutput$\netcore5.0\EnchantsOrder.*" target="lib\netcore50\" />
     <file src="$buildOutput$\netcoreapp2.1\EnchantsOrder.*" target="lib\netcoreapp2.1\" />
+    <file src="$buildOutput$\netcoreapp3.1\EnchantsOrder.*" target="lib\netcoreapp3.1\" />
     <file src="$buildOutput$\netstandard1.0\EnchantsOrder.*" target="lib\netstandard1.0\" />
     <file src="$buildOutput$\netstandard2.0\EnchantsOrder.*" target="lib\netstandard2.0\" />
     <file src="$buildOutput$\netstandard2.1\EnchantsOrder.*" target="lib\netstandard2.1\" />

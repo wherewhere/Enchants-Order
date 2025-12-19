@@ -46,28 +46,6 @@ public static partial class Exports
             get => @object.GetPropertyAsInt32("weight");
             set => @object.SetProperty("weight", value);
         }
-
-        /// <inheritdoc/>
-        public long Experience => (long)Level * Weight;
-
-        /// <inheritdoc/>
-        public int CompareTo(IEnchantment other)
-        {
-            if (other is null) { return -1; }
-            int value = Experience.CompareTo(other.Experience);
-            if (value == 0)
-            {
-                value = Level.CompareTo(other.Level);
-                if (value == 0)
-                {
-                    value = Name.CompareTo(other.Name);
-                }
-            }
-            return value;
-        }
-
-        /// <inheritdoc/>
-        public bool Equals(IEnchantment other) => CompareTo(other) == 0;
     }
 
     private static JSEnchantment AsJSEnchantment(this JSObject @object) => new(@object);

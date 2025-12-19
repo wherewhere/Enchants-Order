@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -21,7 +20,10 @@ namespace EnchantsOrder.Models
 #if WINRT
         IStringable
 #else
-        IComparable<OrderingResults>
+        System.IComparable<OrderingResults>
+#endif
+#if NET7_0_OR_GREATER
+        , System.Numerics.IComparisonOperators<OrderingResults, OrderingResults, bool>
 #endif
     {
         /// <summary>
@@ -91,17 +93,49 @@ namespace EnchantsOrder.Models
         }
 
 #if !WINRT
-        /// <inheritdoc/>
+        /// <summary>
+        /// Determines whether one <see cref="OrderingResults"/> instance is greater than another.
+        /// </summary>
+        /// <param name="left">The first <see cref="OrderingResults"/> instance to compare.</param>
+        /// <param name="right">The second <see cref="OrderingResults"/> instance to compare.</param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is greater than <paramref name="right"/>;
+        /// otherwise, <see langword="false"/>.</returns>
         public static bool operator >(OrderingResults left, OrderingResults right) => left.CompareTo(right) == 1;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Determines whether one <see cref="OrderingResults"/> instance is greater than or equal to another instance.
+        /// </summary>
+        /// <param name="left">The first <see cref="OrderingResults"/> instance to compare.</param>
+        /// <param name="right">The second <see cref="OrderingResults"/> instance to compare.</param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>;
+        /// otherwise, <see langword="false"/>.</returns>
         public static bool operator >=(OrderingResults left, OrderingResults right) => left.CompareTo(right) != -1;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Determines whether one <see cref="OrderingResults"/> instance is less than another instance.
+        /// </summary>
+        /// <param name="left">The first <see cref="OrderingResults"/> instance to compare.</param>
+        /// <param name="right">The second <see cref="OrderingResults"/> instance to compare.</param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is less than <paramref name="right"/>;
+        /// otherwise, <see langword="false"/>.</returns>
         public static bool operator <(OrderingResults left, OrderingResults right) => left.CompareTo(right) == -1;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Determines whether one <see cref="OrderingResults"/> instance is less than or equal to another instance.
+        /// </summary>
+        /// <param name="left">The first <see cref="OrderingResults"/> instance to compare.</param>
+        /// <param name="right">The second <see cref="OrderingResults"/> instance to compare.</param>
+        /// <returns><see langword="true"/> if <paramref name="left"/> is less than or equal to <paramref name="right"/>;
+        /// otherwise, <see langword="false"/>.</returns>
         public static bool operator <=(OrderingResults left, OrderingResults right) => left.CompareTo(right) != 1;
+#endif
+
+#if NET7_0_OR_GREATER
+        /// <inheritdoc/>
+        static bool System.Numerics.IEqualityOperators<OrderingResults, OrderingResults, bool>.operator ==(OrderingResults? left, OrderingResults? right) => Comparer<OrderingResults>.Default.Compare(left, right) == 0;
+
+        /// <inheritdoc/>
+        static bool System.Numerics.IEqualityOperators<OrderingResults, OrderingResults, bool>.operator !=(OrderingResults? left, OrderingResults? right) => !(left == right);
 #endif
 
         /// <summary>
