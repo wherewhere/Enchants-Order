@@ -2,12 +2,9 @@
     "Aqua Affinity": {
         "levelMax": 1,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "helmet",
-            "turtle_shell"
+            "Helmet",
+            "Turtle Shell"
         ]
     },
     "Bane of Arthropods": {
@@ -22,10 +19,10 @@
             "Density"
         ],
         "items": [
-            "sword",
-            "axe",
-            "mace",
-            "spear"
+            "Sword",
+            "Axe",
+            "Mace",
+            "Spear"
         ]
     },
     "Blast Protection": {
@@ -37,11 +34,11 @@
             "Projectile Protection"
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "Helmet",
+            "Chestplate",
+            "Leggings",
+            "Boots",
+            "Turtle Shell"
         ]
     },
     "Breach": {
@@ -55,7 +52,7 @@
             "Density"
         ],
         "items": [
-            "mace"
+            "Mace"
         ]
     },
     "Channeling": {
@@ -65,7 +62,7 @@
             "Riptide"
         ],
         "items": [
-            "trident"
+            "Trident"
         ]
     },
     "Cleaving": {
@@ -78,62 +75,56 @@
             "Smite"
         ],
         "items": [
-            "axe"
+            "Axe"
         ]
     },
     "Curse of Binding": {
         "hidden": true,
         "levelMax": 1,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "elytra",
-            "pumpkin",
-            "head",
-            "turtle_shell"
+            "Helmet",
+            "Chestplate",
+            "Leggings",
+            "Boots",
+            "Elytra",
+            "Pumpkin",
+            "Head",
+            "Turtle Shell"
         ]
     },
     "Curse of Vanishing": {
         "hidden": true,
         "levelMax": 1,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "pickaxe",
-            "shovel",
-            "axe",
-            "sword",
-            "hoe",
-            "fishing_rod",
-            "bow",
-            "shears",
-            "flint_and_steel",
-            "compass",
-            "recovery_compass",
-            "carrot_on_a_stick",
-            "warped_fungus_on_a_stick",
-            "brush",
-            "shield",
-            "elytra",
-            "pumpkin",
-            "head",
-            "trident",
-            "turtle_shell",
-            "crossbow",
-            "mace",
-            "spear"
+            "Helmet",
+            "Chestplate",
+            "Leggings",
+            "Boots",
+            "PickAxe",
+            "Shovel",
+            "Axe",
+            "Sword",
+            "Hoe",
+            "Fishing Rod",
+            "Bow",
+            "Shears",
+            "Flint and Steel",
+            "Compass",
+            "Recovery Compass",
+            "Carrot on a Stick",
+            "Warped Fungus on a Stick",
+            "Brush",
+            "Shield",
+            "Elytra",
+            "Pumpkin",
+            "Head",
+            "Trident",
+            "Turtle Shell",
+            "Crossbow",
+            "Mace",
+            "Spear"
         ]
     },
     "Density": {
@@ -147,7 +138,7 @@
             "Breach"
         ],
         "items": [
-            "mace"
+            "Mace"
         ]
     },
     "Depth Strider": {
@@ -157,43 +148,34 @@
             "Frost Walker"
         ],
         "items": [
-            "boots"
+            "Boots"
         ]
     },
     "Efficiency": {
         "levelMax": 5,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "pickaxe",
-            "shovel",
-            "axe",
-            "hoe",
-            "shears"
+            "PickAxe",
+            "Shovel",
+            "Axe",
+            "Hoe",
+            "Shears"
         ]
     },
     "Feather Falling": {
         "levelMax": 4,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "boots"
+            "Boots"
         ]
     },
     "Fire Aspect": {
         "levelMax": 2,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "sword",
-            "mace",
-            "spear"
+            "Sword",
+            "Mace",
+            "Spear"
         ]
     },
     "Fire Protection": {
@@ -205,21 +187,18 @@
             "Projectile Protection"
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "Helmet",
+            "Chestplate",
+            "Leggings",
+            "Boots",
+            "Turtle Shell"
         ]
     },
     "Flame": {
         "levelMax": 1,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "bow"
+            "Bow"
         ]
     },
     "Fortune": {
@@ -229,10 +208,10 @@
             "Silk Touch"
         ],
         "items": [
-            "pickaxe",
-            "shovel",
-            "axe",
-            "hoe"
+            "PickAxe",
+            "Shovel",
+            "Axe",
+            "Hoe"
         ]
     },
     "Frost Walker": {
@@ -242,7 +221,7 @@
             "Depth Strider"
         ],
         "items": [
-            "boots"
+            "Boots"
         ]
     },
     "Impaling": {
@@ -256,7 +235,7 @@
             "Density"
         ],
         "items": [
-            "trident"
+            "Trident"
         ]
     },
     "Infinity": {
@@ -266,29 +245,23 @@
             "Mending"
         ],
         "items": [
-            "bow"
+            "Bow"
         ]
     },
     "Knockback": {
         "levelMax": 2,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "sword",
-            "spear"
+            "Sword",
+            "Spear"
         ]
     },
     "Looting": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "sword",
-            "spear"
+            "Sword",
+            "Spear"
         ]
     },
     "Loyalty": {
@@ -298,37 +271,28 @@
             "Riptide"
         ],
         "items": [
-            "trident"
+            "Trident"
         ]
     },
     "Luck of the Sea": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "fishing_rod"
+            "Fishing Rod"
         ]
     },
     "Lunge": {
         "levelMax": 3,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "spear"
+            "Spear"
         ]
     },
     "Lure": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "fishing_rod"
+            "Fishing Rod"
         ]
     },
     "Mending": {
@@ -338,30 +302,30 @@
             "Infinity"
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "pickaxe",
-            "shovel",
-            "axe",
-            "sword",
-            "hoe",
-            "fishing_rod",
-            "bow",
-            "shears",
-            "flint_and_steel",
-            "compass",
-            "carrot_on_a_stick",
-            "warped_fungus_on_a_stick",
-            "brush",
-            "shield",
-            "elytra",
-            "trident",
-            "turtle_shell",
-            "crossbow",
-            "mace",
-            "spear"
+            "Helmet",
+            "Chestplate",
+            "Leggings",
+            "Boots",
+            "PickAxe",
+            "Shovel",
+            "Axe",
+            "Sword",
+            "Hoe",
+            "Fishing Rod",
+            "Bow",
+            "Shears",
+            "Flint and Steel",
+            "Compass",
+            "Carrot on a Stick",
+            "Warped Fungus on a Stick",
+            "Brush",
+            "Shield",
+            "Elytra",
+            "Trident",
+            "Turtle Shell",
+            "Crossbow",
+            "Mace",
+            "Spear"
         ]
     },
     "Multishot": {
@@ -371,7 +335,7 @@
             "Piercing"
         ],
         "items": [
-            "crossbow"
+            "Crossbow"
         ]
     },
     "Piercing": {
@@ -381,17 +345,14 @@
             "Multishot"
         ],
         "items": [
-            "crossbow"
+            "Crossbow"
         ]
     },
     "Power": {
         "levelMax": 5,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "bow"
+            "Bow"
         ]
     },
     "Projectile Protection": {
@@ -403,11 +364,11 @@
             "Fire Protection"
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "Helmet",
+            "Chestplate",
+            "Leggings",
+            "Boots",
+            "Turtle Shell"
         ]
     },
     "Protection": {
@@ -419,42 +380,33 @@
             "Projectile Protection"
         ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "Helmet",
+            "Chestplate",
+            "Leggings",
+            "Boots",
+            "Turtle Shell"
         ]
     },
     "Punch": {
         "levelMax": 2,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "bow"
+            "Bow"
         ]
     },
     "Quick Charge": {
         "levelMax": 3,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "crossbow"
+            "Crossbow"
         ]
     },
     "Respiration": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "helmet",
-            "turtle_shell"
+            "Helmet",
+            "Turtle Shell"
         ]
     },
     "Riptide": {
@@ -465,7 +417,7 @@
             "Loyalty"
         ],
         "items": [
-            "trident"
+            "Trident"
         ]
     },
     "Sharpness": {
@@ -480,9 +432,9 @@
             "Density"
         ],
         "items": [
-            "sword",
-            "axe",
-            "spear"
+            "Sword",
+            "Axe",
+            "Spear"
         ]
     },
     "Silk Touch": {
@@ -492,11 +444,11 @@
             "Fortune"
         ],
         "items": [
-            "pickaxe",
-            "shovel",
-            "axe",
-            "hoe",
-            "shears"
+            "PickAxe",
+            "Shovel",
+            "Axe",
+            "Hoe",
+            "Shears"
         ]
     },
     "Smite": {
@@ -511,97 +463,79 @@
             "Density"
         ],
         "items": [
-            "sword",
-            "axe",
-            "mace",
-            "spear"
+            "Sword",
+            "Axe",
+            "Mace",
+            "Spear"
         ]
     },
     "Soul Speed": {
         "levelMax": 3,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "boots"
+            "Boots"
         ]
     },
     "Sweeping Edge": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "sword"
+            "Sword"
         ]
     },
     "Swift Sneak": {
         "levelMax": 3,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "leggings"
+            "Leggings"
         ]
     },
     "Thorns": {
         "levelMax": 3,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "turtle_shell"
+            "Helmet",
+            "Chestplate",
+            "Leggings",
+            "Boots",
+            "Turtle Shell"
         ]
     },
     "Unbreaking": {
         "levelMax": 3,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "helmet",
-            "chestplate",
-            "leggings",
-            "boots",
-            "pickaxe",
-            "shovel",
-            "axe",
-            "sword",
-            "hoe",
-            "fishing_rod",
-            "bow",
-            "shears",
-            "flint_and_steel",
-            "compass",
-            "carrot_on_a_stick",
-            "warped_fungus_on_a_stick",
-            "brush",
-            "shield",
-            "elytra",
-            "trident",
-            "turtle_shell",
-            "crossbow",
-            "mace",
-            "spear"
+            "Helmet",
+            "Chestplate",
+            "Leggings",
+            "Boots",
+            "PickAxe",
+            "Shovel",
+            "Axe",
+            "Sword",
+            "Hoe",
+            "Fishing Rod",
+            "Bow",
+            "Shears",
+            "Flint and Steel",
+            "Compass",
+            "Carrot on a Stick",
+            "Warped Fungus on a Stick",
+            "Brush",
+            "Shield",
+            "Elytra",
+            "Trident",
+            "Turtle Shell",
+            "Crossbow",
+            "Mace",
+            "Spear"
         ]
     },
     "Wind Burst": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
-            "mace"
+            "Mace"
         ]
     }
 }

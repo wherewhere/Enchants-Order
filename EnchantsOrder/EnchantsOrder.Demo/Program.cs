@@ -227,7 +227,7 @@ namespace EnchantsOrder.Demo
                         break;
                     case "?":
                     case "h":
-                    case "helper":
+                    case "help":
                         Console.WriteLine("Description:");
                         Console.WriteLine("  {0}", Resource.RootCommandDescription);
                         Console.WriteLine();
@@ -443,12 +443,12 @@ namespace EnchantsOrder.Demo
                     Enchantment enchantment = enchantments[0];
                     List<IEnchantment> list = [enchantment];
                     enchantments.RemoveAt(0);
-                    if (enchantment.Incompatible.Length > 0)
+                    if (enchantment.Incompatible?.Length > 0)
                     {
                         for (int i = enchantments.Count; --i >= 0;)
                         {
                             Enchantment temp = enchantments[i];
-                            if (temp.Incompatible.Any(x => x.Equals(enchantment.Name, StringComparison.OrdinalIgnoreCase)))
+                            if (temp.Incompatible?.Any(x => x.Equals(enchantment.Name, StringComparison.OrdinalIgnoreCase)) == true)
                             {
                                 list.Add(temp);
                                 enchantments.RemoveAt(i);

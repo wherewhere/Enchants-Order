@@ -4,11 +4,18 @@ const enchants = {
     "zh-CN": enchants_zh,
     "en-US": enchants_en
 };
+type Enchant = {
+    hidden?: boolean,
+    levelMax: number,
+    weight: number,
+    incompatible?: string[],
+    items: string[]
+}
 export function getEnchantments(locale: keyof typeof enchants) {
-    const json = enchants[locale] || enchants["en-US"];
+    const json: { [key: string]: Enchant } = enchants[locale] || enchants["en-US"];
     const enchantments: Enchantment[] = [];
     for (const name in json) {
-        const enchantment = json[name as keyof typeof json];
+        const enchantment = json[name];
         enchantments.push({
             name,
             level: enchantment.levelMax,
@@ -32,8 +39,8 @@ export type Enchantment = {
     name: string;
     level: number;
     weight: number;
-    hidden: boolean;
+    hidden?: boolean;
     items: string[];
-    incompatible: string[];
+    incompatible?: string[];
     readonly experience: number;
 }

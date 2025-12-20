@@ -2,9 +2,6 @@
     "水下速掘": {
         "levelMax": 1,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "头盔",
             "海龟壳"
@@ -85,9 +82,6 @@
         "hidden": true,
         "levelMax": 1,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "头盔",
             "胸甲",
@@ -103,9 +97,6 @@
         "hidden": true,
         "levelMax": 1,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "头盔",
             "胸甲",
@@ -163,9 +154,6 @@
     "效率": {
         "levelMax": 5,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "镐",
             "锹",
@@ -177,9 +165,6 @@
     "摔落保护": {
         "levelMax": 4,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "靴子"
         ]
@@ -187,9 +172,6 @@
     "火焰附加": {
         "levelMax": 2,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "剑",
             "重锤",
@@ -215,9 +197,6 @@
     "火矢": {
         "levelMax": 1,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "弓"
         ]
@@ -272,9 +251,6 @@
     "击退": {
         "levelMax": 2,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "剑",
             "矛"
@@ -283,9 +259,6 @@
     "抢夺": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "剑",
             "矛"
@@ -304,9 +277,6 @@
     "海之眷顾": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "钓鱼竿"
         ]
@@ -314,9 +284,6 @@
     "突进": {
         "levelMax": 3,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "矛"
         ]
@@ -324,9 +291,6 @@
     "饵钓": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "钓鱼竿"
         ]
@@ -387,9 +351,6 @@
     "力量": {
         "levelMax": 5,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "弓"
         ]
@@ -429,9 +390,6 @@
     "冲击": {
         "levelMax": 2,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "弓"
         ]
@@ -439,9 +397,6 @@
     "快速装填": {
         "levelMax": 3,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "弩"
         ]
@@ -449,9 +404,6 @@
     "水下呼吸": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "头盔",
             "海龟壳"
@@ -520,9 +472,6 @@
     "灵魂疾行": {
         "levelMax": 3,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "靴子"
         ]
@@ -530,9 +479,6 @@
     "横扫之刃": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "剑"
         ]
@@ -540,9 +486,6 @@
     "迅捷潜行": {
         "levelMax": 3,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "护腿"
         ]
@@ -550,9 +493,6 @@
     "荆棘": {
         "levelMax": 3,
         "weight": 4,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "头盔",
             "胸甲",
@@ -564,9 +504,6 @@
     "耐久": {
         "levelMax": 3,
         "weight": 1,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "头盔",
             "胸甲",
@@ -597,9 +534,6 @@
     "风暴": {
         "levelMax": 3,
         "weight": 2,
-        "incompatible": [
-            ""
-        ],
         "items": [
             "重锤"
         ]
