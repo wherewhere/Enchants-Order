@@ -1,7 +1,7 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+﻿#if SILVERLIGHT3_0 || WINDOWSPHONE7_0
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#if SILVERLIGHT3_0 || WINDOWSPHONE7_0
 namespace System.Runtime.CompilerServices
 {
     /// <summary>

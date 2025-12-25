@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EnchantsOrder.Common
+﻿namespace EnchantsOrder.Common
 {
     /// <summary>
     /// Provides extension methods for various functionalities.

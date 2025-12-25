@@ -102,12 +102,13 @@ namespace EnchantsOrder
                 // list steps with name
                 foreach (long xp in step)
                 {
-                    foreach (T enchantment in sortedList)
+                    for (int i = 0; i < levelList.Length; i++)
                     {
+                        T enchantment = sortedList[i];
                         if (enchantment.Experience == xp)
                         {
                             enchantments.Add(enchantment);
-                            sortedList.Remove(enchantment);
+                            sortedList.RemoveAt(i);
                             break;
                         }
                     }

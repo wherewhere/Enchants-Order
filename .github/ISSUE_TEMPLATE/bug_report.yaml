@@ -65,6 +65,8 @@ body:
         - .NET 6
         - .NET 7
         - .NET 8
+        - .NET 9
+        - .NET 10
         - Others
   - type: dropdown
     attributes:

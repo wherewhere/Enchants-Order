@@ -1,7 +1,7 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+﻿#if NET20
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#if NET20
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -49,21 +49,8 @@ namespace System.Linq
                         : new SelectIListIterator<TSource, TResult>(ilist, selector);
             }
 
-            if (source is IPartition<TSource> partition)
-            {
-                IEnumerable<TResult>? result = null;
-                CreateSelectIPartitionIterator(selector, partition, ref result);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-
             return new SelectEnumerableIterator<TSource, TResult>(source, selector);
         }
-
-        static partial void CreateSelectIPartitionIterator<TResult, TSource>(
-            Func<TSource, TResult> selector, IPartition<TSource> partition, [NotNull] ref IEnumerable<TResult>? result);
 
         /// <summary>
         /// An iterator that maps each item of an <see cref="IEnumerable{TSource}"/>.
