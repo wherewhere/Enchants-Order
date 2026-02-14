@@ -5,6 +5,7 @@
     <CompressionEnabled>false</CompressionEnabled>
     <OutputType>Library</OutputType>
     <RunAOTCompilation>true</RunAOTCompilation>
+    <RunNPMCompilation>true</RunNPMCompilation>
     <TargetFramework>net10.0-browser</TargetFramework>
     <WasmAllowUndefinedSymbols>true</WasmAllowUndefinedSymbols>
   </PropertyGroup>
@@ -18,7 +19,17 @@
   </Target>
 
   <Target Name="NPMBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="npm run build" WorkingDirectory="Site" />
+    <PropertyGroup>
+      <RunNPMCompilation Condition="$(RunNPMCompilation) == ''">false</RunNPMCompilation>
+      <NPMArguments Condition="$(_IsPublishing) == 'true'">$(NPMArguments) --mode publish</NPMArguments>
+    </PropertyGroup>
+    <ItemGroup Condition="$(_IsPublishing) == 'true'">
+      <Content Remove="wwwroot/assets/**/*" />
+    </ItemGroup>
+    <Exec Command="npm run build -- $(NPMArguments)" WorkingDirectory="Site" Condition="$(RunNPMCompilation)" />
+    <ItemGroup Condition="$(_IsPublishing) == 'true'">
+      <Content Include="wwwroot/assets/**/*" />
+    </ItemGroup>
   </Target>
 
 </Project>

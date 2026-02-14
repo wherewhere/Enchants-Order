@@ -1,4 +1,4 @@
-/// <reference types="./vite.env" />
+/// <reference types="./env" />
 import type { IEnchant } from "./helpers/enchantment"
 export interface IEnchantment {
     readonly Name: string;

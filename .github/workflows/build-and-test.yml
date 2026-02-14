@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup .NET Core App
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -57,7 +57,7 @@ jobs:
 
       # Install the .NET Core App workload
       - name: Install .NET Core App
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -86,7 +86,7 @@ jobs:
           path: public/wwwroot
 
   deploy:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     needs: build-and-publish
 
     permissions:
