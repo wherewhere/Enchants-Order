@@ -54,6 +54,7 @@
   "dependencies": {
     "@fluentui/svg-icons": "^1.0.0",
     "@fluentui/web-components": "^2.0.0",
+    "@microsoft/clarity": "^1.0.0",
     "@unhead/vue": "^2.0.0",
     "async-lock": "^1.0.0",
     "bilibili-card": "^1.0.0",

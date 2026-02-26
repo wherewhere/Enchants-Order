@@ -202,6 +202,7 @@
     import { useI18n } from "vue-i18n";
     import { useSeoMeta } from "@unhead/vue";
     import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string";
+    import { useAnalytics } from "./helpers/analytics";
     import { getEnchantments, type Enchantment, type IEnchant } from "./helpers/enchantment";
     import { keywords } from "./package.json";
     import theme from "bilibili-card/src/styles/bilibili-card.fluent.css?url";
@@ -252,6 +253,7 @@
         articleAuthor: [author],
         articleTag: keywords
     });
+    useAnalytics();
 
     const locker = new AsyncLock();
     const enchantments = ref<Enchantment[]>([]);
@@ -523,6 +525,8 @@
 <style lang="scss">
     @use "github:microsoft/fluentui-blazor?branch=dev&path=/src/Core/wwwroot/css/reboot.css";
 
+    $base-transition: background-color 0.083s ease-in-out;
+
     :root {
         --font-monospace: "Cascadia Code NF", "Cascadia Code PL", "Cascadia Code", "Cascadia Next SC", "Cascadia Next TC", "Cascadia Next JP", Consolas, "Courier New", "Liberation Mono", SFMono-Regular, Menlo, Monaco, monospace;
         --settings-card-padding: calc(var(--design-unit) * 4px);
@@ -534,7 +538,7 @@
     }
 
     * {
-        transition: background-color 0.083s ease-in-out;
+        transition: $base-transition;
     }
 
     body,
@@ -547,11 +551,13 @@
 </style>
 
 <style lang="scss" scoped>
+    $base-transition: background-color 0.083s ease-in-out;
+
     .content {
         height: 100%;
         overflow-y: auto;
         padding: 0 16px 16px;
-        transition: padding 0.083s ease-in-out, background-color 0.083s ease-in-out;
+        transition: padding 0.083s ease-in-out, $base-transition;
 
         @media (min-width: 640px) {
             padding: 0 32px 24px;

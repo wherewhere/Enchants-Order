@@ -39,6 +39,10 @@ declare module "async-lock" {
     export = AsyncLock;
 }
 
+declare module "@microsoft/clarity/src/utils" {
+    export function injectScript(projectId: string): void;
+}
+
 declare module "*.svg?component" {
     import type { defineComponent, SVGAttributes, VNode } from "vue";
     export const render: (_ctx: { title?: string }, _cache: any[]) => VNode;
