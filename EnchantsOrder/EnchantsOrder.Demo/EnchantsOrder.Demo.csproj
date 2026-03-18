@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resource\Resource.resx">
+      <CustomToolNamespace>EnchantsOrder.Demo.Properties</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>

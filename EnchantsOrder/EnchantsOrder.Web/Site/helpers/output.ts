@@ -1,7 +1,7 @@
-import type { ManualChunksOption, OutputOptions } from "rollup";
+import type { CodeSplittingOptions, OutputOptions } from "rolldown";
 
-export default function getOutputOptions(mode: string, manualChunks?: ManualChunksOption): OutputOptions {
-    const output: OutputOptions = { manualChunks };
+export default function getOutputOptions(mode: string, codeSplitting?: boolean | CodeSplittingOptions): OutputOptions {
+    const output: OutputOptions = { codeSplitting };
     if (mode === "publish") {
         output.assetFileNames = "assets/[name].[hash].[ext]";
         output.chunkFileNames = "assets/[name].[hash].js";

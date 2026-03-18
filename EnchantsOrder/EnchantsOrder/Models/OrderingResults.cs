@@ -66,10 +66,14 @@ namespace EnchantsOrder.Models
             {
                 _ = builder.AppendLine(step.ToString());
             }
-            return builder.AppendLine($"Penalty Level: {penalty}")
-                          .AppendLine($"Max Experience Level: {maxExperience}")
-                          .Append($"Total Experience Level: {totalExperience}")
-                          .ToString();
+            _ = builder.AppendLine($"Penalty Level: {penalty}")
+                       .AppendLine($"Max Experience Level: {maxExperience}")
+                       .Append($"Total Experience Level: {totalExperience}");
+            if (IsTooExpensive)
+            {
+                _ = builder.AppendLine().Append("Too Expensive!");
+            }
+            return builder.ToString();
         }
 
         /// <inheritdoc/>

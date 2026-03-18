@@ -1,6 +1,6 @@
 ﻿using EnchantsOrder.Demo.Common;
 using EnchantsOrder.Demo.Models;
-using EnchantsOrder.Demo.Properties.Resource;
+using EnchantsOrder.Demo.Properties;
 using EnchantsOrder.Models;
 using Microsoft.Extensions.Configuration;
 using System;

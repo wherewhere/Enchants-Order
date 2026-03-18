@@ -50,10 +50,14 @@ export default defineConfig(({ mode }) => {
             outDir: "../wwwroot",
             sourcemap: true,
             minify: "terser",
-            rollupOptions: {
+            rolldownOptions: {
+                checks: {
+                    pluginTimings: false
+                },
                 output: getOutputOptions(mode)
             },
-            emptyOutDir: true
+            emptyOutDir: true,
+            chunkSizeWarningLimit: 1024
         }
     };
 });

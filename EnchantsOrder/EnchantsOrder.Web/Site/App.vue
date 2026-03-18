@@ -183,6 +183,7 @@
                     </template>
                     <template #description>
                         {{ t("results.step.description", [result.Penalty, result.MaxExperience]) }}
+                        <span v-if="result.IsTooExpensive" style="color: var(--accent-foreground-rest)">{{ t("results.step.tooExpensive") }}</span>
                     </template>
                     <div class="setting-expander-content-grid" style="font-family: var(--font-monospace);">
                         <pre class="unset">{{ readSteps(result.Steps) }}</pre>
@@ -491,7 +492,7 @@
                 if (value) {
                     const wanted = decompressFromEncodedURIComponent(value);
                     if (wanted) {
-                        const list = JSON.parse(wanted)
+                        const list = JSON.parse(wanted);
                         if (Array.isArray(list)) {
                             wantedList.value = list;
                         }

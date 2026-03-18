@@ -7,7 +7,7 @@ export default createI18n({
         const supportLanguageCodes =
             [
                 ["en", "en-au", "en-ca", "en-gb", "en-ie", "en-in", "en-nz", "en-sg", "en-us", "en-za", "en-bz", "en-hk", "en-id", "en-jm", "en-kz", "en-mt", "en-my", "en-ph", "en-pk", "en-tt", "en-vn", "en-zw", "en-053", "en-021", "en-029", "en-011", "en-018", "en-014"],
-                ["zh-Hans", "zh-cn", "zh-hans-cn", "zh-sg", "zh-hans-sg"]
+                ["zh-hans", "zh-cn", "zh-hans-cn", "zh-sg", "zh-hans-sg"]
             ];
         const fallbackLanguage = "en-US";
         const languages = navigator.languages || [navigator.language || fallbackLanguage];
@@ -88,7 +88,7 @@ export default createI18n({
                 },
                 weight: {
                     header: "Weight",
-                    description: "Set the weight of the target enchantment. <b>Do not change</b> if you are not sure what it is."
+                    description: "Set the weight of the target enchantment. Do not change if you are not sure what it is."
                 }
             },
             list: {
@@ -114,6 +114,7 @@ export default createI18n({
                     },
                     header: "Total Experience Level: {0}",
                     description: "Penalty Level: {0} {'|'} Max Experience Level: {1}",
+                    tooExpensive: "Too Expensive!",
                     content: "Step {0}:"
                 }
             },
@@ -211,6 +212,7 @@ export default createI18n({
                     },
                     header: "总经验等级: {0}",
                     description: "惩罚等级: {0} {'|'} 最高所需等级: {1}",
+                    tooExpensive: "过于昂贵！",
                     content: "步骤 {0}:"
                 }
             }
