@@ -49,7 +49,6 @@ export default defineConfig(({ mode }) => {
         build: {
             outDir: "../wwwroot",
             sourcemap: true,
-            minify: "terser",
             rolldownOptions: {
                 checks: {
                     pluginTimings: false
