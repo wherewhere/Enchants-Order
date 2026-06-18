@@ -21,6 +21,7 @@
 
   <PropertyGroup>
     <CheckNotRecommendedTargetFramework>False</CheckNotRecommendedTargetFramework>
+    <SuppressTfmSupportBuildWarnings>False</SuppressTfmSupportBuildWarnings>
     <TargetFrameworks>net8.0;netcoreapp2.1;netstandard1.0;netstandard2.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsWindows)' == 'True'">$(TargetFrameworks);net2.0;net4.7</TargetFrameworks>
   </PropertyGroup>
@@ -38,7 +39,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PolySharp" Version="1.15.0">
+    <PackageReference Include="PolySharp" Version="1.16.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
