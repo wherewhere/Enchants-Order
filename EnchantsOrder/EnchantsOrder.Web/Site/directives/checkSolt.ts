@@ -1,48 +1,47 @@
 import type { FunctionDirective, Slot } from "vue";
 
-const directive: FunctionDirective<HTMLElement, Slot | undefined> = (element, binding) => {
-    if (element instanceof HTMLElement) {
-        const solt = binding.value;
-        function setDisplay(value: boolean) {
-            if (value) {
-                if (element.style.display === "none") {
-                    element.style.display = '';
-                }
-            }
-            else {
-                element.style.display = "none";
-            }
-        }
-        if (typeof solt === "undefined") {
-            setDisplay(false);
-        }
-        else if (typeof solt === "function") {
-            let value = solt();
-            if (value instanceof Array) {
-                const result = value.some(x => {
-                    if (typeof x === "object") {
-                        if (typeof x.type === "symbol") {
-                            const child = x.children;
-                            if (typeof child === "string" || child instanceof Array) {
-                                return !!child.length;
-                            }
-                            else {
-                                return !!child;
-                            }
+export function isSlot(solt?: Slot) {
+    if (typeof solt === "undefined") {
+        return false;
+    }
+    else if (typeof solt === "function") {
+        let value = solt();
+        if (value instanceof Array) {
+            const result = value.some(x => {
+                if (typeof x === "object") {
+                    if (typeof x.type === "symbol") {
+                        const child = x.children;
+                        if (typeof child === "string" || child instanceof Array) {
+                            return !!child.length;
                         }
                         else {
-                            return true;
+                            return !!child;
                         }
                     }
                     else {
-                        return false;
+                        return true;
                     }
-                });
-                setDisplay(result);
+                }
+                else {
+                    return false;
+                }
+            });
+            return result;
+        }
+    }
+    return false;
+}
+
+const directive: FunctionDirective<HTMLElement, Slot | undefined> = (element, binding) => {
+    if (element instanceof HTMLElement) {
+        const solt = binding.value;
+        if (isSlot(solt)) {
+            if (element.style.display === "none") {
+                element.style.display = '';
             }
         }
-        else if (solt !== binding.oldValue) {
-            setDisplay(false);
+        else {
+            element.style.display = "none";
         }
     }
 };

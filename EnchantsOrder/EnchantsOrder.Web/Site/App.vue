@@ -145,7 +145,7 @@
                 <template #header>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h2 id="wanted" class="unset">{{ t("list.header") }}</h2>
-                        <div class="text-button" :title="t('enchantment.list.button.title')" type="button"
+                        <div class="text-button" :title="t('list.button.title')" type="button"
                              style="padding: 4px;" @click="orderingWantListAsync"
                              :disabled="!wantedList.length || loading">
                             <fluent-progress-ring v-if="loading"
@@ -183,7 +183,9 @@
                     </template>
                     <template #description>
                         {{ t("results.step.description", [result.Penalty, result.MaxExperience]) }}
-                        <span v-if="result.IsTooExpensive" style="color: var(--accent-foreground-rest)">{{ t("results.step.tooExpensive") }}</span>
+                        <span v-if="result.IsTooExpensive" style="color: var(--accent-foreground-rest)">
+                            {{ t("results.step.tooExpensive") }}
+                        </span>
                     </template>
                     <div class="setting-expander-content-grid" style="font-family: var(--font-monospace);">
                         <pre class="unset">{{ readSteps(result.Steps) }}</pre>
@@ -322,7 +324,7 @@
         }
     }
 
-    function removeEnchantment(item: Enchantment) {
+    function removeEnchantment(item: typeof wantedList.value[number]) {
         if (item) {
             const index = wantedList.value.indexOf(item);
             if (index > -1) {
@@ -462,9 +464,10 @@
     async function orderingWantListAsync() {
         try {
             loading.value = true;
-            if (wantedList.value.length) {
-                setSettings(wantedList.value);
-                results.value = [await orderingAsync(wantedList.value, initialPenalty.value)];
+            const list = wantedList.value;
+            if (list.length) {
+                setSettings(list);
+                results.value = [await orderingAsync(list, initialPenalty.value)];
             }
         }
         finally {
@@ -608,7 +611,7 @@
         max-height: calc(var(--base-height-multiplier) * 30px);
     }
 
-    :deep(fluent-tooltip.title-tooltip) {
+    fluent-tooltip.title-tooltip {
         &::part(tooltip) {
             padding: 0;
 
@@ -617,7 +620,7 @@
             }
         }
 
-        .video-holder {
+        :deep(.video-holder) {
             border-radius: calc(var(--control-corner-radius) * 1px);
 
             .cover-box {

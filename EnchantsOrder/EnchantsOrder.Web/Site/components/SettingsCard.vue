@@ -28,6 +28,8 @@
 </script>
 
 <style lang="scss" scoped>
+    $settings-card-padding: calc(var(--design-unit) * 4px);
+
     .settings-card {
         display: block;
         box-sizing: border-box;
@@ -36,10 +38,9 @@
         border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-rest);
         border-radius: calc(var(--control-corner-radius) * 1px);
         box-shadow: var(--elevation-shadow-card-rest);
-        --settings-card-padding: calc(var(--design-unit) * 4px);
 
-        :deep(.presenter) {
-            padding: var(--settings-card-padding);
+        .presenter {
+            padding: $settings-card-padding;
         }
     }
 </style>

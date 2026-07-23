@@ -30,40 +30,41 @@
 </script>
 
 <style lang="scss" scoped>
+    $settings-card-description-font-size: var(--type-ramp-minus-1-font-size);
+    $settings-card-header-icon-max-size: var(--type-ramp-base-line-height);
+    $settings-card-header-icon-margin: 0 calc((var(--base-horizontal-spacing-multiplier) * 6 + var(--design-unit) * 0.5) * 1px) 0 calc((var(--base-horizontal-spacing-multiplier) * 6 - var(--design-unit) * 4) * 1px);
+    $settings-card-vertical-header-content-spacing: calc(var(--design-unit) * 2px) 0 0 0;
+
     .settings-presenter {
-        --settings-card-description-font-size: var(--type-ramp-minus-1-font-size);
-        --settings-card-header-icon-max-size: var(--type-ramp-base-line-height);
-        --settings-card-header-icon-margin: 0 calc((var(--base-horizontal-spacing-multiplier) * 6 + var(--design-unit) * 0.5) * 1px) 0 calc((var(--base-horizontal-spacing-multiplier) * 6 - var(--design-unit) * 4) * 1px);
-        --settings-card-vertical-header-content-spacing: calc(var(--design-unit) * 2px) 0 0 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        :deep(div.header-root) {
+        div.header-root {
             display: flex;
             align-items: center;
             flex: 1;
         }
 
-        :deep(div.icon-holder) {
-            max-width: var(--settings-card-header-icon-max-size);
-            max-height: var(--settings-card-header-icon-max-size);
-            margin: var(--settings-card-header-icon-margin);
+        div.icon-holder {
+            max-width: $settings-card-header-icon-max-size;
+            max-height: $settings-card-header-icon-max-size;
+            margin: $settings-card-header-icon-margin;
             fill: currentColor;
         }
 
-        :deep(div.header-panel) {
+        div.header-panel {
             display: flex;
             flex-direction: column;
             margin: 0 calc(var(--design-unit) * 6px) 0 0;
         }
 
-        :deep(span.description) {
-            font-size: var(--settings-card-description-font-size);
+        span.description {
+            font-size: $settings-card-description-font-size;
             color: var(--neutral-fill-strong-hover);
         }
 
-        :deep(div.content-presenter) {
+        div.content-presenter {
             display: grid;
         }
 
@@ -77,12 +78,12 @@
             justify-content: normal;
             align-items: normal;
 
-            :deep(div.header-panel) {
+            div.header-panel {
                 margin: 0;
             }
 
-            :deep(div.content-presenter) {
-                margin: var(--settings-card-vertical-header-content-spacing);
+            div.content-presenter {
+                margin: $settings-card-vertical-header-content-spacing;
             }
 
             .settings-nowarp & {
@@ -90,11 +91,11 @@
                 justify-content: space-between;
                 align-items: center;
 
-                :deep(div.header-panel) {
+                div.header-panel {
                     margin: 0 calc(var(--design-unit) * 6px) 0 0;
                 }
 
-                :deep(div.content-presenter) {
+                div.content-presenter {
                     margin: 0;
                 }
             }
@@ -104,12 +105,12 @@
                 justify-content: normal;
                 align-items: normal;
 
-                :deep(div.header-panel) {
+                div.header-panel {
                     margin: 0;
                 }
 
-                :deep(div.content-presenter) {
-                    margin: var(--settings-card-vertical-header-content-spacing);
+                div.content-presenter {
+                    margin: $settings-card-vertical-header-content-spacing;
                 }
             }
         }

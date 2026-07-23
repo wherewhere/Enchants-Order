@@ -30,7 +30,7 @@ namespace EnchantsOrder.Models
         /// <summary>
         /// Gets the experience level when enchant request of this enchantment. Should be <see cref="Level"/> <see langword="*"/> <see cref="Weight"/>.
         /// </summary>
-#if !NETCOREAPP3_0_OR_GREATER && !NETSTANDARD2_1_OR_GREATER
+#if !COMP_NETSTANDARD2_1
         long Experience { get; }
 #else
         long Experience => (long)Level * Weight;

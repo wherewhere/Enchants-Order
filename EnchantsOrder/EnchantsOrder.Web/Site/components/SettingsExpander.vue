@@ -38,17 +38,15 @@
 </script>
 
 <style lang="scss" scoped>
-    .settings-expander {
-        --settings-expander-header-padding: calc(var(--design-unit) * 1px) 0 calc(var(--design-unit) * 1px) calc(var(--design-unit) * 2px);
-        --settings-expander-item-padding: 0 calc((var(--base-height-multiplier) + 1 + var(--density)) * var(--design-unit) * 1px) 0 calc((var(--base-horizontal-spacing-multiplier) * 12 - var(--design-unit) * 1.5) * 1px + var(--type-ramp-base-line-height));
+    $settings-expander-header-padding: calc(var(--design-unit) * 1px) 0 calc(var(--design-unit) * 1px) calc(var(--design-unit) * 2px);
+    $settings-expander-item-padding: 0 calc((var(--base-height-multiplier) + 1 + var(--density)) * var(--design-unit) * 1px) 0 calc((var(--base-horizontal-spacing-multiplier) * 12 - var(--design-unit) * 1.5) * 1px + var(--type-ramp-base-line-height));
 
-        :deep(fluent-accordion-item.expander) {
+    .settings-expander {
+        fluent-accordion-item.expander {
             box-sizing: border-box;
             box-shadow: var(--elevation-shadow-card-rest);
             border-radius: calc(var(--control-corner-radius) * 1px);
-        }
 
-        :deep(fluent-accordion-item.expander) {
             &:hover {
                 background: var(--neutral-fill-input-hover);
                 border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-hover);
@@ -67,12 +65,12 @@
             }
         }
 
-        :deep(.presenter) {
-            padding: var(--settings-expander-header-padding);
+        .presenter {
+            padding: $settings-expander-header-padding;
         }
 
         :deep(div.setting-expander-content-grid) {
-            padding: var(--settings-expander-item-padding);
+            padding: $settings-expander-item-padding;
         }
     }
 </style>
