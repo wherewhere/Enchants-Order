@@ -1,3 +1,16 @@
+<script lang="ts">
+    import {
+        provideFluentDesignSystem,
+        fluentAccordion,
+        fluentAccordionItem
+    } from "@fluentui/web-components";
+    provideFluentDesignSystem()
+        .register(
+            fluentAccordion(),
+            fluentAccordionItem()
+        );
+</script>
+
 <template>
     <fluent-accordion class="settings-expander">
         <fluent-accordion-item class="expander" :expanded="expanded">

@@ -1,3 +1,28 @@
+<script lang="ts">
+    import {
+        provideFluentDesignSystem,
+        fluentAnchoredRegion,
+        fluentCombobox,
+        fluentNumberField,
+        fluentOption,
+        fluentProgressRing,
+        fluentSelect,
+        fluentSwitch,
+        fluentTooltip
+    } from "@fluentui/web-components";
+    provideFluentDesignSystem()
+        .register(
+            fluentAnchoredRegion(),
+            fluentCombobox(),
+            fluentNumberField(),
+            fluentOption(),
+            fluentProgressRing(),
+            fluentSelect(),
+            fluentSwitch(),
+            fluentTooltip()
+        );
+</script>
+
 <template>
     <div class="content">
         <div class="stack-horizontal" style="justify-content: space-between;">
@@ -501,6 +526,9 @@
                     }
                 }
             }
+            if (params.has("init")) {
+               return params.get("init") !== "false";
+            }
         }
     }
 
@@ -520,7 +548,9 @@
     }
 
     onMounted(() => {
-        loadSettings();
+        if (loadSettings()) {
+            initDotNetAsync();
+        }
         addEventListener("hashchange", loadSettings);
     });
 </script>

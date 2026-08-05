@@ -18,16 +18,12 @@
     <Exec Command="npm install" WorkingDirectory="Site" />
   </Target>
 
-  <Target Name="NPMBuild" BeforeTargets="PreBuildEvent">
-    <PropertyGroup>
-      <RunNPMCompilation Condition="$(RunNPMCompilation) == ''">false</RunNPMCompilation>
-      <NPMArguments Condition="$(_IsPublishing) == 'true'">$(NPMArguments) --mode publish</NPMArguments>
-    </PropertyGroup>
-    <ItemGroup Condition="$(_IsPublishing) == 'true'">
+  <Target Name="NPMBuild" BeforeTargets="PreBuildEvent" Condition="$(RunNPMCompilation) == 'true'">
+    <ItemGroup>
       <Content Remove="wwwroot/assets/**/*" />
     </ItemGroup>
-    <Exec Command="npm run build -- $(NPMArguments)" WorkingDirectory="Site" Condition="$(RunNPMCompilation)" />
-    <ItemGroup Condition="$(_IsPublishing) == 'true'">
+    <Exec Command="npm run build" WorkingDirectory="Site" />
+    <ItemGroup>
       <Content Include="wwwroot/assets/**/*" />
     </ItemGroup>
   </Target>

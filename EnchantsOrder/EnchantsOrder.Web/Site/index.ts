@@ -1,33 +1,9 @@
 import {
     provideFluentDesignSystem,
-    fluentAccordion,
-    fluentAccordionItem,
-    fluentAnchoredRegion,
-    fluentButton,
-    fluentCombobox,
-    fluentNumberField,
-    fluentOption,
-    fluentProgressRing,
-    fluentSelect,
-    fluentSwitch,
-    fluentTooltip,
     baseLayerLuminance,
     StandardLuminance
 } from "@fluentui/web-components";
-provideFluentDesignSystem()
-    .register(
-        fluentAccordion(),
-        fluentAccordionItem(),
-        fluentAnchoredRegion(),
-        fluentButton(),
-        fluentCombobox(),
-        fluentNumberField(),
-        fluentOption(),
-        fluentProgressRing(),
-        fluentSelect(),
-        fluentSwitch(),
-        fluentTooltip()
-    );
+provideFluentDesignSystem().register();
 
 const scheme = matchMedia("(prefers-color-scheme: dark)");
 scheme.addEventListener("change", e => baseLayerLuminance.withDefault(e.matches ? StandardLuminance.DarkMode : StandardLuminance.LightMode));
