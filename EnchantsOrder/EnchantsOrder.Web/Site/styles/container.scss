@@ -1,0 +1,23 @@
+@use "sass:string";
+
+@mixin container($property, $value) {
+    @if string.slice($property, 1, 3)=="max" {
+        @container (#{$property}: #{$value}) {
+            @content;
+        }
+
+        @media (#{$property}: #{$value}) {
+            @content;
+        }
+    }
+
+    @else {
+        @media (#{$property}: #{$value}) {
+            @content;
+        }
+
+        @container (#{$property}: #{$value}) {
+            @content;
+        }
+    }
+}

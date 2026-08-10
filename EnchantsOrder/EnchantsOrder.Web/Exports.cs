@@ -1,6 +1,7 @@
 ﻿using EnchantsOrder;
 using EnchantsOrder.Models;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
@@ -22,7 +23,7 @@ public static partial class Exports
     /// <param name="text">The string to parse as JSON. See the JSON object for a description of JSON syntax.</param>
     /// <returns>The Object, Array, string, number, boolean, or null value corresponding to the given JSON <paramref name="text"/>.</returns>
     [JSImport("globalThis.JSON.parse")]
-    public static partial JSObject JSONParse(string text);
+    public static partial JSObject JSONParse([StringSyntax(StringSyntaxAttribute.Json)] string text);
 
     private readonly struct JSEnchantment(JSObject @object) : IEnchantment
     {

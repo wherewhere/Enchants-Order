@@ -29,7 +29,7 @@
             <h1 id="title">{{ t("title") }}</h1>
             <div class="stack-horizontal" style="padding: 0 4px; align-items: center;">
                 <fluent-tooltip class="title-tooltip" anchor="title-info">
-                    <BiliBiliCard :theme="theme" style="min-width: 300px;" />
+                    <BiliBiliCard :theme="theme" :shadow-style="shadow" style="min-width: 300px;" />
                 </fluent-tooltip>
                 <Info20Regular id="title-info" class="text-info" />
             </div>
@@ -170,9 +170,8 @@
                 <template #header>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h2 id="wanted" class="unset">{{ t("list.header") }}</h2>
-                        <div class="text-button" :title="t('list.button.title')" type="button"
-                             style="padding: 4px;" @click="orderingWantListAsync"
-                             :disabled="!wantedList.length || loading">
+                        <div class="text-button" :title="t('list.button.title')" type="button" style="padding: 4px;"
+                             @click="orderingWantListAsync" :disabled="!wantedList.length || loading">
                             <fluent-progress-ring v-if="loading"
                                                   style="width: 12px; height: 12px;"></fluent-progress-ring>
                             <TriangleRight12Filled v-else />
@@ -222,6 +221,7 @@
 </template>
 
 <script lang="ts" setup>
+    import "./types";
     import AsyncLock from "async-lock";
     import type { DotnetHostBuilder } from "../_framework/dotnet.js";
     import type { Exports, IEnchantment, OrderingResults } from "./types";
@@ -233,6 +233,7 @@
     import { useAnalytics } from "./helpers/analytics";
     import { getEnchantments, type Enchantment, type IEnchant } from "./helpers/enchantment";
     import { keywords } from "./package.json";
+    import shadow from "./styles/shadow.scss?inline";
     import theme from "bilibili-card/src/styles/bilibili-card.fluent.css?url";
     import SettingsCard from "./components/SettingsCard.vue";
     import SettingsExpander from "./components/SettingsExpander.vue";
@@ -527,7 +528,7 @@
                 }
             }
             if (params.has("init")) {
-               return params.get("init") !== "false";
+                return params.get("init") !== "false";
             }
         }
     }

@@ -45,7 +45,7 @@
     "cssnano": "^8.0.0",
     "cssnano-preset-advanced": "^8.0.0",
     "eslint": "^10.0.0",
-    "jsdom": "^29.0.0",
+    "jsdom": "^30.0.0",
     "mime": "^4.0.0",
     "sass": "^1.0.0",
     "vite": "^8.0.0",

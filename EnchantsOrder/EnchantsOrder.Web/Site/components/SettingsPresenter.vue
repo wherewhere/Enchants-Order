@@ -30,6 +30,8 @@
 </script>
 
 <style lang="scss" scoped>
+    @use "../styles/container";
+
     $settings-card-description-font-size: var(--type-ramp-minus-1-font-size);
     $settings-card-header-icon-max-size: var(--type-ramp-base-line-height);
     $settings-card-header-icon-margin: 0 calc((var(--base-horizontal-spacing-multiplier) * 6 + var(--design-unit) * 0.5) * 1px) 0 calc((var(--base-horizontal-spacing-multiplier) * 6 - var(--design-unit) * 4) * 1px);
@@ -73,7 +75,7 @@
             text-decoration: inherit;
         }
 
-        @media (max-width: 640px) {
+        @include container.container(max-width, 476px) {
             flex-flow: column;
             justify-content: normal;
             align-items: normal;
