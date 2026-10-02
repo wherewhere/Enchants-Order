@@ -17,7 +17,7 @@ using Enchantment = EnchantsOrder.Demo.Models.Enchantment;
 
 namespace EnchantsOrder.Demo
 {
-    internal class Program
+    internal sealed class Program
     {
         private static string[] Items = [];
         private static readonly List<Enchantment> Enchantments = [];

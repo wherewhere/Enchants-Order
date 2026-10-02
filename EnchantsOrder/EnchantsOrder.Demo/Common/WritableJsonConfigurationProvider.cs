@@ -5,7 +5,7 @@ using System.Text.Json.Nodes;
 
 namespace EnchantsOrder.Demo.Common
 {
-    internal class WritableJsonConfigurationProvider(JsonConfigurationSource source) : JsonConfigurationProvider(source)
+    internal sealed class WritableJsonConfigurationProvider(JsonConfigurationSource source) : JsonConfigurationProvider(source)
     {
         public override void Set(string key, string value)
         {

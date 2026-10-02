@@ -5,8 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 #if WINRT
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
-#else
-using System.Collections.Generic;
 #endif
 
 namespace EnchantsOrder.Models
@@ -72,13 +70,18 @@ namespace EnchantsOrder.Models
 #else
         /// <inheritdoc/>
 #endif
-        public bool Equals([NotNullWhen(true)] IEnchantment? other) => CompareTo(other) == 0;
+        public bool Equals([NotNullWhen(true)] IEnchantment? other) =>
+            (object)this == other ||
+                (other is not null
+                    && Name == other.Name
+                    && Level == other.Level
+                    && Weight == other.Weight);
 
         /// <inheritdoc/>
 #if WINRT
         [Overload("EqualsToObject")]
 #endif
-        public override bool Equals([NotNullWhen(true)] object? obj) => obj is Enchantment enchantment && Equals(enchantment);
+        public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as IEnchantment);
 
         /// <inheritdoc/>
         public override int GetHashCode() => HashCode.Combine(Name, Level, Weight);
@@ -122,7 +125,7 @@ namespace EnchantsOrder.Models
         /// <param name="right">The second <see cref="Enchantment"/> to compare.</param>
         /// <returns><see langword="true"/> if the two <see cref="Enchantment"/> instances are equal;
         /// otherwise, <see langword="false"/>.</returns>
-        public static bool operator ==(Enchantment? left, Enchantment? right) => EqualityComparer<Enchantment?>.Default.Equals(left, right);
+        public static bool operator ==(Enchantment? left, Enchantment? right) => left?.Equals(right) ?? (right is null);
 
         /// <summary>
         /// Determines whether two <see cref="Enchantment"/> instances are not equal.

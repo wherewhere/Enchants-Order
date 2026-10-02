@@ -68,6 +68,8 @@
 
         div.content-presenter {
             display: grid;
+            grid-auto-flow: column;
+            gap: calc(var(--design-unit) * 1px);
         }
 
         :deep(a.text-button) {
@@ -86,6 +88,7 @@
 
             div.content-presenter {
                 margin: $settings-card-vertical-header-content-spacing;
+                grid-auto-flow: row;
             }
 
             .settings-nowarp & {
@@ -99,6 +102,7 @@
 
                 div.content-presenter {
                     margin: 0;
+                    grid-auto-flow: column;
                 }
             }
 
@@ -113,6 +117,7 @@
 
                 div.content-presenter {
                     margin: $settings-card-vertical-header-content-spacing;
+                    grid-auto-flow: row;
                 }
             }
         }

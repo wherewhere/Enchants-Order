@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration.Json;
 
 namespace EnchantsOrder.Demo.Common
 {
-    internal class WritableJsonConfigurationSource : JsonConfigurationSource
+    internal sealed class WritableJsonConfigurationSource : JsonConfigurationSource
     {
         public override IConfigurationProvider Build(IConfigurationBuilder builder)
         {

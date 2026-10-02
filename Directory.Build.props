@@ -24,10 +24,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <FullTargets Condition="'$(FullTargets)' == ''">False</FullTargets>
-    <ImportAsync Condition="'$(ImportAsync)' == ''">False</ImportAsync>
-    <IsWindows Condition="'$(IsWindows)' == ''">False</IsWindows>
-    <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows')) == 'True' OR '$(Platform)' == 'Windows NT'">True</IsWindows>
+    <FullTargets Condition="'$(FullTargets)' == ''">false</FullTargets>
+    <ImportAsync Condition="'$(ImportAsync)' == ''">false</ImportAsync>
+    <IsWindows Condition="'$(IsWindows)' == ''">false</IsWindows>
+    <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows')) == 'true' OR '$(Platform)' == 'Windows NT'">true</IsWindows>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'native'">
