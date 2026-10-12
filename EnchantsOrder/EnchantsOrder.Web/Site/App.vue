@@ -240,7 +240,7 @@
     import SettingsGroup from "./components/SettingsGroup.vue";
     import ValueChangeHost from "./components/ValueChangeHost.vue";
     import Info20Regular from "@fluentui/svg-icons/icons/info_20_regular.svg?component";
-    import LocalLanguage20Regular from "@fluentui/svg-icons/icons/local_language_20_regular.svg?component";
+    import LocalLanguage20Regular from "@fluentui/svg-icons/icons/zh/local_language_20_regular.svg?component";
     import TriangleRight12Filled from "@fluentui/svg-icons/icons/triangle_right_12_filled.svg?component";
     import Database20Regular from "@fluentui/svg-icons/icons/database_20_regular.svg?component";
     import Bug20Regular from "@fluentui/svg-icons/icons/bug_20_regular.svg?component";
