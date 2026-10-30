@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <FullTargets>True</FullTargets>
-    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">True</IsAotCompatible>
-    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">True</IsTrimmable>
+    <FullTargets>true</FullTargets>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
     <NoWarn>$(NoWarn);NU1902;NU1903</NoWarn>
     <Nullable>enable</Nullable>
     <PackageIcon>Icon.png</PackageIcon>
@@ -20,20 +20,20 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <CheckNotRecommendedTargetFramework>False</CheckNotRecommendedTargetFramework>
-    <SuppressTfmSupportBuildWarnings>False</SuppressTfmSupportBuildWarnings>
-    <TargetFrameworks>net8.0;netcoreapp2.1;netstandard1.0;netstandard2.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsWindows)' == 'True'">$(TargetFrameworks);net2.0;net4.7</TargetFrameworks>
+    <CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
+    <SuppressTfmSupportBuildWarnings>false</SuppressTfmSupportBuildWarnings>
+    <TargetFrameworks>net10.0;netcoreapp2.1;netstandard1.0;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsWindows)' == 'true'">$(TargetFrameworks);net2.0;net4.7</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(FullTargets)' == 'True'">
+  <PropertyGroup Condition="'$(FullTargets)' == 'true'">
     <NoWarn>$(NoWarn);NU1603;NU1901</NoWarn>
-    <TargetFrameworks>$(TargetFrameworks);netcoreapp3.1;net6.0;netstandard2.1</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsWindows)' == 'True'">$(TargetFrameworks);net4.0-client</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsWindows)' == 'True' and '$(GITHUB_ACTIONS)' != 'True'">$(TargetFrameworks);native;netcore5.0;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
+    <TargetFrameworks>$(TargetFrameworks);netcoreapp3.1;net6.0;net8.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsWindows)' == 'true'">$(TargetFrameworks);net4.0-client</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsWindows)' == 'true' and '$(GITHUB_ACTIONS)' != 'true'">$(TargetFrameworks);native;netcore5.0;sl3;sl5;uap10.0;wp7.0;wp8.0</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(FullTargets)' == 'True' and '$(IsWindows)' == 'True' and '$(GITHUB_ACTIONS)' != 'True'">
+  <PropertyGroup Condition="'$(FullTargets)' == 'true' and '$(IsWindows)' == 'true' and '$(GITHUB_ACTIONS)' != 'true'">
     <NuspecFile>EnchantsOrder.nuspec</NuspecFile>
     <NuspecProperties>id=$(AssemblyName);version=$(VersionPrefix);title=$(Title);authors=$(Authors);requireLicenseAcceptance=$(PackageRequireLicenseAcceptance);license=$(PackageLicenseExpression);icon=$(PackageIcon);readme=$(PackageReadmeFile);projectUrl=$(PackageProjectUrl);iconUrl=$(PackageIconUrl);description=$(Description);releaseNotes=$(PackageReleaseNotes);copyright=$(Copyright);repositoryType=$(RepositoryType);repositoryUrl=$(PackageProjectUrl);repositoryCommit=$(RepositoryCommit);buildOutput=bin\$(Configuration)</NuspecProperties>
   </PropertyGroup>
@@ -46,7 +46,7 @@
     <DefineConstants>$(DefineConstants);COMP_NETSTANDARD2_1</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net9.0'))">
     <PackageReference Include="PolySharp" Version="1.16.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

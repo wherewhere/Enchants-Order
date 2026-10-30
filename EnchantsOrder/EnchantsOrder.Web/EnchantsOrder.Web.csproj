@@ -6,7 +6,7 @@
     <OutputType>Library</OutputType>
     <RunAOTCompilation>true</RunAOTCompilation>
     <RunNPMCompilation>true</RunNPMCompilation>
-    <TargetFramework>net10.0-browser</TargetFramework>
+    <TargetFramework>net11.0-browser</TargetFramework>
     <WasmAllowUndefinedSymbols>true</WasmAllowUndefinedSymbols>
   </PropertyGroup>
 
