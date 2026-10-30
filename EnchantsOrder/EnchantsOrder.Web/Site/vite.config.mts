@@ -5,6 +5,7 @@ import svgLoader from "./helpers/svg-loader.mts";
 import bilibiliCard from "bilibili-card/dist/lib/bilibili-card";
 import dotnetFrameworkStaticFiles from "./helpers/dotnet-framework-static-files.mts";
 import githubImporter from "./helpers/github-importer.mts";
+import svgo from "postcss-svgo";
 import cssnano from "cssnano";
 
 export default defineConfig({
@@ -37,6 +38,7 @@ export default defineConfig({
         },
         postcss: {
             plugins: [
+                svgo(),
                 cssnano({
                     preset: "advanced"
                 })
