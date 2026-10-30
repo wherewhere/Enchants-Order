@@ -557,7 +557,7 @@
 </script>
 
 <style lang="scss">
-    @use "github:microsoft/fluentui-blazor?branch=dev&path=/src/Core/wwwroot/css/reboot.css";
+    @use "github:microsoft/fluentui-blazor?branch=archive-v4&path=/src/Core/wwwroot/css/reboot.css";
 
     $base-transition: background-color 0.083s ease-in-out;
 
