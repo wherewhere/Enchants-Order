@@ -5,14 +5,14 @@ import { injectScript } from "@microsoft/clarity/src/utils";
 declare global {
     interface Window {
         dataLayer: IArguments[];
-        gtag: (key: string, ...values: any[]) => void;
-        _hmt: { push: (args: string[]) => void };
+        gtag: (key: string, ...values: readonly any[]) => void;
+        _hmt: { push: (args: readonly string[]) => void };
     }
 }
 
 export function useAnalytics() {
     window.dataLayer = window.dataLayer || [];
-    function gtag(key: string, ...values: any[]): void;
+    function gtag(key: string, ...values: readonly any[]): void;
     function gtag() { window.dataLayer.push(arguments); }
     window.gtag = gtag;
     gtag("js", new Date());

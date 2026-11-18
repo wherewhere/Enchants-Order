@@ -284,7 +284,7 @@
     useAnalytics();
 
     const locker = new AsyncLock();
-    const enchantments = ref<Enchantment[]>([]);
+    const enchantments = ref<readonly Enchantment[]>([]);
     const initialPenalty = shallowRef(0);
     const enchantment = ref({
         name: '',
@@ -293,7 +293,7 @@
     } as Enchantment);
     const loading = shallowRef(false);
     const usePresets = shallowRef(false);
-    const items = ref<string[]>([]);
+    const items = ref<readonly string[]>([]);
     const item = shallowRef<string>();
     const wantedList = ref<Enchantment[]>([]);
     const results = ref<OrderingResults[]>([]);
@@ -359,7 +359,7 @@
         }
     }
 
-    function readSteps(steps: IEnchantment[][]) {
+    function readSteps(steps: readonly (readonly IEnchantment[])[]) {
         function getRomanNumber(num: number, maxValue = 2000) {
             if (num > maxValue) { return num.toString(); }
             const arabic = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
@@ -378,7 +378,7 @@
         function readEnchantment(enchantment: IEnchantment) {
             return `${enchantment.Name} ${getRomanNumber(enchantment.Level)}`;
         }
-        function readStep(step: IEnchantment[], index: number) {
+        function readStep(step: readonly IEnchantment[], index: number) {
             const builder = [];
             builder.push(t("results.step.content", [index]));
             const count = step.length;
@@ -501,7 +501,7 @@
         }
     }
 
-    async function orderingAsync(wantedList: IEnchant[], initialPenalty: number | string) {
+    async function orderingAsync(wantedList: readonly IEnchant[], initialPenalty: number | string) {
         await initDotNetAsync();
         return exports!.Ordering(wantedList, +initialPenalty);
     }
@@ -533,7 +533,7 @@
         }
     }
 
-    function setSettings(wantedList: IEnchant[]) {
+    function setSettings(wantedList: readonly IEnchant[]) {
         const settings: { [key: string]: string } = {};
         if (wantedList.length) {
             settings.wanted = compressToEncodedURIComponent(
@@ -544,8 +544,11 @@
                         weight: x.weight
                     }))));
         }
-        location.hash = new URLSearchParams(settings).toString();
-        hashChanged = true;
+        const hash = '#' + new URLSearchParams(settings).toString();
+        if (location.hash !== hash) {
+            hashChanged = true;
+            location.hash = hash;
+        }
     }
 
     onMounted(() => {

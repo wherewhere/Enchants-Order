@@ -1,58 +1,45 @@
 ﻿using EnchantsOrder.Common;
 using EnchantsOrder.Models;
-using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace EnchantsOrder.Demo.Models
 {
-    internal sealed class Enchantment : IEnchantment
+    internal sealed partial class Enchantment : IEnchantment
     {
         /// <inheritdoc/>
+        [JsonPropertyName("levelMax")]
         public int Level { get; set; }
+
         /// <inheritdoc/>
+        [JsonPropertyName("weight")]
         public int Weight { get; set; }
 
+        /// <summary>
+        /// Get or set is hidden.
+        /// </summary>
+        [JsonPropertyName("hidden")]
         public bool Hidden { get; set; } = false;
 
         /// <inheritdoc/>
+        [JsonIgnore]
         public string Name { get; set; }
 
+        /// <summary>
+        /// The items this <see cref="Enchantment"/> can enchant.
+        /// </summary>
+        [JsonPropertyName("items")]
         public string[] Items { get; set; }
+
+        /// <summary>
+        /// The enchantments this <see cref="Enchantment"/> can't enchant with.
+        /// </summary>
+        [JsonPropertyName("incompatible")]
         public string[] Incompatible { get; set; }
 
         /// <inheritdoc/>
+        [JsonIgnore]
         public long Experience => (long)Level * Weight;
-
-        public Enchantment(JsonProperty token)
-        {
-            Name = token.Name;
-
-            JsonElement value = token.Value;
-            if (value.TryGetProperty("levelMax", out JsonElement levelMaxProperty) && levelMaxProperty.TryGetInt32(out int levelMax))
-            {
-                Level = levelMax;
-            }
-
-            if (value.TryGetProperty("weight", out JsonElement weightProperty) && weightProperty.TryGetInt32(out int weight))
-            {
-                Weight = weight;
-            }
-
-            if (value.TryGetProperty("hidden", out JsonElement hiddenProperty))
-            {
-                Hidden = hiddenProperty.GetBoolean();
-            }
-
-            if (value.TryGetProperty("items", out JsonElement itemsProperty))
-            {
-                Items = [.. itemsProperty.EnumerateArray().Select(x => x.GetString())];
-            }
-
-            if (value.TryGetProperty("incompatible", out JsonElement incompatibleProperty))
-            {
-                Incompatible = [.. incompatibleProperty.EnumerateArray().Select(x => x.GetString())];
-            }
-        }
 
         /// <inheritdoc/>
         public override string ToString() => $"{Name} {Level.GetRomanNumber()}";
@@ -75,5 +62,15 @@ namespace EnchantsOrder.Demo.Models
 
         /// <inheritdoc/>
         public bool Equals(IEnchantment other) => CompareTo(other) == 0;
+
+        public static Enchantment Deserialize(JsonProperty token)
+        {
+            Enchantment enchantment = token.Value.Deserialize(SourceGenerationContext.Default.Enchantment) ?? new Enchantment();
+            enchantment.Name = token.Name;
+            return enchantment;
+        }
+
+        [JsonSerializable(typeof(Enchantment))]
+        private sealed partial class SourceGenerationContext : JsonSerializerContext;
     }
 }

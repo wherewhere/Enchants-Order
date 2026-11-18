@@ -31,7 +31,7 @@ declare module "async-lock" {
          * });
          */
         acquire<T>(
-            key: string | string[],
+            key: string | readonly string[],
             fn: (() => T | PromiseLike<T>) | ((done: AsyncLock.AsyncLockDoneCallback<T>) => any),
             opts?: AsyncLock.AsyncLockOptions,
         ): Promise<T>;
@@ -45,7 +45,7 @@ declare module "@microsoft/clarity/src/utils" {
 
 declare module "*.svg?component" {
     import type { defineComponent, SVGAttributes, VNode } from "vue";
-    export const render: (_ctx: { title?: string }, _cache: any[]) => VNode;
+    export const render: (_ctx: { title?: string }, _cache: readonly any[]) => VNode;
     interface SVGComponentProps extends SVGAttributes {
         title?: string;
     }

@@ -8,8 +8,8 @@ type Enchant = {
     hidden?: boolean,
     levelMax: number,
     weight: number,
-    incompatible?: string[],
-    items: string[]
+    incompatible?: readonly string[],
+    items: readonly string[]
 }
 export function getEnchantments(locale: keyof typeof enchants) {
     const json: { [key: string]: Enchant } = enchants[locale] || enchants["en-US"];
@@ -40,7 +40,7 @@ export type Enchantment = {
     level: number;
     weight: number;
     hidden?: boolean;
-    items: string[];
-    incompatible?: string[];
+    items: readonly string[];
+    incompatible?: readonly string[];
     readonly experience: number;
 }

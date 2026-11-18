@@ -10,10 +10,10 @@ export type OrderingResults = {
     readonly Penalty: number;
     readonly MaxExperience: number;
     readonly TotalExperience: number;
-    readonly Steps: IEnchantment[][];
+    readonly Steps: readonly (readonly IEnchantment[])[];
     readonly IsTooExpensive: boolean;
     readonly IsTooManyPenalty: boolean;
 }
 export type Exports = {
-    Ordering(wantedList: IEnchant[], initialPenalty: number): Promise<OrderingResults>;
+    Ordering(wantedList: readonly IEnchant[], initialPenalty: number): Promise<OrderingResults>;
 }

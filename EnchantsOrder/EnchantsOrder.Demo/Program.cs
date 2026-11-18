@@ -194,12 +194,13 @@ namespace EnchantsOrder.Demo
             };
             langCommand.SetAction(x => LangCommandHandler(x.GetValue(langArgument)));
 
-            RootCommand rootCommand = new(Resource.RootCommandDescription)
-            {
+            RootCommand rootCommand =
+            [
+                with(Resource.RootCommandDescription),
                 orderCommand,
                 listCommand,
                 langCommand
-            };
+            ];
             rootCommand.SetAction(_ => RootCommandHandler());
 
             return rootCommand.Parse(args).InvokeAsync();
@@ -291,7 +292,7 @@ namespace EnchantsOrder.Demo
             JsonDocument document = JsonDocument.Parse(file.BaseStream);
             foreach (JsonProperty token in document.RootElement.EnumerateObject())
             {
-                Enchantments.Add(new(token));
+                Enchantments.Add(Enchantment.Deserialize(token));
             }
             Items = Enchantments.OrderByDescending(x => x.Items.Length).FirstOrDefault().Items;
         }

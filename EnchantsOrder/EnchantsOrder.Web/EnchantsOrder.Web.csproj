@@ -22,7 +22,12 @@
     <ItemGroup>
       <Content Remove="wwwroot/assets/**/*" />
     </ItemGroup>
-    <Exec Command="npm run build" WorkingDirectory="Site" />
+    <Exec Command="npm run build"
+          EnvironmentVariables="NO_COLOR=1"
+          StdOutEncoding="UTF-8"
+          StdErrEncoding="UTF-8"
+          WorkingDirectory="Site">
+    </Exec>
     <ItemGroup>
       <Content Include="wwwroot/assets/**/*" />
     </ItemGroup>
